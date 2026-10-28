@@ -1,0 +1,904 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SUBIT — інтерактивна 3D-структура</title>
+<style>
+:root{
+  --bg:#f6f5f1; --panel:#ffffff; --ink:#1c1c1a; --muted:#6a6963; --line:#d8d5cb;
+  --accent:#2f5d8a; --accent-soft:#e3ecf7; --hot:#b4532a; --hot-soft:#f7e6dc;
+  --ok:#2e7d4f; --bad:#b03a3a;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#131418; --panel:#1d1f25; --ink:#eceae4; --muted:#9c9b94; --line:#33353e;
+    --accent:#86b6e8; --accent-soft:#1c2c3f; --hot:#f0a077; --hot-soft:#3a2a20;
+    --ok:#7fd1a0; --bad:#f09a9a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#131418; --panel:#1d1f25; --ink:#eceae4; --muted:#9c9b94; --line:#33353e;
+  --accent:#86b6e8; --accent-soft:#1c2c3f; --hot:#f0a077; --hot-soft:#3a2a20;
+  --ok:#7fd1a0; --bad:#f09a9a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{max-width:1100px;margin:0 auto;padding:16px 16px 6px}
+h1{font-size:21px;margin:0 0 2px}
+header p{margin:0;color:var(--muted);font-size:13px}
+main{max-width:1100px;margin:0 auto;padding:10px 16px 40px}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.tabs button,.tools button,.tools select,.stage .ov button{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:999px;padding:6px 12px;font:inherit;font-size:13px;cursor:pointer}
+.tools select{border-radius:8px}
+.tabs button[aria-selected="true"],.tools button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.tools{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}
+.tools .sep{width:8px}
+.tools label{font-size:13px;color:var(--muted);display:inline-flex;gap:4px;align-items:center}
+.stage{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+canvas#cv{display:block;width:100%;height:min(62vh,540px);min-height:360px;touch-action:none;cursor:grab}
+canvas#cv.grabbing{cursor:grabbing}
+.ov{position:absolute;right:10px;top:10px;display:flex;gap:6px}
+.ov button{padding:4px 10px;font-size:12px}
+.ov button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.hint{position:absolute;left:12px;bottom:10px;font-size:12px;color:var(--muted);background:color-mix(in srgb,var(--panel) 85%,transparent);padding:4px 8px;border-radius:8px;pointer-events:none;max-width:90%}
+.tip{position:absolute;display:none;pointer-events:none;font:12px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--ink);color:var(--panel);padding:4px 7px;border-radius:6px;white-space:nowrap;transform:translate(10px,-50%)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:12px}
+.panel h2{font-size:16px;margin:0 0 6px}
+.panel h3{font-size:14px;margin:12px 0 4px;color:var(--muted);font-weight:600}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:14px}
+.kv b{font-weight:600}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;overflow-wrap:anywhere}
+.ok{color:var(--ok)} .bad{color:var(--bad)} .muted{color:var(--muted)}
+.chain{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-top:6px}
+.chain div{border:1px solid var(--line);border-radius:8px;padding:6px 4px;font-size:11px;text-align:center;color:var(--muted);min-height:44px;display:flex;align-items:center;justify-content:center;word-break:break-word}
+.chain div.on{border-color:var(--hot);background:var(--hot-soft);color:var(--ink);font-weight:600}
+@media (max-width:640px){ .chain{grid-template-columns:repeat(3,1fr)} .ov{top:auto;bottom:40px;right:8px} }
+svg.diamond{width:100%;max-width:300px;height:auto}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:720px){ .two{grid-template-columns:1fr} }
+.examples{display:flex;flex-wrap:wrap;gap:6px}
+.note{font-size:13px;color:var(--muted);margin:6px 0 0}
+</style>
+</head>
+<body>
+<header>
+  <h1>SUBIT — інтерактивна 3D-структура</h1>
+  <p>Тягніть — обертання, колесо — масштаб, стрілки клавіатури — обертання, «+» і «−» — масштаб, Esc — скинути вибір. Клік — дія залежить від сцени.</p>
+</header>
+<main>
+  <div class="tabs" role="tablist">
+    <button role="tab" aria-selected="true"  data-scene="states">1 · Алфавіт і стани</button>
+    <button role="tab" aria-selected="false" data-scene="rho">2 · Динаміка ρ</button>
+    <button role="tab" aria-selected="false" data-scene="classify">3 · Класифікація множин</button>
+    <button role="tab" aria-selected="false" data-scene="functor">4 · Морфізм і функтор E</button>
+    <button role="tab" aria-selected="false" data-scene="tree">5 · Дерево Tree∞</button>
+  </div>
+
+  <div class="tools" id="tools"></div>
+
+  <div class="stage" id="stage">
+    <canvas id="cv" aria-label="3D-сцена SUBIT"></canvas>
+    <div class="ov">
+      <button type="button" id="btnAuto" aria-pressed="false">⟳ авто</button>
+      <button type="button" id="btnReset">⌂ вид</button>
+    </div>
+    <div class="tip" id="tip"></div>
+    <div class="hint" id="hint"></div>
+  </div>
+
+  <div class="panel" id="info"></div>
+</main>
+
+<script>
+(function(){
+"use strict";
+
+/* ================================================================
+   ДАНІ ПРЕДМЕТНОЇ ОБЛАСТІ (за специфікацією)
+   Алфавіт A (§1): 2-бітні коди 00→N, 01→F, 10→T, 11→B; індекс = код.
+   Координати стану (WHO, WHERE, WHEN) — імена з §1.
+   code6 = 16·WHO + 4·WHERE + WHEN (А3).
+   ================================================================ */
+const BEL   = ['N','F','T','B'];
+const BELC  = ['#8b8a84','#c0562f','#2f8a5a','#6f4fb8'];
+const AXC   = ['#b4532a','#2f5d8a','#2f8a5a'];          // кольори осей WHO/WHERE/WHEN
+const WHO   = ['THEY','YOU','ME','WE'];
+const WHERE = ['NORTH','WEST','EAST','SOUTH'];
+const WHEN  = ['WINTER','AUTUMN','SPRING','SUMMER'];
+const AXN   = {WHO, WHERE, WHEN};
+const N = 64;
+const stOf = (w,h,t)=>16*w+4*h+t;
+const dec  = s=>({w:(s>>4)&3, h:(s>>2)&3, t:s&3});
+const b2   = v=>v.toString(2).padStart(2,'0');
+const stBits = s=>{const d=dec(s);return b2(d.w)+b2(d.h)+b2(d.t);};
+const stName = s=>{const d=dec(s);return `${WHO[d.w]} / ${WHERE[d.h]} / ${WHEN[d.t]}`;};
+
+/* ================= Загальний стан застосунку ================= */
+const V = {yaw:0.65, pitch:-0.35, zoom:1, vy:0, vp:0, auto:false};
+let scene = 'states';
+let sel = null;             // обраний об'єкт (стан, вершина ρ, адреса дерева)
+let hoverTip = '';
+let dragging = false;
+let msg = '';               // короткі повідомлення у панелі
+
+// сцена 1
+let colorBy = 'hue';
+let slice = {axis:'none', v:0};
+
+// сцени 2–3: правило ρ, множина P, траєкторія
+const rho = Array.from({length:N}, (_,s)=>(s*s+1)%N);   // квадратичне відображення: цикли і перехідні стани
+let P = new Set(), srcRho = null, traj = null, trajTimer = 0;
+
+// сцена 4: два Dyn-об'єкти та морфізм φ
+let fA = [1,2,0,3], hB = [1,2,0,3], phi = [1,2,0,3], srcA = null, showE = false;
+
+// сцена 5: дерево Tree∞ — Map адреса → мітка ('node' або число-значення листка 0..3)
+let TR = null, treeMode = 'value', treeFlow = true, treeSeed = 7, treeDepthMax = 3;
+
+/* ================= 3D-рушій ================= */
+const C = document.getElementById('cv');
+const ctx = C.getContext('2d');
+const TIP = document.getElementById('tip');
+const HINT = document.getElementById('hint');
+let W = 0, H = 0, lastPts = [];
+function resize(){
+  const r = C.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+  C.width = Math.round(r.width*dpr); C.height = Math.round(r.height*dpr);
+  ctx.setTransform(dpr,0,0,dpr,0,0); W = r.width; H = r.height;
+}
+function proj(p){
+  const cy=Math.cos(V.yaw), sy=Math.sin(V.yaw);
+  const x1 = cy*p[0] + sy*p[2], z1 = -sy*p[0] + cy*p[2];
+  const cp=Math.cos(V.pitch), sp=Math.sin(V.pitch);
+  const y1 = cp*p[1] - sp*z1, z2 = sp*p[1] + cp*z1;
+  const k = 4.2/(4.2 - z2);
+  const sc = Math.min(W,H)*0.34*V.zoom*k;
+  return {x:W/2 + x1*sc, y:H/2 - y1*sc, z:z2, k};
+}
+function cssVar(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim() || '#888'; }
+function hit(mx,my){
+  let best=null, bd=1e9;
+  for (const q of lastPts){
+    const d = Math.hypot(q.pr.x-mx, q.pr.y-my);
+    const lim = Math.max(9, q.r*q.pr.k+3);
+    if (d < lim && d < bd){ bd=d; best=q; }
+  }
+  return best;
+}
+function arrow(a,b,color,lw){
+  ctx.strokeStyle=color; ctx.fillStyle=color; ctx.lineWidth=lw;
+  ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+  const ang=Math.atan2(b.y-a.y,b.x-a.x), L=7;
+  ctx.beginPath(); ctx.moveTo(b.x,b.y);
+  ctx.lineTo(b.x-L*Math.cos(ang-0.4), b.y-L*Math.sin(ang-0.4));
+  ctx.lineTo(b.x-L*Math.cos(ang+0.4), b.y-L*Math.sin(ang+0.4));
+  ctx.closePath(); ctx.fill();
+}
+function render(now){
+  if (!dragging){
+    if (V.auto) V.yaw += 0.004;
+    V.yaw += V.vy; V.pitch += V.vp; V.vy*=0.92; V.vp*=0.92;
+  }
+  V.pitch = Math.max(-1.55, Math.min(1.55, V.pitch));
+  ctx.clearRect(0,0,W,H);
+  const g = SCENES[scene].geom();
+  const pts = g.pts.map(q=>({...q, pr:proj(q.p)}));
+  lastPts = pts;
+  const muted = cssVar('--muted'), line = cssVar('--line'), ink = cssVar('--ink');
+  for (const L of (g.lines||[])){
+    const a=proj(L.a), b=proj(L.b);
+    ctx.strokeStyle = L.color || line; ctx.lineWidth = L.w || 1; ctx.setLineDash(L.dash||[]);
+    ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); ctx.setLineDash([]);
+  }
+  // ребра, далекі першими
+  const es = (g.edges||[]).filter(e=>pts[e.a]&&pts[e.b]).map(e=>({...e, z:(pts[e.a].pr.z+pts[e.b].pr.z)/2}));
+  es.sort((x,y)=>x.z-y.z);
+  for (const e of es){
+    const A=pts[e.a].pr, B=pts[e.b].pr;
+    ctx.globalAlpha = e.alpha ?? 0.8;
+    if (e.dash) ctx.setLineDash([5,4]);
+    if (e.arrow) arrow(A,B,e.color||muted,e.lw||1.3);
+    else { ctx.strokeStyle=e.color||muted; ctx.lineWidth=e.lw||1.3; ctx.beginPath(); ctx.moveTo(A.x,A.y); ctx.lineTo(B.x,B.y); ctx.stroke(); }
+    ctx.setLineDash([]); ctx.globalAlpha = 1;
+  }
+  // потоки (крапки, що біжать ребрами)
+  for (const f of (g.flows||[])){
+    const A=pts[f.a], B=pts[f.b]; if(!A||!B) continue;
+    const t = ((now||0)/1600 + f.off) % 1;
+    const x = A.pr.x + (B.pr.x-A.pr.x)*t, y = A.pr.y + (B.pr.y-A.pr.y)*t;
+    ctx.globalAlpha = f.alpha ?? 0.9;
+    ctx.beginPath(); ctx.arc(x,y,2.6,0,Math.PI*2); ctx.fillStyle=f.color; ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+  // точки
+  const order = [...pts].sort((a,b)=>a.pr.z-b.pr.z);
+  for (const q of order){
+    const rad = q.r*q.pr.k;
+    ctx.globalAlpha = q.alpha ?? 1;
+    ctx.beginPath(); ctx.arc(q.pr.x,q.pr.y,rad,0,Math.PI*2);
+    ctx.fillStyle = q.color; ctx.fill();
+    if (q.ring){ ctx.lineWidth=2; ctx.strokeStyle=q.ring; ctx.stroke(); }
+    if (q.hot){ ctx.lineWidth=2.4; ctx.strokeStyle=cssVar('--hot'); ctx.beginPath(); ctx.arc(q.pr.x,q.pr.y,rad+4,0,Math.PI*2); ctx.stroke(); }
+    ctx.globalAlpha = 1;
+  }
+  // підписи
+  ctx.font = '12px system-ui, sans-serif';
+  for (const t of (g.texts||[])){
+    const p = proj(t.p);
+    ctx.fillStyle = t.color || ink;
+    ctx.textAlign = t.align || 'center';
+    ctx.textBaseline = t.base || 'middle';
+    ctx.globalAlpha = t.alpha ?? 1;
+    ctx.fillText(t.text, p.x + (t.dx||0), p.y + (t.dy||0));
+    ctx.globalAlpha = 1;
+  }
+  requestAnimationFrame(render);
+}
+
+/* ================= Миша, дотик, клавіатура ================= */
+let down=null, last=null;
+C.addEventListener('pointerdown', e=>{
+  dragging=true; down={x:e.clientX,y:e.clientY}; last={x:e.clientX,y:e.clientY};
+  C.setPointerCapture(e.pointerId); C.classList.add('grabbing'); TIP.style.display='none';
+});
+C.addEventListener('pointermove', e=>{
+  const r = C.getBoundingClientRect();
+  if (dragging){
+    const dx=e.clientX-last.x, dy=e.clientY-last.y;
+    V.yaw += dx*0.008; V.pitch += dy*0.008;
+    V.vy = dx*0.008; V.vp = dy*0.008;
+    last={x:e.clientX,y:e.clientY};
+    return;
+  }
+  const q = hit(e.clientX-r.left, e.clientY-r.top);
+  C.style.cursor = q ? 'pointer' : 'grab';
+  if (q && q.tip){
+    TIP.textContent = q.tip; TIP.style.display='block';
+    TIP.style.left = (e.clientX-r.left)+'px'; TIP.style.top = (e.clientY-r.top)+'px';
+  } else TIP.style.display='none';
+});
+C.addEventListener('pointerleave', ()=>{ TIP.style.display='none'; });
+C.addEventListener('pointerup', e=>{
+  dragging=false; C.classList.remove('grabbing');
+  const moved = Math.hypot(e.clientX-down.x, e.clientY-down.y);
+  if (moved < 6){
+    const r=C.getBoundingClientRect();
+    const q = hit(e.clientX-r.left, e.clientY-r.top);
+    SCENES[scene].pick(q ? q.id : null);
+  }
+});
+C.addEventListener('wheel', e=>{
+  e.preventDefault();
+  V.zoom = Math.max(0.5, Math.min(2.6, V.zoom * (e.deltaY < 0 ? 1.08 : 0.92)));
+}, {passive:false});
+window.addEventListener('keydown', e=>{
+  if (['SELECT','INPUT','TEXTAREA'].includes(e.target.tagName)) return;
+  const k = e.key;
+  if (k==='ArrowLeft')  { V.yaw -= 0.12; e.preventDefault(); }
+  if (k==='ArrowRight') { V.yaw += 0.12; e.preventDefault(); }
+  if (k==='ArrowUp')    { V.pitch -= 0.1; e.preventDefault(); }
+  if (k==='ArrowDown')  { V.pitch += 0.1; e.preventDefault(); }
+  if (k==='+' || k==='=') V.zoom = Math.min(2.6, V.zoom*1.1);
+  if (k==='-' || k==='_') V.zoom = Math.max(0.5, V.zoom/1.1);
+  if (k==='a' || k==='A') toggleAuto();
+  if (k==='Escape'){ sel=null; srcRho=null; srcA=null; msg=''; renderInfo(); }
+});
+document.getElementById('btnAuto').addEventListener('click', toggleAuto);
+document.getElementById('btnReset').addEventListener('click', ()=>{ V.yaw=0.65; V.pitch=-0.35; V.zoom=SCENES[scene].zoom||1; });
+function toggleAuto(){
+  V.auto = !V.auto;
+  document.getElementById('btnAuto').setAttribute('aria-pressed', String(V.auto));
+}
+
+/* ================= Панелі керування ================= */
+const TOOLS = document.getElementById('tools');
+const INFO  = document.getElementById('info');
+function btn(label, onClick, pressed){
+  const b=document.createElement('button'); b.type='button'; b.textContent=label;
+  if (pressed!==undefined) b.setAttribute('aria-pressed', String(!!pressed));
+  b.addEventListener('click', onClick); return b;
+}
+function sep(){ const s=document.createElement('span'); s.className='sep'; return s; }
+function select(opts, value, onChange, label){
+  const wrap=document.createElement('label');
+  if (label) wrap.append(label+' ');
+  const s=document.createElement('select');
+  opts.forEach(([v,t])=>{ const o=document.createElement('option'); o.value=v; o.textContent=t; s.appendChild(o); });
+  s.value=value; s.addEventListener('change', ()=>onChange(s.value));
+  wrap.appendChild(s); return wrap;
+}
+function setHint(t){ HINT.textContent = t; }
+
+/* ================= Сцени ================= */
+const SCENES = {};
+
+/* ---------- 1. Алфавіт і стани ---------- */
+function hue(s){ return `hsl(${Math.round(s*360/N)} 55% 52%)`; }
+function axisColor(v){ return AXC.length ? ['#b4532a','#2f5d8a','#2f8a5a','#6f4fb8'][v] : '#888'; }
+SCENES.states = {
+  zoom: 1,
+  hint: 'Тягніть — обертання. Клік по стану — розбір координат. Зріз дозволяє переглянути площину однієї координати.',
+  tools(){
+    TOOLS.append(
+      select([['hue','кольори за code6'],['WHO','за WHO'],['WHERE','за WHERE'],['WHEN','за WHEN']], colorBy, v=>{colorBy=v; renderInfo();}, 'Колір:'),
+      sep(),
+      select([['none','без зрізу'],['WHO','WHO ='],['WHERE','WHERE ='],['WHEN','WHEN =']], slice.axis, v=>{slice.axis=v; renderInfo();}, 'Зріз:'),
+      select([[0,AXN.WHO[0]],[1,AXN.WHO[1]],[2,AXN.WHO[2]],[3,AXN.WHO[3]]], String(slice.v), v=>{slice.v=+v; renderInfo();}, 'значення:'),
+      sep(),
+      btn('скинути вибір', ()=>{ sel=null; renderInfo(); })
+    );
+  },
+  geom(){
+    const pts=[], lines=[], texts=[];
+    const ax = slice.axis;
+    for (let s=0; s<N; s++){
+      const d=dec(s);
+      const p=[(d.w-1.5)/1.5, (d.h-1.5)/1.5, (d.t-1.5)/1.5];
+      let color = colorBy==='hue' ? hue(s) : axisColor(colorBy==='WHO'?d.w:colorBy==='WHERE'?d.h:d.t);
+      const inSlice = ax==='none' || (ax==='WHO'?d.w:ax==='WHERE'?d.h:d.t)===slice.v;
+      pts.push({id:s, p, r: sel===s?7:5, color, alpha: inSlice?1:0.1, hot: sel===s,
+                tip: `${stName(s)} · code6 = ${s} · ${stBits(s)}`});
+    }
+    const ax0=[-1.25,-1.25,-1.25];
+    lines.push({a:ax0, b:[1.25,-1.25,-1.25], color:cssVar('--muted'), w:1.2});
+    lines.push({a:ax0, b:[-1.25,1.25,-1.25], color:cssVar('--muted'), w:1.2});
+    lines.push({a:ax0, b:[-1.25,-1.25,1.25], color:cssVar('--muted'), w:1.2});
+    for (let i=0;i<4;i++){
+      const u=(i-1.5)/1.5;
+      texts.push({p:[u,-1.42,-1.25], text:WHO[i], color:cssVar('--muted')});
+      texts.push({p:[-1.42,u,-1.25], text:WHERE[i], color:cssVar('--muted'), align:'right'});
+      texts.push({p:[-1.25,-1.42,u], text:WHEN[i], color:cssVar('--muted')});
+    }
+    texts.push({p:[1.32,-1.25,-1.25], text:'WHO →', color:cssVar('--ink')});
+    texts.push({p:[-1.25,1.32,-1.25], text:'WHERE →', color:cssVar('--ink')});
+    texts.push({p:[-1.25,-1.25,1.32], text:'WHEN →', color:cssVar('--ink')});
+    return {pts, lines, texts};
+  },
+  pick(id){ if (id!==null) sel = (sel===id ? null : id); renderInfo(); },
+  info(){
+    const h=document.createElement('div');
+    h.innerHTML = `<h2>Алфавіт A і стани S₀ = A³</h2>
+      <p class="muted">Кожна вісь — одна з трьох координат стану (WHO, WHERE, WHEN), на кожній чотири значення алфавіту A. 4·4·4 = 64 стани (§1, А2). Положення точки — її координати; код code6 = 16·WHO + 4·WHERE + WHEN (А3).</p>`;
+    const g=document.createElement('div'); g.className='two';
+    g.append(diamondBox(), stateBox());
+    h.append(g);
+    return h;
+  }
+};
+function diamondBox(){
+  const d=document.createElement('div');
+  const dark = cssVar('--line'), mu = cssVar('--muted');
+  d.innerHTML = `<h3>Алфавіт A — діаграма Белнапа</h3>
+  <svg class="diamond" viewBox="-170 -120 340 240" aria-label="Діаграма Белнапа">
+    <line x1="-100" y1="0" x2="0" y2="-80" stroke="${dark}" stroke-width="2"/>
+    <line x1="-100" y1="0" x2="0" y2="80" stroke="${dark}" stroke-width="2"/>
+    <line x1="100" y1="0" x2="0" y2="-80" stroke="${dark}" stroke-width="2"/>
+    <line x1="100" y1="0" x2="0" y2="80" stroke="${dark}" stroke-width="2"/>
+    <text x="-125" y="5" font-size="13" fill="${mu}">F</text>
+    <text x="118" y="5" font-size="13" fill="${mu}">T</text>
+    <text x="-6" y="-92" font-size="13" fill="${mu}">B</text>
+    <text x="-6" y="100" font-size="13" fill="${mu}">N</text>
+    <text x="-150" y="-100" font-size="11" fill="${mu}">істинність →</text>
+    <text x="-150" y="-86" font-size="11" fill="${mu}">інформація ↑</text>
+  </svg>
+  <p class="note">Порядок істинності F &lt; N &lt; T і F &lt; B &lt; T; порядок інформації N &lt; F, T &lt; B. Маркери: 1 = WHO, 2 = WHERE, 3 = WHEN — значення обраного стану.</p>`;
+  const svg=d.querySelector('svg');
+  const pos={F:[-100,0],T:[100,0],B:[0,-80],N:[0,80]};
+  for (const [n,[x,y]] of Object.entries(pos)){
+    svg.innerHTML += `<circle cx="${x}" cy="${y}" r="16" fill="${BELC[BEL.indexOf(n)]}" opacity="0.2"/>`;
+  }
+  if (sel!==null && typeof sel==='number'){
+    const q=dec(sel);
+    [q.w,q.h,q.t].forEach((v,k)=>{
+      const [x,y]=pos[BEL[v]]; const off=[-13,0,13][k];
+      svg.innerHTML += `<circle cx="${x+off}" cy="${y}" r="9" fill="${AXC[k]}" opacity=".9"/><text x="${x+off}" y="${y+4}" font-size="10" text-anchor="middle" fill="#fff">${k+1}</text>`;
+    });
+  }
+  return d;
+}
+function stateBox(){
+  const d=document.createElement('div');
+  if (sel===null || typeof sel!=='number'){
+    d.innerHTML = `<h3>Обраний стан</h3><p class="muted">Клікніть точку — тут з'явиться розбір: координати, біти, code6. Приклад із §1: ME / EAST / SPRING = 42.</p>`;
+    return d;
+  }
+  const q=dec(sel);
+  d.innerHTML = `<h3>Обраний стан</h3>
+    <div class="kv">
+      <b>WHO</b><span>${WHO[q.w]} (${BEL[q.w]}, ${b2(q.w)})</span>
+      <b>WHERE</b><span>${WHERE[q.h]} (${BEL[q.h]}, ${b2(q.h)})</span>
+      <b>WHEN</b><span>${WHEN[q.t]} (${BEL[q.t]}, ${b2(q.t)})</span>
+      <b>біти</b><span class="mono">${stBits(sel)}</span>
+      <b>code6</b><span class="mono">16·${q.w} + 4·${q.h} + ${q.t} = ${sel}</span>
+    </div>`;
+  return d;
+}
+
+/* ---------- Спільна геометрія: 64 стани на сфері (сцени 2 і 3) ---------- */
+const SPHERE = Array.from({length:N}, (_,i)=>{
+  const y = 1 - 2*(i+0.5)/N, r = Math.sqrt(1-y*y), th = i*2.399963;
+  return [Math.cos(th)*r*0.92, y*0.92, Math.sin(th)*r*0.92];
+});
+function cycles(){
+  // цикли функціонального графа ρ
+  const seen = new Array(N).fill(false), out = [];
+  for (let s=0; s<N; s++){
+    if (seen[s]) continue;
+    const path=[], pos=new Map();
+    let x=s;
+    while (!pos.has(x) && !seen[x]){ pos.set(x,path.length); path.push(x); x=rho[x]; }
+    if (pos.has(x)) out.push(path.slice(pos.get(x)));
+    path.forEach(y=>seen[y]=true);
+  }
+  return out;
+}
+let clsKey=null, clsVal=null;
+function classify(Pset){
+  const img = S => new Set([...S].map(x=>rho[x]));
+  const same = (A,B)=>A.size===B.size && [...A].every(x=>B.has(x));
+  const seq=[new Set(Pset)];
+  for (let n=1;n<=400;n++) seq.push(img(seq[n-1]));
+  let mu=null;
+  for (let m=0; m<=150 && mu===null; m++)
+    for (let n=m+1; n<=300; n++) if (same(seq[n],seq[m])){ mu=m; break; }
+  let pi=null;
+  if (mu!==null) for (let k=1;k<=100;k++) if (same(seq[mu+k],seq[mu])){ pi=k; break; }
+  let pset=null;
+  for (let k=1;k<=300;k++) if (same(seq[k],Pset)){ pset=k; break; }
+  const DP = seq[1], sameImg = same(DP,Pset);
+  let orbit;
+  if (sameImg) orbit = [...Pset].every(x=>rho[x]===x) ? 'INVARIANT_FIXED' : 'INVARIANT_DYNAMIC';
+  else if (mu===0 && pset!==null && pset>=2) orbit='PERIODIC_SET';
+  else if (mu!==null && mu>=1) orbit = (pi===1 ? 'EVENTUALLY_FIXED' : 'EVENTUALLY_PERIODIC');
+  else orbit='APERIODIC';
+  const inter=[...DP].filter(x=>Pset.has(x)).length;
+  const sub=[...DP].every(x=>Pset.has(x)), sup=[...Pset].every(x=>DP.has(x));
+  let incl;
+  if (sameImg) incl='EQUAL_IMAGE';
+  else if (inter===0) incl='DISJOINT_IMAGE';
+  else if (sub) incl='STRICT_SUBIMAGE';
+  else if (sup) incl='STRICT_SUPERIMAGE';
+  else incl='OVERLAPPING_NONCOMPARABLE';
+  const chaos = sameImg ? 'NON_CHAOTIC' : 'NOT_APPLICABLE';
+  const om = {APERIODIC:'APERIODIC_NON_CHAOTIC', EVENTUALLY_FIXED:'EVENTUALLY_PERIODIC', EVENTUALLY_PERIODIC:'EVENTUALLY_PERIODIC', PERIODIC_SET:'PERIODIC_SET', INVARIANT_DYNAMIC:'INVARIANT_DYNAMIC', INVARIANT_FIXED:'INVARIANT_FIXED'};
+  return {DP, mu, pi, pset, orbit, incl, chaos, omega: om[orbit]};
+}
+function classifyCached(Pset){
+  const key = rho.join(',') + '|' + [...Pset].sort((a,b)=>a-b).join(',');
+  if (key!==clsKey){ clsKey=key; clsVal=classify(Pset); }
+  return clsVal;
+}
+const CHAIN = ['CHAOTIC_set','APERIODIC_NON_CHAOTIC','EVENTUALLY_PERIODIC','PERIODIC_SET','INVARIANT_DYNAMIC','INVARIANT_FIXED'];
+function orbitFrom(s){
+  const out=[s], seen=new Set([s]); let x=s;
+  while(true){ x=rho[x]; if (seen.has(x)){ out.push(x); break; } seen.add(x); out.push(x); }
+  return out;
+}
+function sphereGeom(withP){
+  const pts=[], edges=[], flows=[];
+  const cyc = cycles();
+  const cycOf = new Map(); cyc.forEach((c,i)=>c.forEach(x=>cycOf.set(x,i)));
+  const DP = withP && P.size ? classifyCached(P).DP : null;
+  const trajSet = traj ? new Set(traj) : null;
+  for (let s=0; s<N; s++){
+    let color, r=5, alpha=1, ring=null;
+    if (withP){
+      color = hue(s);
+      if (P.has(s)){ ring = cssVar('--accent'); r=6.5; }
+      else if (DP && DP.has(s)) { ring = cssVar('--hot'); }
+      else if (P.size) alpha = 0.3;
+    } else {
+      color = cycOf.has(s) ? `hsl(${Math.round(cycOf.get(s)*137.5)%360} 60% 50%)` : '#9a9893';
+      if (sel!==null && sel!==s) alpha = 0.5;
+      if (trajSet && !trajSet.has(s)) alpha = 0.35;
+    }
+    if (sel===s) r=7;
+    if (srcRho===s) ring = cssVar('--hot');
+    const tip = `${s} (${stBits(s)}) → ${rho[s]}` + (cycOf.has(s) ? ` · цикл ${cycOf.get(s)+1}, довжина ${cyc[cycOf.get(s)].length}` : ' · перехідний');
+    pts.push({id:s, p:SPHERE[s], r, color, alpha, ring, hot: sel===s, tip});
+  }
+  for (let s=0; s<N; s++){
+    const t=rho[s];
+    if (t===s) continue;
+    const hot = sel!==null && (s===sel || t===sel);
+    let al = hot ? 1 : 0.4;
+    if (withP && (P.has(s) || (DP&&DP.has(s)))) al = Math.max(al, 0.8);
+    edges.push({a:s, b:t, arrow:true, color: hot ? cssVar('--hot') : cssVar('--muted'), lw: hot?2:1, alpha: al});
+  }
+  if (!withP && traj){
+    for (let i=0;i+1<traj.length;i++) edges.push({a:traj[i], b:traj[i+1], arrow:true, color:cssVar('--accent'), lw:2.4, alpha:0.95});
+    flows.push(...traj.slice(0,-1).map((s,i)=>({a:s, b:traj[i+1], color:cssVar('--accent'), off:i*0.13})));
+  }
+  return {pts, edges, flows};
+}
+function setMode(k){ mode=k; srcRho=null; traj=null; clearInterval(trajTimer); }
+let mode = 'rho';
+function sphereTools(){
+  TOOLS.append(
+    btn('Правило ρ', ()=>{ scene='rho'; activate('rho'); }, scene==='rho'),
+    btn('Траєкторія', ()=>{ mode='traj'; setMode('traj'); renderInfo(); }, mode==='traj'),
+    sep(),
+    btn('зсув +1', ()=>{ rho.forEach((_,s)=>rho[s]=(s+1)%N); after(); }),
+    btn('×5+1 (біекція)', ()=>{ rho.forEach((_,s)=>rho[s]=(s*5+1)%N); after(); }),
+    btn('дзеркало 63−s', ()=>{ rho.forEach((_,s)=>rho[s]=N-1-s); after(); }),
+    btn('до 0 (стискання)', ()=>{ rho.forEach((_,s)=>rho[s]=0); after(); }),
+    btn('ρ: тотожність', ()=>{ rho.forEach((_,s)=>rho[s]=s); after(); })
+  );
+}
+function after(){ srcRho=null; traj=null; clearInterval(trajTimer); msg=''; renderInfo(); }
+function runTraj(){
+  clearInterval(trajTimer);
+  let i=0;
+  trajTimer = setInterval(()=>{
+    i++; if (!traj || i>=traj.length){ clearInterval(trajTimer); return; }
+    sel = traj[i]; renderInfo();
+  }, 650);
+}
+
+/* ---------- 2. Динаміка ρ ---------- */
+SCENES.rho = {
+  zoom: 1,
+  hint: 'Клік по стану a, потім по b — встановлює ρ(a) = b. Колір — належність циклу; сірі — перехідні стани.',
+  tools(){ mode='rho'; sphereTools(); },
+  geom(){ return sphereGeom(false); },
+  pick(id){
+    if (id===null) return;
+    if (mode==='traj'){ sel=id; traj=orbitFrom(id); runTraj(); }
+    else {
+      if (srcRho===null) srcRho=id; else { rho[srcRho]=id; srcRho=null; }
+      sel=id;
+    }
+    renderInfo();
+  },
+  info(){
+    const cyc=cycles();
+    const box=document.createElement('div');
+    box.innerHTML = `<h2>Правило ρ на S₀</h2>
+      <p class="muted">Фіксоване правило ρ задає скінченну динаміку s ↦ ρ(s) (§2). Його функціональний граф розпадається на цикли і перехідні стани.</p>
+      <div class="kv">
+        <b>циклів</b><span class="mono">${cyc.length}</span>
+        <b>довжини циклів</b><span class="mono">${cyc.map(c=>c.length).sort((a,b)=>b-a).join(', ')}</span>
+        <b>перехідних</b><span class="mono">${N - cyc.reduce((a,c)=>a+c.length,0)}</span>
+      </div>
+      ${sel!==null && typeof sel==='number' ? `<h3>Обраний стан</h3><div class="kv"><b>стан</b><span class="mono">${sel} (${stBits(sel)})</span><b>ρ(s)</b><span class="mono">${rho[sel]} (${stBits(rho[sel])})</span><b>орбіта</b><span class="mono">${orbitFrom(sel).join(' → ')}</span></div>` : ''}
+      ${srcRho!==null?`<p>Джерело: <span class="mono">${srcRho}</span> — оберіть ціль.</p>`:''}`;
+    return box;
+  }
+};
+
+/* ---------- 3. Класифікація множин ---------- */
+function findExample(kind){
+  const cyc = cycles();
+  const cands=[];
+  if (kind==='INVARIANT_FIXED'){
+    const f=cyc.filter(c=>c.length===1).map(c=>c[0]);
+    if (f.length) cands.push(new Set(f.slice(0,3)));
+  }
+  if (kind==='INVARIANT_DYNAMIC'){
+    for (const c of [...cyc].sort((a,b)=>a.length-b.length)) if (c.length>=2){ cands.push(new Set(c)); break; }
+  }
+  if (kind==='PERIODIC_SET'){
+    for (const c of [...cyc].sort((a,b)=>a.length-b.length)) if (c.length>=3){ cands.push(new Set(c.slice(0,2))); break; }
+  }
+  if (kind==='EVENTUALLY'){
+    const per=new Set(cyc.flat());
+    for (let s=0;s<N;s++) if(!per.has(s)) cands.push(new Set([s]));
+  }
+  for (const c of cands.slice(0,40)){
+    const o=classify(c).orbit;
+    if (kind==='EVENTUALLY' ? o.startsWith('EVENTUALLY') : o===kind) return c;
+  }
+  return null;
+}
+SCENES.classify = {
+  zoom: 1,
+  hint: 'Клікайте стани, щоб зібрати множину P. Примітка: приклади класів підбираються для поточного ρ.',
+  tools(){
+    mode='P';
+    TOOLS.append(
+      btn('Очистити P', ()=>{ P=new Set(); msg=''; renderInfo(); }),
+      btn('Випадкова P', ()=>{
+        P=new Set(); const k=2+Math.floor(Math.random()*10);
+        while(P.size<k) P.add(Math.floor(Math.random()*N));
+        msg=''; renderInfo();
+      }),
+      sep(),
+      btn('Ключові ρ-приклади:', ()=>{}),
+      btn('фіксована', ()=>exampleFor('INVARIANT_FIXED')),
+      btn('цикл', ()=>exampleFor('INVARIANT_DYNAMIC')),
+      btn('частина циклу', ()=>exampleFor('PERIODIC_SET')),
+      btn('перехідна', ()=>exampleFor('EVENTUALLY'))
+    );
+  },
+  geom(){ return sphereGeom(true); },
+  pick(id){
+    if (id===null) return;
+    if (P.has(id)) P.delete(id); else P.add(id);
+    sel=id; msg=''; renderInfo();
+  },
+  info(){
+    const box=document.createElement('div');
+    if (P.size===0){
+      box.innerHTML = `<h2>Класифікація множини P</h2>
+        <p class="muted">Клікайте стани, щоб додати їх до P. Для кожної P обчислюються OrbitType, InclusionType, ChaosStatus і π_Ω за поточним ρ (§4.1–4.2, §5.3). Кнопки «фіксована», «цикл», «частина циклу», «перехідна» підбирають P для кожного класу, якщо таке існує для поточного ρ.</p>
+        ${msg?`<p class="bad">${msg}</p>`:''}`;
+      return box;
+    }
+    const c=classifyCached(P);
+    const pos=CHAIN.indexOf(c.omega);
+    box.innerHTML = `<h2>Класифікація P (|P| = ${P.size})</h2>
+      <div class="kv">
+        <b>D[P]</b><span class="mono">|D[P]| = ${c.DP.size}</span>
+        <b>μ(P)</b><span class="mono">${c.mu===null?'∞':c.mu}</span>
+        <b>π(P)</b><span class="mono">${c.pi===null?'—':c.pi}</span>
+        <b>p_set(P)</b><span class="mono">${c.pset===null?'∞':c.pset}</span>
+        <b>OrbitType</b><span class="mono">${c.orbit}</span>
+        <b>InclusionType</b><span class="mono">${c.incl}</span>
+        <b>ChaosStatus</b><span class="mono">${c.chaos}</span>
+        <b>π_Ω</b><span class="mono">${c.omega}</span>
+      </div>
+      <h3>6-ланцюг Ω (§5.1)</h3>
+      <div class="chain">${CHAIN.map((x,i)=>`<div class="${i===pos?'on':''}">${x}</div>`).join('')}</div>
+      <p class="note">Скінченна система: CHAOTIC недосяжний (C7), APERIODIC теж (μ < ∞ завжди). ChaosStatus = NOT_APPLICABLE, якщо D[P] ≠ P (Π2 не виконано).</p>
+      ${msg?`<p class="bad">${msg}</p>`:''}`;
+    return box;
+  }
+};
+function exampleFor(kind){
+  const s = findExample(kind);
+  if (s){ P=s; msg=''; }
+  else  { msg = 'Для поточного ρ такого прикладу немає. Змініть ρ (вкладка 2) або зберіть P вручну.'; }
+  renderInfo();
+}
+
+/* ---------- 4. Морфізм і функтор E ---------- */
+function clusterPos(c,i){
+  const ang=[0,Math.PI/2,Math.PI,3*Math.PI/2][i];
+  const off = c==='A' ? -0.95 : 0.95;
+  return [off+0.42*Math.cos(ang), 0, 0.42*Math.sin(ang)];
+}
+const commutes = s => phi[fA[s]] === hB[phi[s]];
+SCENES.functor = {
+  zoom: 1.6,
+  hint: 'Клік по A-стану, потім по B-стану — задає φ(A) = B. Зелений квадрат комутує, червоний — ні.',
+  tools(){
+    mode='functor';
+    TOOLS.append(
+      btn('φ — ізоморфізм', ()=>{ phi=[1,2,0,3]; srcA=null; renderInfo(); }),
+      btn('φ — тотожність', ()=>{ phi=[0,1,2,3]; srcA=null; renderInfo(); }),
+      btn('φ — ламаний', ()=>{ phi=[0,0,3,2]; srcA=null; renderInfo(); }),
+      sep(),
+      btn('показати E', ()=>{ showE=!showE; renderInfo(); }, showE)
+    );
+  },
+  geom(){
+    const pts=[], edges=[], texts=[];
+    for (let i=0;i<4;i++) pts.push({id:'A'+i, p:clusterPos('A',i), r: srcA===i?7:5.5, color:'hsl(210 55% 55%)', hot: srcA===i, tip:`A${i}: f(${i}) = ${fA[i]}`});
+    for (let i=0;i<4;i++) pts.push({id:'B'+i, p:clusterPos('B',i), r:5.5, color:'hsl(35 65% 55%)', tip:`B${i}: h(${i}) = ${hB[i]}`});
+    for (let i=0;i<4;i++){
+      if (fA[i]!==i) edges.push({a:i, b:fA[i], arrow:true, color:cssVar('--muted'), lw:1.7});
+      if (hB[i]!==i) edges.push({a:4+i, b:4+hB[i], arrow:true, color:cssVar('--muted'), lw:1.7});
+      edges.push({a:i, b:4+phi[i], dash:true, arrow:true, color: commutes(i)?cssVar('--ok'):cssVar('--bad'), lw:1.5, alpha:0.95});
+    }
+    texts.push({p:[-0.95,-0.62,0], text: showE?'E(A) = (S, {f}, g_f)':'Dyn-об’єкт A = (S, f)', color:cssVar('--ink')});
+    texts.push({p:[0.95,-0.62,0], text: showE?'E(B) = (T, {h}, g_h)':'Dyn-об’єкт B = (T, h)', color:cssVar('--ink')});
+    return {pts, edges, texts};
+  },
+  pick(id){
+    if (id===null) return;
+    if (id[0]==='A'){ srcA=+id.slice(1); }
+    else if (id[0]==='B' && srcA!==null){ phi[srcA]=+id.slice(1); srcA=null; }
+    renderInfo();
+  },
+  info(){
+    const bad=[0,1,2,3].filter(s=>!commutes(s));
+    const box=document.createElement('div');
+    box.innerHTML = `<h2>Морфізм φ: (S, f) → (T, h) у Dyn (§8.1)</h2>
+      <p class="muted">Умова: φ ∘ f = h ∘ φ. Зелені пунктири — квадрат комутує в цьому стані, червоні — ні.</p>
+      <div class="kv">
+        <b>f</b><span class="mono">[${fA.join(', ')}]</span>
+        <b>h</b><span class="mono">[${hB.join(', ')}]</span>
+        <b>φ</b><span class="mono">[${phi.join(', ')}]</span>
+        <b>квадрат</b><span class="${bad.length?'bad':'ok'}">${bad.length?'не комутує в станах '+bad.join(', '):'комутує в усіх станах ✓'}</span>
+      </div>
+      <h3>Функтор E: Dyn₊ → SUBIT (§8.6)</h3>
+      <p class="mono" style="font-size:13px">E(S, f) = (S, {f}, g_f), g_f(f, s) := f<br>E(φ) = (φ, єдине відображення {f} → {h})</p>
+      <p class="note">E повний і вірний. Вкладення всієї Dyn не побудовано (§8.7, Q2′). Перемикач «показати E» змінює підписи на SUBIT-об'єкти.</p>`;
+    return box;
+  }
+};
+
+/* ---------- 5. Tree∞ — повні ternarні дерева (§9.1) ---------- */
+/* Інваріанти T1–T4 забезпечуються побудовою:
+   — кожен внутрішній вузол має рівно трьох дітей (T2);
+   — лист (мітка-число 0..3) не має дітей (T3);
+   — відсутні адреси — це None; піддерево під None порожнє (T4);
+   — корінь існує (T1). */
+const ADDR_ROOT = '';
+function treeChildren(a){ return [1,2,3].map(k=>a+k); }
+function treeRandom(maxD, seed){
+  let s = seed >>> 0;
+  const rnd = ()=>{ s = (Math.imul(s,1103515245) + 12345) >>> 0; return s/4294967296; };
+  const m = new Map();
+  (function gen(a,d){
+    if (d < maxD && (d===0 || rnd() < 0.55)){ m.set(a,'node'); treeChildren(a).forEach(b=>gen(b,d+1)); }
+    else m.set(a, Math.floor(rnd()*4));
+  })(ADDR_ROOT, 0);
+  return m;
+}
+function treeDepth1(vals){
+  const m = new Map(); m.set(ADDR_ROOT,'node');
+  vals.forEach((v,k)=>m.set(String(k+1), v));
+  return m;
+}
+function treeValidate(){
+  const r={T1:TR.has(ADDR_ROOT), T2:true, T3:true, T4:true};
+  for (const [a,l] of TR){
+    const kids = treeChildren(a).map(b=>TR.has(b));
+    if (l==='node'){ if (!kids.every(Boolean)) r.T2=false; }
+    else { if (kids.some(Boolean)) r.T3=false; }
+    if (a.length>0 && !TR.has(a.slice(0,-1))) r.T4=false;
+  }
+  return r;
+}
+function treeNodeCount(){ let internal=0, leaves=0; for (const l of TR.values()) (l==='node'?internal++:leaves++); return {internal, leaves}; }
+function treeMaxDepth(){ let d=0; for (const a of TR.keys()) d=Math.max(d,a.length); return d; }
+function sexpr(a){
+  const l=TR.get(a);
+  if (typeof l==='number') return `leaf(${BEL[l]})`;
+  return `node(${treeChildren(a).map(sexpr).join(', ')})`;
+}
+function treeClick(a){
+  const l = TR.get(a);
+  if (treeMode==='value'){
+    if (typeof l==='number') TR.set(a,(l+1)&3);
+    return;
+  }
+  // режим розгалуження: лист → вузол з трьома листками; вузол → лист (згортання піддерева)
+  if (typeof l==='number'){
+    if (a.length < treeDepthMax){
+      TR.set(a,'node');
+      treeChildren(a).forEach(b=>TR.set(b,2));  // нові листки — T
+    }
+  } else if (l==='node'){
+    for (const k of [...TR.keys()]) if (k!==a && k.startsWith(a) && k.length>a.length) TR.delete(k);
+    TR.set(a,2);
+  }
+}
+function treeLayout(){
+  const pos=new Map();
+  const cross=(u,v)=>[u[1]*v[2]-u[2]*v[1], u[2]*v[0]-u[0]*v[2], u[0]*v[1]-u[1]*v[0]];
+  const nrm=v=>{const l=Math.hypot(v[0],v[1],v[2])||1; return [v[0]/l,v[1]/l,v[2]/l];};
+  const phase=a=>{ let h=0; for (const ch of a) h=(h*7+ch.charCodeAt(0))%997; return h*0.0063; };
+  function rec(a, p, dv, d){
+    pos.set(a,{p,d});
+    if (TR.get(a)!=='node') return;
+    const w = Math.abs(dv[1])<0.9 ? [0,1,0] : [1,0,0];
+    const u = nrm(cross(dv,w)), v = nrm(cross(dv,u));
+    const tilt = 0.8 - 0.05*d;
+    const step = 0.62*Math.pow(0.72,d);
+    for (let k=0;k<3;k++){
+      const ang = k*2*Math.PI/3 + phase(a) + d*0.35;
+      const cd = nrm([
+        dv[0]*Math.cos(tilt) + (u[0]*Math.cos(ang)+v[0]*Math.sin(ang))*Math.sin(tilt),
+        dv[1]*Math.cos(tilt) + (u[1]*Math.cos(ang)+v[1]*Math.sin(ang))*Math.sin(tilt),
+        dv[2]*Math.cos(tilt) + (u[2]*Math.cos(ang)+v[2]*Math.sin(ang))*Math.sin(tilt)
+      ]);
+      rec(a+(k+1), [p[0]+cd[0]*step, p[1]+cd[1]*step, p[2]+cd[2]*step], cd, d+1);
+    }
+  }
+  rec(ADDR_ROOT, [0,0.9,0], [0,-1,0], 0);
+  return pos;
+}
+function treeGeom(){
+  const L=treeLayout();
+  const ids=[...TR.keys()];
+  const idx=new Map(ids.map((a,i)=>[a,i]));
+  const selA = typeof sel==='string' ? sel : null;
+  const inSub = a => selA!==null && (a===selA || a.startsWith(selA));
+  const onPath = a => selA!==null && selA.startsWith(a);
+  const pts=[], edges=[], flows=[], texts=[];
+  for (const a of ids){
+    const l=TR.get(a), {p,d}=L.get(a);
+    const leaf = typeof l==='number';
+    const color = leaf ? BELC[l] : (d===0 ? cssVar('--ink') : cssVar('--muted'));
+    const dim = selA!==null && !(inSub(a)||onPath(a));
+    pts.push({id:'t:'+a, p, r: leaf?8.5:(d===0?9:5), color, alpha: dim?0.25:1, ring: leaf?cssVar('--ink'):null, hot: selA===a,
+              tip: `σ = ${a===''?'ε':a.split('').join('·')} · ${leaf?'leaf('+BEL[l]+')':'node'}`});
+    if (leaf) texts.push({p, text:BEL[l], color:'#fff', dy:0, base:'middle'});
+  }
+  for (const a of ids){
+    if (TR.get(a)!=='node') continue;
+    for (const b of treeChildren(a)){
+      const hot = selA!==null && inSub(b);
+      const alpha = selA===null ? 0.8 : (hot ? 1 : 0.18);
+      edges.push({a:idx.get(a), b:idx.get(b), color: hot?cssVar('--hot'):cssVar('--muted'), lw: hot?2.2:1.4, alpha});
+      if (treeFlow) flows.push({a:idx.get(a), b:idx.get(b), color:cssVar('--accent'), off:((idx.get(b)*0.173)%1), alpha: hot?1:0.7});
+    }
+  }
+  return {pts, edges, flows, texts};
+}
+SCENES.tree = {
+  zoom: 1.5,
+  hint: 'Клік по листку (режим «значення») — змінює його значення в A. Режим «розгалуження»: лист → три листки, вузол → лист (згортання).',
+  tools(){
+    mode='tree';
+    TOOLS.append(
+      btn('значення листка', ()=>{ treeMode='value'; renderInfo(); }, treeMode==='value'),
+      btn('розгалуження', ()=>{ treeMode='split'; renderInfo(); }, treeMode==='split'),
+      sep(),
+      btn('приклад: глибина 1 (e(T,B,F))', ()=>{ TR=treeDepth1([2,3,1]); sel=null; renderInfo(); }),
+      btn('випадкове (глибина 2)', ()=>{ treeSeed=(treeSeed*31+7)>>>0; TR=treeRandom(2,treeSeed); sel=null; renderInfo(); }),
+      btn('випадкове (глибина 3)', ()=>{ treeSeed=(treeSeed*31+11)>>>0; TR=treeRandom(3,treeSeed); sel=null; renderInfo(); }),
+      sep(),
+      btn('потоки', ()=>{ treeFlow=!treeFlow; renderInfo(); }, treeFlow)
+    );
+  },
+  geom(){ return treeGeom(); },
+  pick(id){
+    if (id===null) return;
+    if (typeof id==='string' && id.startsWith('t:')){
+      const a=id.slice(2);
+      sel=a; treeClick(a); renderInfo();
+    }
+  },
+  info(){
+    const v=treeValidate(), cnt=treeNodeCount();
+    const okTxt = Object.entries(v).map(([k,ok])=>`<span class="${ok?'ok':'bad'}">${k} ${ok?'✓':'✗'}</span>`).join(' · ');
+    const box=document.createElement('div');
+    let selPart='';
+    if (typeof sel==='string'){
+      const a=sel, l=TR.get(a);
+      const out = typeof l==='number' ? `leaf(${BEL[l]})` : `inr(${treeChildren(a).map(b=>'f'+b.slice(-1)).join(', ')})`;
+      selPart = `<h3>Вузол σ = ${a===''?'ε':a.split('').join('·')}</h3>
+        <div class="kv">
+          <b>out(f)</b><span class="mono">${typeof l==='number'?'inl(' + BEL[l] + ')':'inr(f₁, f₂, f₃)'}</span>
+          <b>піддерево</b><span class="mono">${sexpr(a)}</span>
+        </div>
+        <p class="note">Для вузла-листка піддерева немає (T3). Для вузла f_i — його i-та дитина (§9.1, f_i(σ) := f(i·σ)).</p>`;
+    }
+    const d1 = treeMaxDepth()===1 ? (()=>{ const v1=[1,2,3].map(k=>TR.get(String(k))); const code=16*v1[0]+4*v1[1]+v1[2]; return `<p class="ok">Глибина 1: це вкладення e(a,b,c) ↔ стан A³ з code6 = ${code} (§9.3, T2).</p>`; })() : '';
+    box.innerHTML = `<h2>Tree∞ — повне ternарне дерево з листками з A</h2>
+      <p class="muted">Елемент Tree∞ (§9.1) — відображення f : {1,2,3}* → {None, node, leaf(a)}. Кожен внутрішній вузол має трьох дітей; листки несуть значення з A = {N, F, T, B}; відсутні адреси — None.</p>
+      <div class="kv">
+        <b>вузлів</b><span class="mono">${cnt.internal} внутрішніх, ${cnt.leaves} листків</span>
+        <b>глибина</b><span class="mono">${treeMaxDepth()}</span>
+        <b>інваріанти</b><span>${okTxt}</span>
+        <b>нотація</b><span class="mono" style="font-size:11px">${sexpr(ADDR_ROOT)}</span>
+      </div>
+      ${d1}${selPart}`;
+    return box;
+  }
+};
+TR = treeDepth1([2,3,1]);
+
+/* ================= Запуск ================= */
+function renderInfo(){
+  INFO.innerHTML=''; INFO.append(SCENES[scene].info());
+  setHint(SCENES[scene].hint);
+}
+function activate(name){
+  scene = name;
+  const tabMap = {states:'states', rho:'rho', classify:'classify', functor:'functor', tree:'tree'};
+  TOOLS.innerHTML='';
+  srcRho=null; srcA=null; traj=null; clearInterval(trajTimer); msg='';
+  if (name!=='rho' && name!=='classify') { /* зберігаємо sel для сфер лише між 2 і 3 */ }
+  if (!['rho','classify'].includes(name)) sel=null;
+  V.zoom = SCENES[name].zoom || 1;
+  V.auto = name==='tree';
+  document.getElementById('btnAuto').setAttribute('aria-pressed', String(V.auto));
+  SCENES[name].tools();
+  document.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-selected', String(b.dataset.scene===tabMap[name])));
+  renderInfo();
+}
+document.querySelectorAll('.tabs button').forEach(b=>b.addEventListener('click', ()=>activate(b.dataset.scene)));
+
+window.addEventListener('resize', resize);
+resize();
+activate('states');
+requestAnimationFrame(render);
+})();
+</script>
+</body>
+</html>
