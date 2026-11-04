@@ -1,0 +1,1234 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Cosmologia Dantis v1.1 · SUBIT-TOPOS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&display=swap">
+<style>
+:root{
+  --bg:#07050D;--panel:#0F0C18;--ink:#DCC898;--muted:#8A7860;
+  --line:#221E32;--acc:#C09018;--as:#150F08;
+  --ver:#C8341C;--ult:#3A60B0;--verd:#3C7830;--gld:#C09018;--gld2:#E8AE28;
+  --disp:"IM Fell English SC","IM Fell English",Georgia,serif;
+  --body:"IM Fell English",Georgia,serif;
+  --mono:"Courier New",monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);
+  padding:0 max(8px,env(safe-area-inset-left)) 32px max(8px,env(safe-area-inset-right))}
+.wrap{max-width:1320px;margin:0 auto;display:flex;flex-direction:column;gap:8px}
+
+/* HEADER */
+.hdr{text-align:center;padding:14px 16px 10px;border-bottom:1px solid rgba(192,144,24,.2)}
+.hdr::before{content:"\B7 \2726 \B7 \2726 \B7 \2726 \B7";display:block;color:var(--gld2);
+  font-size:9px;letter-spacing:8px;margin-bottom:5px;opacity:.4}
+.hdr-t{font-family:var(--disp);font-size:clamp(14px,3vw,28px);color:var(--acc);
+  letter-spacing:.15em;text-transform:uppercase}
+.hdr-s{font-style:italic;font-size:clamp(8px,1vw,10px);color:var(--muted);
+  letter-spacing:.07em;margin-top:3px}
+.hdr-v{display:inline-block;font-size:8px;font-family:var(--mono);
+  background:rgba(192,144,24,.12);border:1px solid rgba(192,144,24,.3);
+  color:var(--gld2);padding:1px 6px;border-radius:3px;margin-left:8px;vertical-align:middle}
+
+/* 3-COL GRID */
+.mg{display:grid;grid-template-columns:214px 1fr 188px;gap:8px;align-items:start}
+@media(max-width:960px){.mg{grid-template-columns:196px 1fr}}
+@media(max-width:600px){.mg{grid-template-columns:1fr}}
+.col-schema{display:flex;flex-direction:column}
+@media(max-width:960px){.col-schema{display:none}.col-schema.open{display:flex}.schema-toggle{display:inline-block}}
+.schema-toggle{display:none;cursor:pointer;font:9px var(--mono);color:var(--muted);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:3px;padding:2px 6px;margin:3px 0;letter-spacing:.08em}
+
+/* PANEL */
+.pnl{background:var(--panel);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.pnl-hd{font-family:var(--disp);font-size:8.5px;letter-spacing:.22em;color:var(--muted);
+  text-transform:uppercase;padding:6px 12px 5px;border-bottom:1px solid var(--line)}
+
+/* LULLIAN */
+.lull-wrap{padding:9px 7px 5px}
+#lullSvg{width:100%;height:auto;display:block;overflow:visible}
+.lull-state{padding:4px 10px 6px;display:grid;grid-template-columns:auto 1fr;
+  gap:2px 8px;font-size:9.5px;border-top:1px solid var(--line)}
+.lull-state b{color:var(--muted);font-weight:400;font-style:italic}
+.lull-state span{font-family:var(--mono);font-size:9px}
+.c6row{padding:3px 10px 7px;display:flex;align-items:center;gap:8px;
+  font:9.5px var(--mono);color:var(--muted);border-top:1px solid var(--line)}
+.c6big{font-size:19px;color:var(--gld2);font-weight:bold;font-family:var(--mono)}
+.om-tag{display:inline-block;padding:1px 5px;font-size:8px;font-family:var(--mono);
+  border:1px solid currentColor;border-radius:2px}
+.om-ev{color:var(--muted)}
+.bel-row{padding:3px 10px 7px;font-size:8.5px;color:var(--muted);
+  border-top:1px solid var(--line);line-height:1.6}
+.bel-row b{font-weight:400;letter-spacing:.08em;color:var(--muted)}
+.bel-chip{display:inline-block;font-family:var(--mono);font-size:8px;
+  padding:0 4px;border:1px solid rgba(138,120,96,.35);border-radius:2px;margin:0 2px}
+
+/* 3D CENTER */
+.col-3d{display:flex;flex-direction:column;gap:6px}
+.tabs{display:flex;gap:3px;overflow-x:auto;padding-bottom:1px;flex-shrink:0;
+  scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;border:1px solid var(--line);background:var(--panel);
+  border-radius:5px;padding:4px 11px;cursor:pointer;font-family:var(--disp);
+  font-size:10.5px;color:var(--muted);letter-spacing:.1em;transition:all .12s}
+.tab[aria-selected=true]{background:var(--as);border-color:var(--acc);color:var(--acc)}
+.tab:hover:not([aria-selected=true]){color:var(--ink);border-color:var(--muted)}
+.scene-desc{font-size:10px;color:var(--muted);font-style:italic;padding:4px 8px;
+  background:var(--panel);border-radius:5px;border:1px solid var(--line);
+  line-height:1.5;flex-shrink:0}
+.stage{position:relative;border:1px solid var(--line);border-radius:9px;overflow:hidden;
+  background:radial-gradient(ellipse 80% 70% at 50% 40%,#100E3C,#07050D)}
+canvas#cv{display:block;width:100%;height:min(62vh,560px);min-height:260px;
+  touch-action:none;cursor:grab}
+canvas#cv.grabbing{cursor:grabbing}
+.ov{position:absolute;right:7px;top:7px;display:flex;gap:3px}
+.ov button{border:1px solid var(--line);background:rgba(15,12,24,.88);
+  border-radius:4px;padding:3px 8px;font-size:9.5px;cursor:pointer;
+  font-family:var(--disp);color:var(--muted);letter-spacing:.07em;transition:all .12s}
+.ov button[aria-pressed=true]{background:var(--as);border-color:var(--acc);color:var(--acc)}
+.ov button:hover{color:var(--ink)}
+.badge{position:absolute;left:7px;top:7px;font:10.5px var(--disp);letter-spacing:.12em;
+  background:rgba(15,12,24,.88);border:1px solid var(--line);
+  border-radius:5px;padding:3px 7px;color:var(--muted)}
+.hint{position:absolute;left:7px;bottom:7px;font-size:9px;color:var(--muted);pointer-events:none}
+.hint span{background:rgba(15,12,24,.72);padding:2px 5px;border-radius:3px;display:inline-block}
+#tip{position:absolute;display:none;pointer-events:none;font:10px var(--mono);
+  background:var(--ink);color:var(--bg);padding:2px 6px;border-radius:3px;
+  white-space:nowrap;transform:translate(10px,-50%);z-index:3}
+#compassCv{position:absolute;right:7px;bottom:26px;pointer-events:none;opacity:.55}
+.presets-row{display:flex;align-items:center;gap:5px;flex-wrap:wrap;flex-shrink:0}
+.presets-lbl{font-size:8px;letter-spacing:.14em;color:var(--muted);font-family:var(--disp)}
+.preset{border:1px solid var(--line);background:transparent;border-radius:3px;
+  padding:2px 7px;font-size:8.5px;cursor:pointer;font-family:var(--disp);
+  color:var(--muted);letter-spacing:.07em;transition:all .12s}
+.preset:hover{color:var(--ink);border-color:var(--muted)}
+.preset.act{border-color:var(--gld2);color:var(--gld2)}
+
+/* SCHEMA */
+.schema-inner{padding:7px 5px 5px}
+#schemaCanvas{width:100%;height:auto;display:block;cursor:pointer}
+
+/* BOTTOM */
+.bottom{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:580px){.bottom{grid-template-columns:1fr}}
+.info-pnl{padding:9px 12px}
+.reg-name{font-family:var(--disp);font-size:15px;color:var(--acc);margin-bottom:3px;line-height:1.2}
+.reg-cantica{font-size:9.5px;color:var(--muted);font-style:italic;margin-bottom:5px}
+.kv{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 10px;font-size:10.5px}
+.kv b{color:var(--muted);font-weight:400;font-style:italic}
+.kv span{font-family:var(--mono);font-size:9.5px}
+.subit-pnl{padding:9px 12px}
+.ax-lbl{font-size:8px;letter-spacing:.14em;color:var(--muted);
+  text-transform:uppercase;margin-bottom:2px;font-family:var(--disp)}
+.ax-row{display:flex;gap:3px;flex-wrap:wrap;margin-bottom:5px}
+.ax-chip{border:1px solid var(--line);border-radius:3px;padding:1px 6px;
+  font:8.5px var(--mono);color:var(--muted);cursor:pointer;transition:all .1s}
+.ax-chip.act{border-color:var(--acc);color:var(--acc);background:var(--as)}
+.note{font-size:8px;font-style:italic;color:var(--muted);margin-top:3px;opacity:.7}
+
+/* JOURNEY */
+.journey{padding:8px 12px}
+.j-lbl{font-family:var(--disp);font-size:8px;letter-spacing:.2em;
+  color:var(--muted);text-transform:uppercase;margin-bottom:5px}
+.stops{display:flex;flex-wrap:wrap;gap:3px}
+.stop{border:1px solid var(--line);background:transparent;color:var(--muted);
+  padding:2px 7px;font-size:9px;font-family:var(--body);cursor:pointer;
+  border-radius:3px;transition:all .12s}
+.stop:hover{color:var(--ink);border-color:var(--muted)}
+.stop.act{background:var(--acc);border-color:var(--acc);color:var(--bg)}
+.stop.ri{border-color:#8A2418!important;color:#C04030!important}
+.stop.ri.act{background:#8A2418!important;color:#F0C898!important}
+.stop.rp{border-color:#2A6020!important;color:#40A050!important}
+.stop.rp.act{background:#2A6020!important;color:#C0E8B0!important}
+.stop.rh{border-color:#2A50A0!important;color:#4070C8!important}
+.stop.rh.act{background:#2A50A0!important;color:#B0C8F0!important}
+</style>
+<div class="wrap">
+
+<header class="hdr">
+  <div class="hdr-t">Cosmologia Dantis<span class="hdr-v">v1.1</span></div>
+  <div class="hdr-s">SUBIT-TOPOS · Ars Lulliana · Armilla Caelestis · Anno Domini MCCC</div>
+</header>
+
+<div class="mg">
+
+<!-- LEFT: LULLIAN -->
+<div class="col-lull">
+  <div class="pnl">
+    <div class="pnl-hd">Rotae Lullianae · WHO &times; WHERE &times; WHEN</div>
+    <div class="lull-wrap">
+      <svg id="lullSvg" viewBox="0 0 210 210" xmlns="http://www.w3.org/2000/svg"
+        role="img" aria-label="Lullian wheel: WHO, WHERE, WHEN coordinate selectors"></svg>
+    </div>
+    <div class="lull-state" id="lullState"></div>
+    <div class="c6row">
+      <span class="c6big" id="c6big">42</span>
+      <span>=&nbsp;<span id="b6txt">101010</span><sub>2</sub></span>
+      <span id="omTag" class="om-tag om-ev">HEURISTIC</span>
+    </div>
+    <div class="bel-row" id="belRow">
+      <b>Belnap FOUR</b><br>
+      <span class="bel-chip">N</span>None&nbsp;
+      <span class="bel-chip">F</span>False&nbsp;
+      <span class="bel-chip">T</span>True&nbsp;
+      <span class="bel-chip">B</span>Both
+    </div>
+  </div>
+</div>
+
+<!-- CENTER: 3D -->
+<div class="col-3d">
+  <div class="tabs" id="tabs" role="tablist">
+    <button class="tab" role="tab" data-sc="cosmos"   aria-selected="true">&#10022; COSMOS</button>
+    <button class="tab" role="tab" data-sc="inferno"  aria-selected="false">&#10016; INFERNO</button>
+    <button class="tab" role="tab" data-sc="paradiso" aria-selected="false">&#9728; PARADISO</button>
+    <button class="tab" role="tab" data-sc="mandala"  aria-selected="false">&#9711; MANDALA</button>
+    <button class="tab" role="tab" data-sc="subit"    aria-selected="false">&#8853; SUBIT</button>
+  </div>
+  <div class="scene-desc" id="sceneDesc" aria-live="polite"></div>
+  <div class="stage">
+    <canvas id="cv" tabindex="0" role="img" aria-label="3D visualization of Dante cosmos"></canvas>
+    <div class="ov">
+      <button id="btnAuto" aria-pressed="false" title="Auto-rotate">&#10227;</button>
+      <button id="btnReset" title="Reset view">&#8962;</button>
+    </div>
+    <div class="badge" id="badge">COSMOS</div>
+    <div class="hint"><span id="hint">Drag &middot; Scroll/pinch &middot; Arrow keys</span></div>
+    <div id="tip"></div>
+    <canvas id="compassCv" width="52" height="52" aria-hidden="true"></canvas>
+  </div>
+  <div class="presets-row" id="presets">
+    <span class="presets-lbl">VIEW:</span>
+    <button class="preset act" data-view="side">SIDE</button>
+    <button class="preset" data-view="top">TOP</button>
+    <button class="preset" data-view="angle">ANGLE</button>
+    <button class="preset" data-view="bottom">BOTTOM</button>
+  </div>
+</div>
+
+<!-- RIGHT: SCHEMA -->
+<button class="schema-toggle" id="schemaToggle" aria-expanded="false">&#9168; SECTIO</button>
+<div class="col-schema" id="colSchema">
+  <div class="pnl">
+    <div class="pnl-hd">Sectio Transversa</div>
+    <div class="schema-inner">
+      <canvas id="schemaCanvas" width="178" height="510"
+        role="img" aria-label="Cross-section of Dante cosmos"></canvas>
+    </div>
+    <div style="font-size:7px;color:var(--muted);font-family:var(--disp);
+      letter-spacing:.1em;text-align:center;padding:3px 0 7px">Click = select region</div>
+  </div>
+</div>
+
+</div><!-- /mg -->
+
+<!-- BOTTOM -->
+<div class="bottom">
+  <div class="pnl info-pnl">
+    <div class="pnl-hd">Selected Region</div>
+    <div style="padding-top:5px">
+      <div class="reg-name" id="rName">Selva Oscura</div>
+      <div class="reg-cantica" id="rCantica">Inf. I &middot; Nel mezzo del cammin di nostra vita</div>
+      <dl class="kv" id="rKV"></dl>
+    </div>
+  </div>
+  <div class="pnl subit-pnl">
+    <div class="pnl-hd">SUBIT State &mdash; S&#8320; = A&#179;</div>
+    <div style="padding-top:5px">
+      <div class="ax-lbl">WHO (2-bit)</div><div class="ax-row" id="whoRow"></div>
+      <div class="ax-lbl">WHERE (2-bit)</div><div class="ax-row" id="whereRow"></div>
+      <div class="ax-lbl">WHEN (2-bit)</div><div class="ax-row" id="whenRow"></div>
+      <div class="note">&#8251; SUBIT axes WHO/WHERE/WHEN are independent of Belnap FOUR logic</div>
+    </div>
+  </div>
+</div>
+
+<div class="pnl journey">
+  <div class="j-lbl">Iter Dantis &middot; Martius&ndash;Aprilis MCCC (reconstructio)</div>
+  <div class="stops" id="stops"></div>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+(function(){
+"use strict";
+
+/* ======================================================
+   SUBIT-TOPOS v1.0 — Core
+   S0 = A^3, A = {N(00),F(01),T(10),B(11)}
+   code6(WHO,WHERE,WHEN) = 16*WHO + 4*WHERE + WHEN
+   Range: 0..63
+   ====================================================== */
+
+const WHO_N   = ["THEY","YOU","ME","WE"];
+const WHERE_N = ["NORTH","WEST","EAST","SOUTH"];
+const WHEN_N  = ["WINTER","AUTUMN","SPRING","SUMMER"];
+const BEL     = ["N","F","T","B"];  // Belnap FOUR: Neither/False/True/Both — logical layer, separate from SUBIT axes
+
+// Single source of truth for UI state
+const STATE = {
+  who: 2,    // ME
+  where: 2,  // EAST
+  when: 2,   // SPRING
+  selId: "dante_selva",
+};
+
+function code6(){ return 16*STATE.who + 4*STATE.where + STATE.when; }
+function b2(v){ return v.toString(2).padStart(2,"0"); }
+function b6txt(){ return b2(STATE.who)+b2(STATE.where)+b2(STATE.when); }
+
+// Omega classifier — EXPERIMENTAL (operator/transition rule not yet formally defined)
+function getOmega(c){
+  if(c===0)  return "Ω?·0";   // minimal element
+  if(c===63) return "Ω?·63";  // maximal element
+  if(c===42) return "Ω?·42";  // Dante starting point (heuristic SELF_DUAL)
+  if((c & (c-1)) === 0 || c===62) return "Ω?·pow2";
+  return "Ω?·gen";
+}
+function omClass(om){ return "om-ev"; } // all experimental — single class
+
+/* ======================================================
+   DANTE REGION DATA
+   Each region has canonical SUBIT coordinates.
+   Multiple regions may share coordinates (spatial overlap).
+   selId identifies the specific region, not just the state.
+   ====================================================== */
+
+const HEAVENS = [
+  // Nine moving spheres (corpi celesti mobili)
+  {id:"moon",    r:1.55, name:"Luna I",           sym:"☽", color:"#7070A0", pts:16, cantica:"Par. II",
+   who:3, where:2, when:2, note:"Incostanza · B·F·F"},
+  {id:"mercury", r:1.95, name:"Mercurio II",      sym:"☿", color:"#606478", pts:20, cantica:"Par. V",
+   who:3, where:2, when:2, note:"Ambizione"},
+  {id:"venus",   r:2.40, name:"Venere III",       sym:"♀", color:"#7A4888", pts:24, cantica:"Par. VIII",
+   who:3, where:2, when:3, note:"Amore"},
+  {id:"sun",     r:2.92, name:"Sole IV",          sym:"☉", color:"#A07C18", pts:28, cantica:"Par. X",
+   who:3, where:3, when:2, note:"Sapienza"},
+  {id:"mars",    r:3.58, name:"Marte V",          sym:"♂", color:"#922418", pts:32, cantica:"Par. XIV",
+   who:3, where:3, when:2, note:"Fortezza"},
+  {id:"jupiter", r:4.28, name:"Giove VI",         sym:"♃", color:"#3A5AAA", pts:36, cantica:"Par. XVIII",
+   who:3, where:3, when:3, note:"Giustizia"},
+  {id:"saturn",  r:5.05, name:"Saturno VII",      sym:"♄", color:"#2A4888", pts:40, cantica:"Par. XXI",
+   who:3, where:3, when:3, note:"Contemplazione"},
+  {id:"stars",   r:5.95, name:"Stelle Fisse VIII",sym:"✦", color:"#1E4A8A", pts:50, cantica:"Par. XXII",
+   who:3, where:3, when:3, note:"Trionfo"},
+  {id:"primo",   r:6.95, name:"Primo Mobile IX",  sym:"∞", color:"#1A3A7A", pts:55, cantica:"Par. XXVII",
+   who:3, where:3, when:3, note:"Velocita massima"},
+  // Empyrean — non-material, outside space (NO solid sphere)
+  {id:"empyrean",r:0,    name:"Empireo",          sym:"✦", color:"#C09018", pts:0,  cantica:"Par. XXX–XXXIII",
+   who:3, where:3, when:3, note:"Lux Aeterna · B⊗B⊗B · 111111₂"},
+];
+
+const REGIONS = [
+  // id, name, sym, color, who, where, when, cantica, note
+  {id:"empyrean", name:"Empireo",            sym:"✦", color:"#D0A020", who:3, where:3, when:3,
+   cantica:"Par. XXX–XXXIII", note:"WE⊗SOUTH⊗SUMMER · code6=63 · maximal element"},
+  {id:"primo",    name:"Primo Mobile IX",    sym:"∞", color:"#1A3A7A", who:3, where:3, when:3,
+   cantica:"Par. XXVII", note:"Massima velocita celeste"},
+  {id:"stars",    name:"Stelle Fisse VIII",  sym:"✦", color:"#1E4A8A", who:3, where:3, when:3,
+   cantica:"Par. XXII"},
+  {id:"saturn",   name:"Saturno VII",        sym:"♄", color:"#2A4888", who:3, where:3, when:3,
+   cantica:"Par. XXI"},
+  {id:"jupiter",  name:"Giove VI",           sym:"♃", color:"#3A5AAA", who:3, where:3, when:3,
+   cantica:"Par. XVIII"},
+  {id:"mars",     name:"Marte V",            sym:"♂", color:"#922418", who:3, where:3, when:2,
+   cantica:"Par. XIV"},
+  {id:"sun",      name:"Sole IV",            sym:"☉", color:"#A07C18", who:3, where:3, when:2,
+   cantica:"Par. X"},
+  {id:"venus",    name:"Venere III",         sym:"♀", color:"#7A4888", who:3, where:2, when:3,
+   cantica:"Par. VIII"},
+  {id:"mercury",  name:"Mercurio II",        sym:"☿", color:"#606478", who:3, where:2, when:2,
+   cantica:"Par. V"},
+  {id:"moon",     name:"Luna I",             sym:"☽", color:"#7070A0", who:3, where:2, when:2,
+   cantica:"Par. II"},
+  {id:"earth",    name:"Terra · Jerusalem", sym:"✠", color:"#7A4020", who:1, where:2, when:1,
+   cantica:"Inf. I; Purg. I", note:"Emisfero nord · antipode di Purgatorio"},
+  {id:"ante_inf", name:"Ante-Inferno",       sym:"✕", color:"#3A1A10", who:0, where:1, when:0,
+   cantica:"Inf. III", note:"Gli ignavi · prima delle porte"},
+  {id:"limbo",    name:"I · Limbo",     sym:"✕", color:"#502010", who:0, where:1, when:0,
+   cantica:"Inf. IV", note:"Virtuous pagans"},
+  {id:"lussuria", name:"II · Lussuria", sym:"✕", color:"#681808", who:0, where:0, when:0,
+   cantica:"Inf. V"},
+  {id:"gola",     name:"III · Gola",    sym:"✕", color:"#781808", who:0, where:0, when:0,
+   cantica:"Inf. VI"},
+  {id:"avarizia", name:"IV · Avarizia", sym:"✕", color:"#881408", who:0, where:0, when:0,
+   cantica:"Inf. VII"},
+  {id:"ira",      name:"V · Ira",       sym:"✕", color:"#980E08", who:0, where:0, when:0,
+   cantica:"Inf. VIII"},
+  {id:"eresia",   name:"VI · Eresia",   sym:"✕", color:"#A80A06", who:0, where:0, when:0,
+   cantica:"Inf. IX–X"},
+  {id:"violenza", name:"VII · Violenza",sym:"✕", color:"#B80804", who:0, where:0, when:0,
+   cantica:"Inf. XII–XVII"},
+  {id:"malebolge",name:"VIII · Malebolge",sym:"✕",color:"#C80402", who:0, where:0, when:0,
+   cantica:"Inf. XVIII–XXX"},
+  {id:"cocito",   name:"IX · Cocito",   sym:"✕", color:"#5080A0", who:0, where:0, when:0,
+   cantica:"Inf. XXXI–XXXIV", note:"Ghiaccio eterno · 4 zone: Caina, Antenora, Tolomea, Giudecca"},
+  {id:"lucifer",  name:"Lucifero",            sym:"✠", color:"#4878A0", who:0, where:0, when:0,
+   cantica:"Inf. XXXIV", note:"THEY⊗NORTH⊗WINTER · code6=0 · minimal element"},
+  {id:"antipurgatorio",name:"Antipurgatorio", sym:"△", color:"#2A4818", who:1, where:2, when:1,
+   cantica:"Purg. I–VIII", note:"Emisfero sud · antipode Jerusalem"},
+  {id:"corniche", name:"Corniche I–VII", sym:"△", color:"#386828", who:2, where:2, when:2,
+   cantica:"Purg. IX–XXVII", note:"7 terraces: Superbia, Invidia, Ira, Accidia, Avarizia, Gola, Lussuria"},
+  {id:"eden",     name:"Eden Terrestre",      sym:"✦", color:"#3A7828", who:3, where:3, when:3,
+   cantica:"Purg. XXVIII", note:"Vetta del Monte Purgatorio"},
+  {id:"dante_selva",name:"Selva Oscura",      sym:"★", color:"#884828", who:2, where:2, when:2,
+   cantica:"Inf. I · MCCC", note:"code6=42 · ME⨂EAST⨂SPRING · Dante start (Ω?·42)"},
+];
+
+function getRegion(id){ return REGIONS.find(r=>r.id===id)||null; }
+function findRegionsByState(){
+  return REGIONS.filter(r=>r.who===STATE.who&&r.where===STATE.where&&r.when===STATE.when);
+}
+function findRegionByState(){
+  // Returns first match; callers should use findRegionsByState() for full set
+  const matches=findRegionsByState();
+  return matches.length>0?matches[0]:null;
+}
+
+/* ======================================================
+   SHARED STATE CHANGE
+   ====================================================== */
+function syncStops(){
+  document.querySelectorAll(".stop").forEach(b=>b.classList.toggle("act",b.dataset.id===STATE.selId));
+}
+function onStateChange(src){
+  buildLull();
+  updateC6();
+  updateSubitChips();
+  updateInfoPanel();
+  drawSchema(STATE.selId);
+  syncStops();
+  if(scene==="subit") buildSubit();
+  needRedraw=true; invalidate();
+}
+
+function selectRegion(id, src){
+  STATE.selId = id;
+  const reg = getRegion(id);
+  if(reg){ STATE.who=reg.who; STATE.where=reg.where; STATE.when=reg.when; }
+  onStateChange(src||"region");
+}
+
+/* ======================================================
+   LULLIAN WHEEL
+   ====================================================== */
+const LC=105;
+const RINGS=[
+  {key:"who",  r1:100,r2:70, names:WHO_N,  colors:["#5C4A2A","#922018","#183468","#C09018"]},
+  {key:"where",r1:67, r2:44, names:WHERE_N,colors:["#403010","#8A2418","#4A6010","#183468"]},
+  {key:"when", r1:41, r2:26, names:WHEN_N, colors:["#2A3A50","#7A3C18","#1A4028","#806010"]},
+];
+
+function arcP(r1,r2,a1d,a2d){
+  const a1=a1d*Math.PI/180, a2=a2d*Math.PI/180;
+  const x1=LC+r1*Math.cos(a1),y1=LC+r1*Math.sin(a1);
+  const x2=LC+r1*Math.cos(a2),y2=LC+r1*Math.sin(a2);
+  const x3=LC+r2*Math.cos(a2),y3=LC+r2*Math.sin(a2);
+  const x4=LC+r2*Math.cos(a1),y4=LC+r2*Math.sin(a1);
+  return `M${x1},${y1} A${r1},${r1} 0 0 1 ${x2},${y2} L${x3},${y3} A${r2},${r2} 0 0 0 ${x4},${y4} Z`;
+}
+
+function buildLull(){
+  const svg=document.getElementById("lullSvg");
+  let h="";
+  for(const ring of RINGS){
+    for(let i=0;i<4;i++){
+      const a1d=-90+i*90, a2d=-90+(i+1)*90;
+      const act=STATE[ring.key]===i;
+      const c=ring.colors[i];
+      h+=`<path d="${arcP(ring.r1,ring.r2,a1d,a2d)}"
+        fill="${c}" fill-opacity="${act?.78:.16}"
+        stroke="#07050D" stroke-width="1.5"
+        data-ax="${ring.key}" data-val="${i}"
+        style="cursor:pointer" tabindex="0"
+        role="button" aria-label="${ring.key}=${ring.names[i]}"/>`;
+      if(act){
+        h+=`<path d="${arcP(ring.r1-1,ring.r2+1,a1d+1,a2d-1)}"
+          fill="none" stroke="${c}" stroke-width="1.6" opacity=".5" pointer-events="none"/>`;
+      }
+      const ma=(a1d+a2d)/2*Math.PI/180;
+      const mr=(ring.r1+ring.r2)/2;
+      const lx=LC+mr*Math.cos(ma), ly=LC+mr*Math.sin(ma);
+      const tk=(ring.r1-ring.r2)>=24?9:8;
+      h+=`<text x="${lx}" y="${ly-3}" text-anchor="middle" dominant-baseline="middle"
+        fill="${act?c:"rgba(220,200,152,.4)"}" font-size="${tk}"
+        font-family="'IM Fell English SC',serif" pointer-events="none">${b2(i)}</text>`;
+      const short=ring.names[i].length>6?ring.names[i].slice(0,5)+"…":ring.names[i];
+      h+=`<text x="${lx}" y="${ly+tk-1}" text-anchor="middle" dominant-baseline="middle"
+        fill="${act?"#F0C840":"rgba(220,200,152,.3)"}" font-size="${tk-1}"
+        font-family="'IM Fell English',serif" pointer-events="none">${short}</text>`;
+    }
+  }
+  // Ring axis labels
+  const rl=[{r:85,t:"WHO",c:"#C83428"},{r:55,t:"WHERE",c:"#3870C0"},{r:33,t:"WHEN",c:"#38A048"}];
+  for(const x of rl){
+    h+=`<text x="${LC}" y="${LC-x.r+3}" text-anchor="middle"
+      fill="${x.c}" font-size="5.5" opacity=".45"
+      font-family="'IM Fell English SC',serif" pointer-events="none">${x.t}</text>`;
+  }
+  // Centre disk
+  const om=getOmega(code6()), oc=omClass(om);
+  const dc=om.includes("⁺")?"#E8C038":om.includes("⁻")?"#C09018":om.includes("DUAL")?"#A0B870":"#6A6060";
+  h+=`<circle cx="${LC}" cy="${LC}" r="23" fill="#0A0818" stroke="${dc}" stroke-width="1.3" opacity=".9"/>`;
+  h+=`<text x="${LC}" y="${LC-3}" text-anchor="middle" dominant-baseline="middle"
+    fill="${dc}" font-size="12" font-weight="bold" font-family="'IM Fell English SC',serif"
+    pointer-events="none">${code6()}</text>`;
+  h+=`<text x="${LC}" y="${LC+9}" text-anchor="middle" dominant-baseline="middle"
+    fill="${dc}" font-size="6" font-family="'IM Fell English',serif" font-style="italic"
+    pointer-events="none">code₆</text>`;
+  h+=`<line x1="${LC}" y1="5" x2="${LC}" y2="10" stroke="rgba(192,144,24,.4)" stroke-width="1.2"/>`;
+  svg.innerHTML=h;
+
+  // State display
+  document.getElementById("lullState").innerHTML=
+    `<b>WHO</b><span>${WHO_N[STATE.who]} (${b2(STATE.who)})</span>
+     <b>WHERE</b><span>${WHERE_N[STATE.where]} (${b2(STATE.where)})</span>
+     <b>WHEN</b><span>${WHEN_N[STATE.when]} (${b2(STATE.when)})</span>`;
+
+  svg.querySelectorAll("path[data-ax]").forEach(p=>{
+    const handler=()=>{
+      STATE[p.dataset.ax]=parseInt(p.dataset.val);
+      const reg=findRegionByState();
+      if(reg) STATE.selId=reg.id;
+      onStateChange("lull");
+    };
+    p.addEventListener("click",handler);
+    p.addEventListener("keydown",e=>{ if(e.key===" "||e.key==="Enter") handler(); });
+  });
+}
+
+function updateC6(){
+  const om=getOmega(code6()), oc=omClass(om);
+  document.getElementById("c6big").textContent=code6();
+  document.getElementById("b6txt").textContent=b6txt();
+  const ot=document.getElementById("omTag");
+  ot.className="om-tag "+oc; ot.textContent=om;
+}
+
+/* ======================================================
+   SUBIT CHIPS
+   ====================================================== */
+function buildAxisChips(){
+  const axes=[
+    {key:"who",  names:WHO_N,  rowId:"whoRow"},
+    {key:"where",names:WHERE_N,rowId:"whereRow"},
+    {key:"when", names:WHEN_N, rowId:"whenRow"},
+  ];
+  for(const ax of axes){
+    const row=document.getElementById(ax.rowId);
+    ax.names.forEach((n,i)=>{
+      const btn=document.createElement("button");
+      btn.className=`ax-chip ax-${ax.key}`;
+      btn.textContent=`${b2(i)}·${n}`;
+      btn.setAttribute("aria-label",`${ax.key}=${n}`);
+      btn.addEventListener("click",()=>{
+        STATE[ax.key]=i;
+        const reg=findRegionByState();
+        if(reg) STATE.selId=reg.id;
+        onStateChange("chip");
+      });
+      row.appendChild(btn);
+    });
+  }
+}
+function updateSubitChips(){
+  ["who","where","when"].forEach(ax=>{
+    document.querySelectorAll(`.ax-${ax}`).forEach((b,i)=>b.classList.toggle("act",STATE[ax]===i));
+  });
+}
+
+function updateInfoPanel(){
+  const reg=getRegion(STATE.selId);
+  if(!reg) return;
+  document.getElementById("rName").textContent=`${reg.sym||""} ${reg.name}`;
+  document.getElementById("rCantica").textContent=reg.cantica||"";
+  const om=getOmega(code6()), oc=omClass(om);
+  // Show disambiguation when multiple regions share current state
+  const matches=findRegionsByState();
+  const disambig=matches.length>1
+    ? `<b>context</b><span style="font-size:8px">${matches.map(r=>r.name).join(" · ")}</span>`
+    : "";
+  document.getElementById("rKV").innerHTML=
+    `<b>WHO</b><span>${WHO_N[STATE.who]} (${b2(STATE.who)})</span>
+     <b>WHERE</b><span>${WHERE_N[STATE.where]} (${b2(STATE.where)})</span>
+     <b>WHEN</b><span>${WHEN_N[STATE.when]} (${b2(STATE.when)})</span>
+     <b>code₆</b><span>${code6()} = ${b6txt()}₂</span>
+     <b>Ω</b><span><span class="om-tag ${oc}">${om}</span></span>
+     ${disambig}
+     ${reg.note?`<b>nota</b><span style="font-style:italic;font-size:9px">${reg.note}</span>`:""}`;
+}
+
+/* ======================================================
+   3D ENGINE
+   Fixed FOV=20 to prevent near-plane artifacts (max radius ~8)
+   ====================================================== */
+function greatCircle(r,txd,tzd,color,w,alpha,N){
+  const lines=[],tx=txd*Math.PI/180,tz=tzd*Math.PI/180;
+  function rX([x,y,z]){return[x,y*Math.cos(tx)-z*Math.sin(tx),y*Math.sin(tx)+z*Math.cos(tx)]}
+  function rZ([x,y,z]){return[x*Math.cos(tz)-y*Math.sin(tz),x*Math.sin(tz)+y*Math.cos(tz),z]}
+  function pt(a){return rZ(rX([r*Math.cos(a),0,r*Math.sin(a)]))}
+  N=N||64;
+  for(let i=0;i<N;i++){
+    lines.push({a:pt(2*Math.PI*i/N),b:pt(2*Math.PI*(i+1)/N),c:color,w,alpha});
+  }
+  return lines;
+}
+function latFlat(r,y,color,w,alpha,N){
+  N=N||40; const lines=[];
+  for(let i=0;i<N;i++){
+    lines.push({
+      a:[r*Math.cos(2*Math.PI*i/N),y,r*Math.sin(2*Math.PI*i/N)],
+      b:[r*Math.cos(2*Math.PI*(i+1)/N),y,r*Math.sin(2*Math.PI*(i+1)/N)],
+      c:color,w,alpha});
+  }
+  return lines;
+}
+function fibPts(n,r,color,ptR,alpha,layerId){
+  const pts=[],g=Math.PI*(3-Math.sqrt(5));
+  for(let i=0;i<n;i++){
+    const yf=1-(i/(n-1))*2,rad=Math.sqrt(1-yf*yf),t=g*i;
+    pts.push({p:[r*rad*Math.cos(t),r*yf,r*rad*Math.sin(t)],
+              c:color,r:ptR,alpha,layer:layerId||""});
+  }
+  return pts;
+}
+
+/* Scenes */
+const SL={cosmos:[],inferno:[],paradiso:[],subit:[]};
+const SP={cosmos:[],inferno:[],paradiso:[],subit:[]};
+const ST={cosmos:[],inferno:[],paradiso:[],subit:[]};
+
+function buildCosmos(){
+  const L=SL.cosmos,P=SP.cosmos,T=ST.cosmos;
+  // Background stars
+  const sr=123456; let sx=sr;
+  function rng(){ sx=(sx*1103515245+12345)&0x7FFFFFFF; return sx/0x7FFFFFFF; }
+  for(let i=0;i<90;i++){
+    const phi=Math.acos(2*rng()-1),theta=2*Math.PI*rng(),r=10+rng()*1.5;
+    P.push({p:[r*Math.sin(phi)*Math.cos(theta),r*Math.cos(phi),r*Math.sin(phi)*Math.sin(theta)],
+            c:"#F8F0C0",r:0.6,alpha:.15+rng()*.4,star:true});
+  }
+  // Empyrean: luminous field (no solid sphere — light rays only)
+  {
+    const r=8.0,c="#C09018";
+    for(let i=0;i<24;i++){
+      const a=2*Math.PI*i/24,dr=0.8;
+      L.push({a:[r*Math.cos(a),r*Math.sin(a),0],
+              b:[(r+dr)*Math.cos(a),(r+dr)*Math.sin(a),0],c:"#D0A820",w:1,alpha:.35});
+    }
+    for(let j=0;j<12;j++){
+      const a=2*Math.PI*j/12;
+      L.push({a:[0,r*Math.cos(a),r*Math.sin(a)],
+              b:[0,(r+0.6)*Math.cos(a),(r+0.6)*Math.sin(a)],c:"#E0B828",w:1.2,alpha:.3});
+    }
+    T.push({p:[0,8.6,0],text:"✦ EMPIREO · 111111₂ · Lux Aeterna",
+            c:"#E8C038",size:11.5,bold:true,layer:"empyrean"});
+  }
+  // Nine moving heavens
+  for(const h of HEAVENS.filter(x=>x.r>0)){
+    const al=.42,w=1.0;
+    L.push(...greatCircle(h.r,0,0,h.color,w,al,72));
+    L.push(...greatCircle(h.r,90,0,h.color,w*.65,al*.6,64));
+    L.push(...greatCircle(h.r,23.5,0,h.color,w*.5,al*.4,56));
+    P.push(...fibPts(h.pts,h.r,h.color,1.4,.55,h.id));
+    T.push({p:[h.r*.72,h.r*.72,0],text:`${h.sym} ${h.name}`,c:h.color,size:9.5,layer:h.id});
+  }
+  // Vertical axis (pole)
+  L.push({a:[0,-9.2,0],b:[0,9.2,0],c:"rgba(192,144,24,.08)",w:.7,alpha:1});
+  // Earth (sphere, Jerusalem at top)
+  {const r=1.0,c="#7A4020";
+    L.push(...greatCircle(r,0,0,c,1.8,.75,64));
+    L.push(...greatCircle(r,90,0,c,1.4,.65,64));
+    L.push(...greatCircle(r,90,90,c,1.1,.55,48));
+    P.push({p:[0,1.02,0],c:"#D09840",r:5,alpha:.9,label:"Jerusalem",layer:"earth"});
+    T.push({p:[.15,.9,0],text:"✠ Jerusalem",c:"#D09840",size:9,layer:"earth"});
+  }
+  // Hell: inverted cone inside Earth (north surface to center)
+  {const c="#8A1808";
+    const hY=[.85,.6,.35,.1,-.15,-.38,-.58,-.72,-.82];
+    const hR=[.88,.78,.66,.54,.43,.33,.22,.12,.04];
+    for(let i=0;i<9;i++){
+      L.push(...latFlat(hR[i],hY[i],c+(Math.floor(i*20+30)).toString(16),.6,.3+i*.04,26));
+    }
+  }
+  // Lucifer at Earth center
+  P.push({p:[0,0,0],c:"#4878A0",r:5.5,alpha:.9,label:"Lucifero · 000000₂",layer:"lucifer"});
+  // Purgatory: south hemisphere, antipodal to Jerusalem (y<-1)
+  // Mountain narrows toward summit (Eden at top = smallest radius)
+  {const apY=-1.0, baY=-3.1, c="#386828";
+    for(let i=1;i<=7;i++){
+      const t=i/7,y=apY+(baY-apY)*t,rP=.55*(1-t*.85);
+      L.push(...latFlat(rP,y,c,.9,.4+.1*t,24));
+    }
+    for(let j=0;j<7;j++){
+      const a=2*Math.PI*j/7;
+      L.push({a:[0,apY,0],b:[.55*Math.cos(a),baY,.55*Math.sin(a)],c,w:.7,alpha:.3});
+    }
+    P.push({p:[0,baY+.1,0],c:"#60C870",r:5,alpha:.85,label:"Eden Terrestre",layer:"eden"});
+    T.push({p:[.18,-1.55,0],text:"△ Purgatorio",c,size:9,layer:"corniche"});
+    T.push({p:[.12,baY+.15,0],text:"✦ Eden",c:"#60C870",size:8.5,layer:"eden"});
+  }
+}
+
+function buildInferno(){
+  const L=SL.inferno,P=SP.inferno,T=ST.inferno;
+  const layers=[
+    {id:"ante_inf",n:"Ante-Inferno",    c:"#3A1A10",y:.95,r:.92},
+    {id:"limbo",   n:"I · Limbo",  c:"#501808",y:.80,r:.86},
+    {id:"lussuria",n:"II · Lussuria",c:"#681008",y:.60,r:.76},
+    {id:"gola",    n:"III · Gola", c:"#780E08",y:.38,r:.64},
+    {id:"avarizia",n:"IV · Avarizia",c:"#880A06",y:.15,r:.52},
+    {id:"ira",     n:"V · Ira",    c:"#980606",y:-.10,r:.40},
+    {id:"eresia",  n:"VI · Eresia",c:"#A80404",y:-.32,r:.30},
+    {id:"violenza",n:"VII · Violenza",c:"#B80202",y:-.52,r:.20},
+    {id:"malebolge",n:"VIII · Malebolge",c:"#C80100",y:-.68,r:.11},
+    {id:"cocito",  n:"IX · Cocito",c:"#4878A0",y:-.80,r:.06},
+  ];
+  for(const lay of layers){
+    L.push(...latFlat(lay.r,lay.y,lay.c,2,.85,48));
+    for(let j=0;j<8;j++){
+      const a=2*Math.PI*j/8;
+      P.push({p:[lay.r*Math.cos(a),lay.y,lay.r*Math.sin(a)],c:lay.c,r:2.5,alpha:.7,layer:lay.id});
+    }
+    T.push({p:[lay.r+.06,lay.y,0],text:lay.n,c:lay.c,size:9.5,bold:lay.id==="cocito"});
+  }
+  // Cocito zones (4 quadrants)
+  const zones=["Caina","Antenora","Tolomea","Giudecca"];
+  for(let z=0;z<4;z++){
+    const a=Math.PI/4+z*Math.PI/2;
+    T.push({p:[.055*Math.cos(a),-.74,.055*Math.sin(a)],text:zones[z],c:"#6898B8",size:8});
+  }
+  // Lucifer center
+  P.push({p:[0,-.82,0],c:"#4878A0",r:7,alpha:.95,label:"Lucifero · 000000₂",layer:"lucifer"});
+  T.push({p:[.07,-.98,0],text:"✠ Lucifero · N⊗N⊗N · 000000₂",
+          c:"#4878A0",size:11,bold:true,layer:"lucifer"});
+  // Surface of Earth
+  L.push(...greatCircle(1.0,0,0,"#7A4020",.9,.3,64));
+  T.push({p:[0,.98,0],text:"✠ Jerusalem · Superfice",c:"#D09840",size:9});
+}
+
+function buildParadiso(){
+  const L=SL.paradiso,P=SP.paradiso,T=ST.paradiso;
+  for(const h of HEAVENS.filter(x=>x.r>0)){
+    L.push(...greatCircle(h.r,0,0,h.color,1.8,.72,80));
+    L.push(...greatCircle(h.r,90,0,h.color,1.1,.55,72));
+    L.push(...greatCircle(h.r,23.5,0,h.color,.8,.45,64));
+    P.push(...fibPts(h.pts*2,h.r,h.color,2,.78,h.id));
+    T.push({p:[h.r*.72,h.r*.72,0],text:`${h.sym} ${h.name}`,c:h.color,size:10.5,
+            bold:false,layer:h.id});
+  }
+  // Empyrean: radiant field
+  for(let i=0;i<36;i++){
+    const a=2*Math.PI*i/36,r=8.0,dr=.9+Math.sin(i*.7)*.2;
+    L.push({a:[r*Math.cos(a),r*Math.sin(a),0],
+            b:[(r+dr)*Math.cos(a),(r+dr)*Math.sin(a),0],c:"#E0B828",w:1.5,alpha:.5});
+  }
+  L.push(...greatCircle(1.0,0,0,"#7A4020",.9,.35,64));
+  T.push({p:[0,9.1,0],text:"✦ EMPIREO · Candida Rosa",c:"#E8C038",size:12,bold:true,layer:"empyrean"});
+}
+
+function buildSubit(){
+  const L=SL.subit,P=SP.subit,T=ST.subit;
+  L.length=0;P.length=0;T.length=0;
+  const aL=3.5;
+  L.push({a:[0,-aL*1.12,0],b:[0,aL*1.12,0],c:"#C83418",w:1.8,alpha:.75});
+  L.push({a:[0,0,-aL*1.12],b:[0,0,aL*1.12],c:"#3A60B0",w:1.8,alpha:.75});
+  L.push({a:[-aL*1.12,0,0],b:[aL*1.12,0,0],c:"#C09018",w:1.8,alpha:.75});
+  const vals=[-1.5,-.5,.5,1.5];
+  const wc=["#5C4A2A","#922018","#183468","#C09018"];
+  const rc=["#403010","#8A2418","#4A6010","#183468"];
+  const nc=["#2A3A50","#7A3C18","#1A4028","#806010"];
+  for(let v=0;v<4;v++){
+    P.push({p:[0,vals[v],0],c:wc[v],r:7,alpha:.85,axis:"who",val:v});
+    T.push({p:[.2,vals[v]+.2,0],text:`WHO:${WHO_N[v]}(${b2(v)})`,c:wc[v],size:9.5,bold:v===STATE.who});
+    P.push({p:[0,0,vals[v]],c:rc[v],r:7,alpha:.85,axis:"where",val:v});
+    T.push({p:[.2,.2,vals[v]],text:`WHERE:${WHERE_N[v]}(${b2(v)})`,c:rc[v],size:9.5,bold:v===STATE.where});
+    P.push({p:[vals[v],0,0],c:nc[v],r:7,alpha:.85,axis:"when",val:v});
+    T.push({p:[vals[v],.2,.2],text:`WHEN:${WHEN_N[v]}(${b2(v)})`,c:nc[v],size:9.5,bold:v===STATE.when});
+  }
+  for(let i=-1;i<=1;i++) L.push(...latFlat(aL,i*1.5,"rgba(80,70,50,.18)",.5,.3,36));
+  // Highlight current state
+  P.push({p:[0,vals[STATE.who],0],c:"#F0C840",r:11,alpha:.9});
+  P.push({p:[0,0,vals[STATE.where]],c:"#F0C840",r:11,alpha:.9});
+  P.push({p:[vals[STATE.when],0,0],c:"#F0C840",r:11,alpha:.9});
+  T.push({p:[4.2,0,0],text:"← WHEN →",c:"#C09018",size:8.5});
+  T.push({p:[0,4.4,0],text:"WHO ↕",c:"#C83418",size:8.5});
+  T.push({p:[0,0,4.4],text:"WHERE ↕",c:"#3A60B0",size:8.5});
+  T.push({p:[0,5.2,0],text:`code₆=${code6()} · ${getOmega(code6())}`,c:"#E8AE28",size:11,bold:true});
+}
+
+/* ======================================================
+   PROJECTION  — fov=20 prevents near-plane blow-up
+   ====================================================== */
+const V={yaw:.05,pitch:-.22,zoom:.95,vy:0,vp:0,auto:false};
+const SCENE_VIEW={
+  cosmos:  {yaw:.05,  pitch:-.22, zoom:.95},
+  inferno: {yaw:.3,   pitch:-.75, zoom:3.2},
+  paradiso:{yaw:.05,  pitch:-.20, zoom:.78},
+  mandala: {yaw:.05,  pitch:-1.52, zoom:.95},
+  subit:   {yaw:.4,   pitch:-.30, zoom:1.8},
+};
+const VIEW_PRESETS={
+  side:  {yaw:.05, pitch:-.22},
+  top:   {yaw:0,   pitch:-1.55},
+  angle: {yaw:.6,  pitch:-.40},
+  bottom:{yaw:0,   pitch:1.30},
+};
+const q={x:0,y:0,z:0,k:1},q2={x:0,y:0,z:0,k:1};
+let W=800,H=500,dpr=1;
+const FOV=20; // safe for max radius ~8
+
+function proj(x,y,z,o){
+  const cy=Math.cos(V.yaw),sy=Math.sin(V.yaw),x1=x*cy+z*sy,z1=-x*sy+z*cy;
+  const cp=Math.cos(V.pitch),sp=Math.sin(V.pitch),y1=y*cp-z1*sp,z2=y*sp+z1*cp;
+  // clip: don't project points behind near plane
+  if(z2>=FOV-0.01){o.x=-9999;o.y=-9999;o.z=FOV;o.k=0;return o;}
+  const k=FOV/(FOV-z2), sc=Math.min(W,H)*.1*V.zoom*k;
+  o.x=W/2+x1*sc; o.y=H/2-y1*sc; o.z=z2; o.k=k; return o;
+}
+
+const C=document.getElementById("cv");
+const ctx=C.getContext("2d");
+function resize(){
+  dpr=Math.min(window.devicePixelRatio||1,2);
+  const r=C.getBoundingClientRect();
+  C.width=Math.round(r.width*dpr); C.height=Math.round(r.height*dpr);
+  W=r.width; H=r.height; ctx.setTransform(dpr,0,0,dpr,0,0);
+}
+new ResizeObserver(()=>{resize();needRedraw=true; invalidate();}).observe(C); resize();
+
+/* ======================================================
+   COMPASS
+   ====================================================== */
+const CC=document.getElementById("compassCv");
+const cctx=CC.getContext("2d");
+function drawCompass(){
+  cctx.clearRect(0,0,52,52);
+  const cx=26,cy=26;
+  proj(0,2,0,q); if(q.k===0)return;
+  const dx=q.x-W/2,dy=q.y-H/2,len=Math.hypot(dx,dy)||1;
+  const nx=dx/len,ny=dy/len;
+  cctx.beginPath(); cctx.arc(cx,cy,20,0,6.28);
+  cctx.strokeStyle="rgba(192,144,24,.18)"; cctx.lineWidth=1; cctx.stroke();
+  cctx.beginPath();
+  cctx.moveTo(cx+nx*16,cy+ny*16);
+  cctx.lineTo(cx+ny*4-nx*9,cy-nx*4-ny*9);
+  cctx.lineTo(cx-ny*4-nx*9,cy+nx*4-ny*9);
+  cctx.closePath();
+  cctx.fillStyle="#C09018"; cctx.fill();
+  cctx.font="6px 'IM Fell English SC',serif";
+  cctx.fillStyle="rgba(192,144,24,.5)";
+  cctx.textAlign="center";
+  cctx.fillText("✦",cx+nx*6,cy+ny*6+2);
+}
+
+/* ======================================================
+   RENDER LOOP
+   ====================================================== */
+let last=0,hoverIdx=-1,isHov=false;
+const sx=[],sy=[],sz=[],sk=[];
+let rafId=0,needRedraw=true;
+
+function invalidate(){ if(!rafId){ rafId=requestAnimationFrame(frame); } }
+
+function frame(now){
+  rafId=0;
+  const dt=Math.min((now-last)/1000,.05); last=now;
+
+  const moving=Math.abs(V.vy)>.0001||Math.abs(V.vp)>.0001||(V.auto&&!isHov);
+  if(V.auto&&!isHov){ V.yaw+=.004; needRedraw=true; }
+  if(Math.abs(V.vy)>.0001){ V.yaw+=V.vy; V.vy*=Math.pow(.90,dt*60); needRedraw=true; }
+  if(Math.abs(V.vp)>.0001){ V.pitch+=V.vp; V.vp*=Math.pow(.90,dt*60); needRedraw=true; }
+  V.pitch=Math.max(-1.55,Math.min(1.55,V.pitch));
+
+  if(moving) invalidate();
+  if(!needRedraw) return;
+  needRedraw=false;
+
+  function gsk(){ return scene==="mandala"?"cosmos":scene; }
+  const sc2=gsk();
+  const L=SL[sc2]||[],Pts=SP[sc2]||[],Txts=ST[sc2]||[];
+  ctx.clearRect(0,0,W,H);
+  sx.length=sy.length=sz.length=sk.length=0;
+  for(let i=0;i<Pts.length;i++){
+    proj(Pts[i].p[0],Pts[i].p[1],Pts[i].p[2],q);
+    sx.push(q.x);sy.push(q.y);sz.push(q.z);sk.push(q.k);
+  }
+
+  // Draw lines (sorted by transformed mid Z — correct camera-space depth)
+  function lineDepth(l){
+    const mx=(l.a[0]+l.b[0])/2, my=(l.a[1]+l.b[1])/2, mz=(l.a[2]+l.b[2])/2;
+    const x1=mx*Math.cos(V.yaw)+mz*Math.sin(V.yaw);
+    const z1=-mx*Math.sin(V.yaw)+mz*Math.cos(V.yaw);
+    return my*Math.sin(V.pitch)+z1*Math.cos(V.pitch);
+  }
+  const li=Array.from({length:L.length},(_,i)=>i);
+  li.sort((a,b)=>lineDepth(L[a])-lineDepth(L[b]));
+  ctx.setLineDash([]);
+  for(const i of li){
+    const l=L[i]; if((l.alpha||1)<.01) continue;
+    proj(l.a[0],l.a[1],l.a[2],q); proj(l.b[0],l.b[1],l.b[2],q2);
+    if(q.k===0||q2.k===0) continue;
+    const fade=Math.max(0,(q.z+q2.z)/2+2)*.3+.7;
+    ctx.globalAlpha=Math.min(1,(l.alpha||1)*fade);
+    ctx.strokeStyle=l.c; ctx.lineWidth=l.w||1;
+    ctx.beginPath(); ctx.moveTo(q.x,q.y); ctx.lineTo(q2.x,q2.y); ctx.stroke();
+  }
+
+  // Draw points
+  ctx.setLineDash([]);
+  const pi=Array.from({length:Pts.length},(_,i)=>i);
+  pi.sort((a,b)=>sz[a]-sz[b]);
+  for(const i of pi){
+    if(sk[i]===0) continue;
+    const pt=Pts[i],r=Math.max(.5,(pt.r||2)*sk[i]);
+    const fade=Math.max(.1,(sz[i]+2)*.4+.6);
+    ctx.globalAlpha=Math.min(1,(pt.alpha||.7)*fade);
+    if(!pt.star&&pt.r>=3){ ctx.shadowColor=pt.c; ctx.shadowBlur=r*2.2; }
+    ctx.beginPath(); ctx.arc(sx[i],sy[i],r,0,6.2832);
+    ctx.fillStyle=pt.c; ctx.fill(); ctx.shadowBlur=0;
+    if(pt.layer&&pt.layer===STATE.selId&&!pt.star){
+      ctx.globalAlpha=1; ctx.lineWidth=2.5; ctx.strokeStyle="#C09018";
+      ctx.beginPath(); ctx.arc(sx[i],sy[i],r+5,0,6.2832); ctx.stroke();
+    }
+    if(i===hoverIdx&&!pt.star){
+      ctx.globalAlpha=1; ctx.lineWidth=1.5; ctx.strokeStyle="#DCC898";
+      ctx.beginPath(); ctx.arc(sx[i],sy[i],r+3,0,6.2832); ctx.stroke();
+    }
+  }
+  ctx.globalAlpha=1;
+
+  // Draw text labels
+  for(const T of Txts){
+    proj(T.p[0],T.p[1],T.p[2],q);
+    if(q.k===0||q.z<-3) continue;
+    const fade=Math.max(.05,(q.z+2)*.4+.6);
+    ctx.globalAlpha=Math.min(1,(T.alpha??0.85)*fade);
+    ctx.font=(T.bold?"600 ":"400 ")+(T.size||10)+"px 'IM Fell English','IM Fell English SC',serif";
+    ctx.fillStyle=T.c||"#8A7860";
+    ctx.textAlign="left"; ctx.textBaseline="middle";
+    ctx.shadowColor="rgba(0,0,0,.88)"; ctx.shadowBlur=4;
+    ctx.fillText(T.text,q.x+3,q.y); ctx.shadowBlur=0;
+  }
+  ctx.globalAlpha=1;
+  drawCompass();
+}
+
+/* ======================================================
+   DRAG / PINCH / WHEEL
+   ====================================================== */
+let dragging=false,dragStart={x:0,y:0},dragMoved=false;
+const ptrs=new Map();
+let pinch=null;
+
+C.addEventListener("pointerdown",e=>{
+  C.setPointerCapture(e.pointerId);
+  ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(ptrs.size===2){
+    const[a,b]=[...ptrs.values()];
+    pinch={d:Math.hypot(a.x-b.x,a.y-b.y),z:V.zoom};
+    dragging=false; return;
+  }
+  dragging=true; dragMoved=false;
+  dragStart={x:e.clientX,y:e.clientY};
+  C.classList.add("grabbing");
+});
+C.addEventListener("pointermove",e=>{
+  const prev=ptrs.get(e.pointerId)||{x:e.clientX,y:e.clientY};
+  ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(pinch&&ptrs.size>=2){
+    const[a,b]=[...ptrs.values()];
+    V.zoom=Math.max(.25,Math.min(7,pinch.z*Math.hypot(a.x-b.x,a.y-b.y)/pinch.d));
+    needRedraw=true; invalidate(); return;
+  }
+  if(!dragging) return;
+  const dx=e.clientX-prev.x, dy=e.clientY-prev.y;
+  if(Math.abs(e.clientX-dragStart.x)>4||Math.abs(e.clientY-dragStart.y)>4) dragMoved=true;
+  V.yaw+=dx*.009; V.pitch+=dy*.009;
+  V.vy=dx*.009; V.vp=dy*.009;
+  needRedraw=true; invalidate();
+});
+C.addEventListener("pointerup",e=>{
+  ptrs.delete(e.pointerId);
+  C.classList.remove("grabbing");
+  if(!dragMoved&&dragging&&ptrs.size===0){
+    const rect=C.getBoundingClientRect();
+    handleClick(e.clientX-rect.left,e.clientY-rect.top);
+  }
+  dragging=false; pinch=null;
+});
+C.addEventListener("pointercancel",e=>{ptrs.delete(e.pointerId);dragging=false;pinch=null;C.classList.remove("grabbing");});
+C.addEventListener("wheel",e=>{
+  e.preventDefault();
+  V.zoom=Math.max(.25,Math.min(7,V.zoom*(e.deltaY<0?1.11:.90)));
+  needRedraw=true; invalidate();
+},{passive:false});
+C.addEventListener("keydown",e=>{
+  if(e.key==="ArrowLeft"){V.yaw-=.12;needRedraw=true; invalidate();e.preventDefault();}
+  if(e.key==="ArrowRight"){V.yaw+=.12;needRedraw=true; invalidate();e.preventDefault();}
+  if(e.key==="ArrowUp"){V.pitch-=.10;needRedraw=true; invalidate();e.preventDefault();}
+  if(e.key==="ArrowDown"){V.pitch+=.10;needRedraw=true; invalidate();e.preventDefault();}
+  if(e.key==="+"||e.key==="="){V.zoom=Math.min(7,V.zoom*1.1);needRedraw=true; invalidate();}
+  if(e.key==="-"){V.zoom=Math.max(.25,V.zoom*.91);needRedraw=true; invalidate();}
+});
+C.addEventListener("mousemove",e=>{
+  isHov=true;
+  const r=C.getBoundingClientRect();
+  const ox=e.clientX-r.left, oy=e.clientY-r.top;
+  let best=-1,bd=26;
+  const Pts=SP[scene==="mandala"?"cosmos":scene]||[];
+  for(let i=0;i<sx.length;i++){
+    if(Pts[i]&&Pts[i].star) continue;
+    const d=Math.hypot(ox-sx[i],oy-sy[i]);
+    if(d<bd){bd=d;best=i;}
+  }
+  hoverIdx=best;
+  const tip=document.getElementById("tip");
+  if(best>=0&&Pts[best]&&Pts[best].label){
+    tip.style.display="block";
+    tip.style.left=ox+"px"; tip.style.top=oy+"px";
+    tip.textContent=Pts[best].label;
+  } else { tip.style.display="none"; }
+  needRedraw=true; invalidate();
+});
+C.addEventListener("mouseleave",()=>{isHov=false;hoverIdx=-1;document.getElementById("tip").style.display="none";needRedraw=true; invalidate();});
+
+function handleClick(px,py){
+  let best=-1,bd=30;
+  const scKey=scene==="mandala"?"cosmos":scene;
+  const Pts=SP[scKey]||[];
+  for(let i=0;i<sx.length;i++){
+    if(Pts[i]&&Pts[i].star) continue;
+    const d=Math.hypot(px-sx[i],py-sy[i]);
+    // SUBIT scene: axis click changes coordinate
+    if(scKey==="subit"&&Pts[i]&&Pts[i].axis!==undefined){
+      if(d<bd){bd=d;best=i;}
+      continue;
+    }
+    if(d<bd&&Pts[i]&&Pts[i].layer){bd=d;best=i;}
+  }
+  if(best<0) return;
+  if(scKey==="subit"&&Pts[best]&&Pts[best].axis!==undefined){
+    STATE[Pts[best].axis]=Pts[best].val;
+    const reg=findRegionByState(); if(reg) STATE.selId=reg.id;
+    onStateChange("subit"); return;
+  }
+  if(Pts[best]&&Pts[best].layer) selectRegion(Pts[best].layer,"3d");
+}
+
+/* ======================================================
+   SCENE SWITCHING
+   ====================================================== */
+let scene="cosmos";
+const SCENE_DESCS={
+  cosmos:"Full model: Empireo (luminous field above) → nine moving heavens → Earth → Purgatorio (south antipode) → Hell inside Earth → Lucifero at centre. Drag to rotate.",
+  inferno:"Cross-section of Earth: nine circles from surface to Lucifer at centre. IX·Cocito = eternal ice, four zones.",
+  paradiso:"Nine moving heavens around Earth, from Luna I to Primo Mobile IX. Empyreo = radiant field beyond.",
+  mandala:"Overhead view of the heavens as concentric rings. Same as COSMOS, viewed from above.",
+  subit:"SUBIT-TOPOS coordinate space: WHO (red) / WHERE (blue) / WHEN (gold). Click axes to navigate.",
+};
+const SCENE_BADGE={cosmos:"COSMOS",inferno:"INFERNO · IX Cerchi",paradiso:"PARADISO · IX Cieli",mandala:"MANDALA · Vista dall'alto",subit:"SUBIT · A³"};
+
+function goScene(name){
+  if(name===scene) return;
+  scene=name;
+  const sv=SCENE_VIEW[name]||SCENE_VIEW.cosmos;
+  V.yaw=sv.yaw; V.pitch=sv.pitch; V.zoom=sv.zoom; V.vy=0; V.vp=0;
+  document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected",String(t.dataset.sc===name)));
+  document.getElementById("badge").textContent=SCENE_BADGE[name]||name.toUpperCase();
+  document.getElementById("sceneDesc").textContent=SCENE_DESCS[name]||"";
+  document.getElementById("hint").textContent="Drag · Scroll/pinch · Arrow keys";
+  if(name==="subit") buildSubit();
+  needRedraw=true; invalidate();
+}
+
+document.getElementById("tabs").addEventListener("click",e=>{
+  const b=e.target.closest(".tab"); if(b) goScene(b.dataset.sc);
+});
+document.getElementById("btnAuto").addEventListener("click",()=>{
+  V.auto=!V.auto;
+  document.getElementById("btnAuto").setAttribute("aria-pressed",String(V.auto));
+  needRedraw=true; invalidate();
+});
+document.getElementById("btnReset").addEventListener("click",()=>{
+  const sv=SCENE_VIEW[scene]||SCENE_VIEW.cosmos;
+  V.yaw=sv.yaw; V.pitch=sv.pitch; V.zoom=sv.zoom; V.vy=0; V.vp=0;
+  needRedraw=true; invalidate();
+  document.querySelectorAll(".preset").forEach(p=>p.classList.toggle("act",p.dataset.view==="side"));
+});
+document.getElementById("presets").addEventListener("click",e=>{
+  const b=e.target.closest(".preset"); if(!b) return;
+  const vp=VIEW_PRESETS[b.dataset.view]; if(!vp) return;
+  V.yaw=vp.yaw; V.pitch=vp.pitch; V.vy=0; V.vp=0; needRedraw=true; invalidate();
+  document.querySelectorAll(".preset").forEach(p=>p.classList.toggle("act",p===b));
+});
+
+/* ======================================================
+   SCHEMATIC — Sectio Transversa
+   ====================================================== */
+const SCV=document.getElementById("schemaCanvas");
+const sctx=SCV.getContext("2d");
+const SW=178,SH=510; SCV.width=SW; SCV.height=SH;
+
+const SCHEMA_LAYERS=[
+  {id:"empyrean",  label:"✦ Empireo",          color:"#C09018",h:28,ind:0, note:"Lux Aeterna"},
+  {id:"primo",     label:"IX Primo Mobile",          color:"#1A3A7A",h:24,ind:4},
+  {id:"stars",     label:"VIII Stelle",              color:"#1E4A8A",h:22,ind:6},
+  {id:"saturn",    label:"VII Saturno",              color:"#2A4888",h:21,ind:8},
+  {id:"jupiter",   label:"VI Giove",                 color:"#3A5AAA",h:20,ind:10},
+  {id:"mars",      label:"V Marte",                  color:"#8A2418",h:19,ind:12},
+  {id:"sun",       label:"IV Sole",                  color:"#9A7410",h:18,ind:13},
+  {id:"venus",     label:"III Venere",               color:"#5A3070",h:17,ind:14},
+  {id:"mercury",   label:"II Mercurio",              color:"#606070",h:16,ind:15},
+  {id:"moon",      label:"I Luna",                   color:"#7070A0",h:16,ind:16},
+  {id:"earth",     label:"✠ Terra · Jerusalem",color:"#7A4020",h:18,ind:18},
+  {id:"dante_selva",label:"★ Selva Oscura",     color:"#884828",h:11,ind:20},
+  {id:"ante_inf",  label:"Ante-Inferno",             color:"#3A1A10",h:12,ind:22},
+  {id:"limbo",     label:"I · Limbo",           color:"#501808",h:11,ind:25},
+  {id:"lussuria",  label:"II · Lussuria",       color:"#681008",h:11,ind:28},
+  {id:"gola",      label:"III · Gola",          color:"#780E08",h:10,ind:30},
+  {id:"avarizia",  label:"IV · Avarizia",       color:"#880A06",h:10,ind:32},
+  {id:"ira",       label:"V · Ira",             color:"#980606",h:9, ind:33},
+  {id:"eresia",    label:"VI · Eresia",         color:"#A80404",h:9, ind:34},
+  {id:"violenza",  label:"VII · Violenza",      color:"#B80202",h:8, ind:35},
+  {id:"malebolge", label:"VIII · Malebolge",    color:"#C80100",h:8, ind:36},
+  {id:"cocito",    label:"IX · Cocito",         color:"#4878A0",h:10,ind:36},
+  {id:"lucifer",   label:"✠ Lucifero · 000000₂",color:"#3A6888",h:18,ind:30},
+  {id:"antipurgatorio",label:"△ Antipurgatorio",color:"#2A4818",h:20,ind:14, south:true},
+  {id:"corniche",  label:"△ Corniche I–VII",color:"#386828",h:18,ind:10, south:true},
+  {id:"eden",      label:"✦ Eden Terrestre",    color:"#4A8838",h:16,ind:12, south:true},
+];
+
+let schemaHits=[];
+
+function drawSchema(hiId){
+  sctx.clearRect(0,0,SW,SH);
+  sctx.fillStyle="#07050D"; sctx.fillRect(0,0,SW,SH);
+  // Separator line (equator)
+  let y=8; schemaHits=[];
+  sctx.font="7px 'IM Fell English SC',serif";
+  sctx.fillStyle="rgba(138,120,96,.45)"; sctx.textAlign="center";
+  sctx.fillText("SECTIO TRANSVERSA",SW/2,y+7); y+=18;
+  const ml=5,mr=5,tw=SW-ml-mr;
+  for(const lay of SCHEMA_LAYERS){
+    const isS=hiId===lay.id;
+    const ind=lay.ind||0;
+    const bx=ml+ind, bw=tw-ind*2, bh=lay.h;
+    // Empyrean special: dashed top border only
+    if(lay.id==="empyrean"){
+      sctx.globalAlpha=isS?.5:.15;
+      const grad=sctx.createLinearGradient(bx,y,bx,y+bh);
+      grad.addColorStop(0,lay.color); grad.addColorStop(1,"transparent");
+      sctx.fillStyle=grad; sctx.fillRect(bx,y,bw,bh);
+      sctx.globalAlpha=isS?.9:.4;
+      sctx.setLineDash([4,4]);
+      sctx.strokeStyle=lay.color; sctx.lineWidth=isS?1.8:.8;
+      sctx.strokeRect(bx+.8,y+.8,bw-1.6,bh-1.6);
+      sctx.setLineDash([]);
+    } else {
+      sctx.globalAlpha=isS?.5:.18;
+      sctx.fillStyle=lay.color; sctx.fillRect(bx,y,bw,bh);
+      sctx.globalAlpha=isS?.9:.38;
+      sctx.strokeStyle=lay.color; sctx.lineWidth=isS?1.8:.7; sctx.setLineDash([]);
+      sctx.strokeRect(bx+.8,y+.8,bw-1.6,bh-1.6);
+    }
+    const fs=bh>=14?8.5:7.5;
+    sctx.globalAlpha=isS?1:.72;
+    sctx.font=(isS?"600 ":"400 ")+fs+"px 'IM Fell English',Georgia,serif";
+    sctx.fillStyle=isS?lay.color:"#DCC898";
+    sctx.textAlign="center"; sctx.textBaseline="middle";
+    sctx.save(); sctx.beginPath(); sctx.rect(bx+2,y,bw-4,bh); sctx.clip();
+    sctx.fillText(lay.label,SW/2,y+bh/2); sctx.restore();
+    sctx.globalAlpha=1;
+    // South pole indicator
+    if(lay.south){
+      sctx.fillStyle="rgba(80,160,80,.5)"; sctx.font="5px sans-serif";
+      sctx.textAlign="right"; sctx.fillText("S",bx+bw-1,y+bh/2+2);
+    }
+    schemaHits.push({id:lay.id,y,h:bh});
+    y+=bh+1;
+  }
+  sctx.textAlign="left";
+  // Hemisphere labels
+  sctx.font="6px 'IM Fell English SC',serif";
+  sctx.fillStyle="rgba(138,120,96,.3)";
+  sctx.textAlign="left"; sctx.fillText("N",2,90); sctx.fillText("S",2,380);
+}
+
+SCV.addEventListener("click",e=>{
+  const r=SCV.getBoundingClientRect();
+  const py=(e.clientY-r.top)*SH/r.height;
+  for(const hit of schemaHits){
+    if(py>=hit.y&&py<hit.y+hit.h){ selectRegion(hit.id,"schema"); return; }
+  }
+});
+
+/* ======================================================
+   JOURNEY STOPS
+   ====================================================== */
+const STOPS=[
+  {label:"Selva Oscura", id:"dante_selva", realm:"i"},
+  {label:"Porte Inferno",id:"ante_inf",    realm:"i"},
+  {label:"Limbo",        id:"limbo",       realm:"i"},
+  {label:"Cocito",       id:"cocito",      realm:"i"},
+  {label:"Lucifero",     id:"lucifer",     realm:"i"},
+  {label:"Antipurgat.",  id:"antipurgatorio",realm:"p"},
+  {label:"Corniche",     id:"corniche",    realm:"p"},
+  {label:"Eden",         id:"eden",        realm:"p"},
+  {label:"Luna I",       id:"moon",        realm:"h"},
+  {label:"Mercurio II",  id:"mercury",     realm:"h"},
+  {label:"Venere III",   id:"venus",       realm:"h"},
+  {label:"Sole IV",      id:"sun",         realm:"h"},
+  {label:"Marte V",      id:"mars",        realm:"h"},
+  {label:"Giove VI",     id:"jupiter",     realm:"h"},
+  {label:"Saturno VII",  id:"saturn",      realm:"h"},
+  {label:"Stelle VIII",  id:"stars",       realm:"h"},
+  {label:"Primo Mobile", id:"primo",       realm:"h"},
+  {label:"Empireo",      id:"empyrean",    realm:"h"},
+];
+function buildStops(){
+  const row=document.getElementById("stops");
+  STOPS.forEach(s=>{
+    const btn=document.createElement("button");
+    btn.className=`stop r${s.realm}`;
+    btn.textContent=s.label;
+    btn.dataset.id=s.id;
+    btn.addEventListener("click",()=>selectRegion(s.id,"stop"));
+    row.appendChild(btn);
+  });
+}
+
+/* ======================================================
+   INIT
+   ====================================================== */
+function init(){
+  // Build 3D scenes
+  SL.cosmos=[]; SP.cosmos=[]; ST.cosmos=[];
+  SL.inferno=[]; SP.inferno=[]; ST.inferno=[];
+  SL.paradiso=[]; SP.paradiso=[]; ST.paradiso=[];
+  buildCosmos(); buildInferno(); buildParadiso(); buildSubit();
+  // Build UI
+  buildAxisChips();
+  buildStops();
+  // Mobile schema toggle
+  const st=document.getElementById("schemaToggle");
+  if(st){ st.addEventListener("click",()=>{
+    const cs=document.getElementById("colSchema");
+    const open=cs.classList.toggle("open");
+    st.setAttribute("aria-expanded",open);
+    st.textContent=open?"▴ SECTIO":"⏸ SECTIO";
+  }); }
+  // Set initial state from STATE object (single source of truth)
+  onStateChange("init");
+  document.getElementById("sceneDesc").textContent=SCENE_DESCS.cosmos;
+  // Start render loop (demand-driven via invalidate)
+  invalidate();
+}
+
+init();
+})();
+</script>
+
+</body></html>

@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Атлас 64 архетипних позицій · SUBIT-KKTO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F2ECDE;
+    --paper-raised: #FBF7EE;
+    --ink: #26221B;
+    --ink-soft: #6E6656;
+    --line: #D9CFB8;
+    --line-strong: #B7A985;
+    --accent: #A83F1E;
+
+    --haru-e-bg: #E1EBCB; --haru-e-ac: #5C6B3F;
+    --haru-l-bg: #C9DCA0; --haru-l-ac: #4A5731;
+    --natsu-e-bg: #F5D6BE; --natsu-e-ac: #B85B33;
+    --natsu-l-bg: #EEB693; --natsu-l-ac: #9C3F1E;
+    --aki-e-bg: #EFDCAE; --aki-e-ac: #9A7830;
+    --aki-l-bg: #E1C27E; --aki-l-ac: #7C5C1E;
+    --fuyu-e-bg: #D3E1E6; --fuyu-e-ac: #4A6B7C;
+    --fuyu-l-bg: #B5CAD3; --fuyu-l-ac: #33505E;
+
+    --shadow: 0 8px 28px rgba(38,34,27,0.16);
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --paper: #1C1914; --paper-raised: #262119; --ink: #EDE6D6; --ink-soft: #A79E8B;
+      --line: #3A3327; --line-strong: #514732; --shadow: 0 8px 28px rgba(0,0,0,0.45);
+      --haru-e-bg: #3A4327; --haru-e-ac: #A6BC7C;
+      --haru-l-bg: #465228; --haru-l-ac: #B7D186;
+      --natsu-e-bg: #4A3122; --natsu-e-ac: #E39C6E;
+      --natsu-l-bg: #55291B; --natsu-l-ac: #EB8C5C;
+      --aki-e-bg: #453A20; --aki-e-ac: #D9B15E;
+      --aki-l-bg: #4F3E19; --aki-l-ac: #E3BE71;
+      --fuyu-e-bg: #223641; --fuyu-e-ac: #8FB6C4;
+      --fuyu-l-bg: #1C333D; --fuyu-l-ac: #9CC3D0;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #1C1914; --paper-raised: #262119; --ink: #EDE6D6; --ink-soft: #A79E8B;
+    --line: #3A3327; --line-strong: #514732; --shadow: 0 8px 28px rgba(0,0,0,0.45);
+    --haru-e-bg: #3A4327; --haru-e-ac: #A6BC7C;
+    --haru-l-bg: #465228; --haru-l-ac: #B7D186;
+    --natsu-e-bg: #4A3122; --natsu-e-ac: #E39C6E;
+    --natsu-l-bg: #55291B; --natsu-l-ac: #EB8C5C;
+    --aki-e-bg: #453A20; --aki-e-ac: #D9B15E;
+    --aki-l-bg: #4F3E19; --aki-l-ac: #E3BE71;
+    --fuyu-e-bg: #223641; --fuyu-e-ac: #8FB6C4;
+    --fuyu-l-bg: #1C333D; --fuyu-l-ac: #9CC3D0;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: 'PT Serif', Georgia, serif; font-weight: 700; margin: 0; }
+  .mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
+
+  header {
+    padding: env(safe-area-inset-top, 0px) 20px 0;
+    position: sticky; top: 0; z-index: 20;
+    background: linear-gradient(var(--paper) 78%, transparent);
+  }
+  .header-inner {
+    max-width: 980px; margin: 0 auto;
+    padding: 18px 0 14px;
+    border-bottom: 1px solid var(--line);
+    display: flex; flex-wrap: wrap; align-items: flex-end; gap: 14px 24px;
+    justify-content: space-between;
+  }
+  .title-block h1 { font-size: 1.5rem; line-height: 1.2; }
+  .title-block p { margin: 4px 0 0; color: var(--ink-soft); font-size: 0.85rem; }
+  .controls { display: flex; gap: 8px; flex-wrap: wrap; }
+  .seg {
+    display: flex; border: 1px solid var(--line-strong); border-radius: 8px; overflow: hidden;
+  }
+  .seg button {
+    border: none; background: var(--paper-raised); color: var(--ink);
+    padding: 7px 13px; font: inherit; font-size: 0.82rem; cursor: pointer;
+    border-right: 1px solid var(--line-strong);
+  }
+  .seg button:last-child { border-right: none; }
+  .seg button[aria-pressed="true"] { background: var(--accent); color: #FBF3E8; }
+  .btn {
+    border: 1px solid var(--line-strong); background: var(--paper-raised); color: var(--ink);
+    padding: 7px 14px; border-radius: 8px; font: inherit; font-size: 0.82rem; cursor: pointer;
+  }
+  .btn.primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  main { max-width: 980px; margin: 0 auto; padding: 20px 20px 64px; }
+
+  /* season filter chips */
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+  .chip {
+    border: 1px solid var(--line-strong); background: transparent; color: var(--ink-soft);
+    padding: 5px 12px; border-radius: 999px; font: inherit; font-size: 0.78rem; cursor: pointer;
+    transition: opacity .15s;
+  }
+  .chip[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  /* GRID VIEW */
+  .grid-scroll { overflow-x: auto; padding-bottom: 6px; margin: 0 -20px; padding-left: 20px; padding-right: 20px; }
+  .atlas-grid {
+    display: grid;
+    grid-template-columns: 92px repeat(8, minmax(42px, 1fr));
+    gap: 3px;
+    min-width: 620px;
+  }
+  .cell {
+    aspect-ratio: 1 / 1;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    border: none; border-radius: 6px; cursor: pointer;
+    font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--ink);
+    position: relative; padding: 0;
+    transition: transform .12s ease;
+  }
+  .cell:hover, .cell:focus-visible { transform: scale(1.08); z-index: 2; outline: 2px solid var(--ink); }
+  .cell.dim { opacity: 0.28; }
+  .cell .addr { font-weight: 500; }
+  .cell.canon::after {
+    content: "◆"; position: absolute; top: 2px; right: 3px; font-size: 0.5rem; color: var(--accent);
+  }
+  .row-head, .col-head {
+    display: flex; align-items: center; font-size: 0.72rem; color: var(--ink-soft);
+    line-height: 1.15;
+  }
+  .row-head { justify-content: flex-end; text-align: right; padding-right: 8px; }
+  .row-head .phase { color: var(--ink); font-weight: 600; display: block; }
+  .col-head { justify-content: center; text-align: center; flex-direction: column; padding-bottom: 4px; }
+  .col-head .op { font-weight: 600; color: var(--ink); }
+  .corner { }
+
+  .legend {
+    margin-top: 18px; font-size: 0.82rem; color: var(--ink-soft); line-height: 1.6;
+    border-top: 1px solid var(--line); padding-top: 14px;
+  }
+  .legend b { color: var(--ink); }
+  .legend .k { color: var(--accent); }
+
+  /* CYCLE VIEW */
+  .cycle-wrap { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+  #wheel { width: 100%; max-width: 460px; height: auto; }
+  .wheel-slice { cursor: pointer; transition: opacity .15s; }
+  .wheel-slice:hover, .wheel-slice:focus-visible { opacity: 0.82; outline: none; }
+  .wheel-label { font-family: 'IBM Plex Sans', sans-serif; font-size: 12px; font-weight: 600; fill: var(--ink); pointer-events: none; }
+  .wheel-sub { font-family: 'IBM Plex Mono', monospace; font-size: 9px; fill: var(--ink-soft); pointer-events: none; }
+  .wheel-center { font-family: 'PT Serif', serif; font-size: 13px; fill: var(--ink-soft); text-anchor: middle; }
+
+  /* MODAL / SHEET */
+  .overlay {
+    position: fixed; inset: 0; background: rgba(20,17,12,0.42);
+    display: flex; align-items: flex-end; justify-content: center;
+    z-index: 100; opacity: 0; pointer-events: none; transition: opacity .18s ease;
+  }
+  .overlay.open { opacity: 1; pointer-events: auto; }
+  .sheet {
+    background: var(--paper-raised); color: var(--ink);
+    width: 100%; max-width: 640px;
+    max-height: 84vh; overflow-y: auto;
+    border-radius: 16px 16px 0 0;
+    box-shadow: var(--shadow);
+    padding: 20px 22px calc(28px + env(safe-area-inset-bottom, 0px));
+    transform: translateY(24px);
+    transition: transform .18s ease;
+  }
+  .overlay.open .sheet { transform: translateY(0); }
+  @media (min-width: 720px) {
+    .overlay { align-items: center; }
+    .sheet { border-radius: 16px; max-height: 80vh; }
+  }
+  .sheet-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+  .sheet-close {
+    border: 1px solid var(--line-strong); background: transparent; color: var(--ink);
+    width: 30px; height: 30px; border-radius: 50%; font-size: 1rem; cursor: pointer; flex: none;
+  }
+  .addr-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 0.95rem;
+    background: var(--accent); color: #FBF3E8; border-radius: 6px; padding: 3px 9px; margin-right: 10px;
+  }
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px; margin-top: 14px; }
+  @media (max-width: 480px) { .detail-grid { grid-template-columns: 1fr; } }
+  .detail-block h4 { margin: 0 0 4px; font-size: 0.72rem; text-transform: none; color: var(--ink-soft); font-weight: 600; letter-spacing: .01em; }
+  .detail-block p { margin: 0; font-size: 0.92rem; line-height: 1.5; }
+  .example-note { margin-top: 14px; padding: 10px 12px; border-left: 2px solid var(--accent); background: rgba(168,63,30,0.08); font-size: 0.86rem; border-radius: 0 8px 8px 0; }
+
+  /* GUIDE */
+  .guide-body h3 { font-size: 1.05rem; margin: 22px 0 8px; }
+  .guide-body h3:first-child { margin-top: 4px; }
+  .guide-body p, .guide-body li { font-size: 0.92rem; line-height: 1.65; color: var(--ink); }
+  .guide-body p { margin: 0 0 10px; }
+  .guide-body ul { margin: 0 0 10px; padding-left: 1.2em; }
+  .guide-body .term { font-weight: 600; font-family: 'PT Serif', serif; }
+  .guide-body .formula { font-family: 'IBM Plex Mono', monospace; background: var(--paper); border: 1px solid var(--line); padding: 8px 12px; border-radius: 8px; display: inline-block; margin: 6px 0; }
+  .guide-nav { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; position: sticky; top: 0; background: var(--paper-raised); padding: 4px 0 10px; }
+  .guide-nav a { font-size: 0.76rem; color: var(--ink-soft); text-decoration: none; border: 1px solid var(--line); padding: 4px 10px; border-radius: 999px; }
+  .guide-nav a:hover { border-color: var(--line-strong); color: var(--ink); }
+  .caveat { border: 1px dashed var(--line-strong); border-radius: 10px; padding: 12px 14px; margin: 10px 0; font-size: 0.86rem; }
+
+  .hidden { display: none !important; }
+
+  ::-webkit-scrollbar { height: 8px; width: 8px; }
+  ::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="title-block">
+      <h1>Атлас 64 архетипних позицій</h1>
+      <p>SUBIT-KKTO · вісім кіґо-векторів × вісім кіредзі-операторів</p>
+    </div>
+    <div class="controls">
+      <div class="seg" role="tablist" aria-label="Режим перегляду">
+        <button id="tab-grid" role="tab" aria-pressed="true" onclick="setView('grid')">Ґрід</button>
+        <button id="tab-cycle" role="tab" aria-pressed="false" onclick="setView('cycle')">Цикл</button>
+      </div>
+      <button class="btn primary" onclick="openGuide()">Гайд для філолога</button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <div class="chips" id="chips" role="group" aria-label="Фільтр за сезоном">
+    <button class="chip" aria-pressed="true" data-season="all" onclick="setSeasonFilter('all')">Усі сезони</button>
+    <button class="chip" aria-pressed="false" data-season="haru" onclick="setSeasonFilter('haru')">Хару 春</button>
+    <button class="chip" aria-pressed="false" data-season="natsu" onclick="setSeasonFilter('natsu')">Нацу 夏</button>
+    <button class="chip" aria-pressed="false" data-season="aki" onclick="setSeasonFilter('aki')">Акі 秋</button>
+    <button class="chip" aria-pressed="false" data-season="fuyu" onclick="setSeasonFilter('fuyu')">Фую 冬</button>
+  </div>
+
+  <section id="view-grid">
+    <div class="grid-scroll">
+      <div class="atlas-grid" id="atlas-grid" role="grid" aria-label="Атлас 64 позицій"></div>
+    </div>
+    <div class="legend">
+      <p><b>Як читати ґрід.</b> Кожен <span class="k">рядок</span> — один із восьми кіґо-векторів (сезон і підфаза, задає архетип циклу). Кожна <span class="k">колонка</span> — один із восьми кіредзі-операторів (тип розрізу й інтенсивність). Адреса клітинки обчислюється як <span class="mono">SUBIT_ID = Kigo_Index × 8 + Operator_Index</span>. Позначка ◆ вказує на канонічний приклад із класичного корпусу (Басьо — 01, Оно-но Комачі — 42). Торкніться клітинки, щоб побачити повний опис.</p>
+    </div>
+  </section>
+
+  <section id="view-cycle" class="hidden">
+    <div class="cycle-wrap">
+      <svg id="wheel" viewBox="0 0 420 420" role="group" aria-label="Колесо восьми кіґо-фаз"></svg>
+      <p class="legend" style="margin-top:0; text-align:center; max-width: 520px;">
+        Колесо показує вісім кіґо-фаз як безперервний цикл — від «Пробудження» до «Глибини» і знову до «Пробудження». Торкніться сектора, щоб побачити всі вісім його кіредзі-варіантів (адреси цього кіґо-вектора).
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<!-- DETAIL SHEET -->
+<div class="overlay" id="detail-overlay" onclick="if(event.target===this) closeDetail()">
+  <div class="sheet" role="dialog" aria-modal="true" id="detail-sheet"></div>
+</div>
+
+<!-- GUIDE SHEET -->
+<div class="overlay" id="guide-overlay" onclick="if(event.target===this) closeGuide()">
+  <div class="sheet" role="dialog" aria-modal="true" style="max-width:760px;">
+    <div class="sheet-head">
+      <h2 style="font-size:1.2rem;">Гайд для філолога</h2>
+      <button class="sheet-close" onclick="closeGuide()" aria-label="Закрити">×</button>
+    </div>
+    <nav class="guide-nav">
+      <a href="#g-what">Що це</a>
+      <a href="#g-terms">Терміни</a>
+      <a href="#g-read">Як читати адресу</a>
+      <a href="#g-sym">Симетрії</a>
+      <a href="#g-examples">Приклади</a>
+      <a href="#g-waka">Вака-розширення</a>
+      <a href="#g-use">Як застосувати</a>
+      <a href="#g-caveat">Застереження</a>
+    </nav>
+    <div class="guide-body" id="guide-body"></div>
+  </div>
+</div>
+
+<script>
+/* ---------- DATA ---------- */
+
+const KIGO = [
+  { i:0, season:'haru', seasonName:'Хару', sub:'рання', phase:'Пробудження', archetype:'ІНІЦІАЦІЯ',
+    element:'Дерево / Вітер', affect:'надія, тривога', application:'origin story, запуск, зародження ідеї',
+    saijiki:'蛙 kawazu (жаба) — клас dobutsu', bgVar:'--haru-e-bg', acVar:'--haru-e-ac' },
+  { i:1, season:'haru', seasonName:'Хару', sub:'пізня', phase:'Розквіт', archetype:'ІНІЦІАЦІЯ (фаза розгортання)',
+    element:'Дерево / Вітер', affect:'піднесення, крихка повнота', application:'перші результати, розгортання ідеї',
+    saijiki:'桜 sakura (сакура) — клас shokubutsu', bgVar:'--haru-l-bg', acVar:'--haru-l-ac' },
+  { i:2, season:'natsu', seasonName:'Нацу', sub:'рання', phase:'Спалах', archetype:'ЕКСПАНСІЯ',
+    element:'Вогонь', affect:'запал, залучення', application:'ріст, набір темпу, перше зіткнення',
+    saijiki:'蛍 hotaru (світлячок) — клас dobutsu', bgVar:'--natsu-e-bg', acVar:'--natsu-e-ac' },
+  { i:3, season:'natsu', seasonName:'Нацу', sub:'пізня', phase:'Пік', archetype:'ЕКСПАНСІЯ (кульмінація)',
+    element:'Вогонь', affect:'пристрасть, виснаження', application:'конфлікт, кульмінація, критична маса',
+    saijiki:'花火 hanabi (феєрверк) — клас gyoji', bgVar:'--natsu-l-bg', acVar:'--natsu-l-ac' },
+  { i:4, season:'aki', seasonName:'Акі', sub:'рання', phase:'Схил', archetype:'РЕФЛЕКСІЯ',
+    element:'Метал', affect:'передчуття, перше усвідомлення', application:'перегляд курсу, ранній спад',
+    saijiki:'月見 tsukimi (милування місяцем) — клас gyoji', bgVar:'--aki-e-bg', acVar:'--aki-e-ac' },
+  { i:5, season:'aki', seasonName:'Акі', sub:'пізня', phase:'Згасання', archetype:'РЕФЛЕКСІЯ (термінальна)',
+    element:'Метал', affect:'ностальгія, ясність', application:'інсайт, ретроспектива, підбиття підсумків',
+    saijiki:'紅葉 momiji (осіннє листя) — клас shokubutsu', bgVar:'--aki-l-bg', acVar:'--aki-l-ac' },
+  { i:6, season:'fuyu', seasonName:'Фую', sub:'рання', phase:'Завмирання', archetype:'ЛАТЕНТНІСТЬ',
+    element:'Вода', affect:'стиск, зосередження', application:'згортання проєкту, підготовка архіву',
+    saijiki:'枯野 kareno (сухе поле) — клас chiri', bgVar:'--fuyu-e-bg', acVar:'--fuyu-e-ac' },
+  { i:7, season:'fuyu', seasonName:'Фую', sub:'пізня', phase:'Глибина', archetype:'ЛАТЕНТНІСТЬ (гранична)',
+    element:'Вода', affect:'тиша, самотність', application:'суть, архів, довга пауза',
+    saijiki:'雪 yuki (сніг) — клас tenmon', bgVar:'--fuyu-l-bg', acVar:'--fuyu-l-ac' },
+];
+
+const KIREJI = [
+  { i:0, op:'АПЕРТУРА', opEn:'APERTURE', intensity:"м'яка", word:'шепіт', topo:'розширює', fn:'легкий заклик, натяк на здивування' },
+  { i:1, op:'АПЕРТУРА', opEn:'APERTURE', intensity:'тверда', word:'заклик', topo:'розширює', fn:'виразний заклик, відкрите здивування' },
+  { i:2, op:'СЛІД', opEn:'TRACE', intensity:"м'який", word:'відлуння', topo:'згортає', fn:"легкий натяк на минуле, слабкий резонанс" },
+  { i:3, op:'СЛІД', opEn:'TRACE', intensity:'твердий', word:'спогад', topo:'згортає', fn:'виразна реалізація минулого' },
+  { i:4, op:'СЕВЕРЕНС', opEn:'SEVERANCE', intensity:"м'який", word:'зсув', topo:'розриває', fn:'легке зіставлення двох планів' },
+  { i:5, op:'СЕВЕРЕНС', opEn:'SEVERANCE', intensity:'твердий', word:'злам', topo:'розриває', fn:"жорстка диз'юнкція планів" },
+  { i:6, op:'СУСПЕНЗІЯ', opEn:'SUSPENSION', intensity:"м'яка", word:'зависання', topo:'призупиняє', fn:'легка незавершеність, тривання' },
+  { i:7, op:'СУСПЕНЗІЯ', opEn:'SUSPENSION', intensity:'тверда', word:'утримання', topo:'призупиняє', fn:'тривала затримана призупинка' },
+];
+
+const CANON = { 1: 'Мацуо Басьо — «фуру іке я / кавадзу тобікому / мідзу но ото» (старий ставок / жаба стрибає / звук води). Кіредзі «я» на межі першого рядка розкриває поле: вічність ставка проти миті стрибка.',
+                42: 'Оно-но Комачі — «хана но іро ва…» (колір квітів зів’яв…). Кіго «хана» вжито проти власного архетипу — не як цвітіння, а як в’янення; кіредзі СЛІД (м’який) згортає образ до спогаду.' };
+
+function buildAtlas() {
+  const arr = [];
+  for (const k of KIGO) {
+    for (const o of KIREJI) {
+      arr.push({ addr: k.i*8 + o.i, kigo: k, kireji: o, label: k.phase + ' ' + o.word });
+    }
+  }
+  return arr;
+}
+const ATLAS = buildAtlas();
+
+/* ---------- RENDER GRID ---------- */
+
+const gridEl = document.getElementById('atlas-grid');
+
+function pad2(n){ return n.toString().padStart(2,'0'); }
+
+function renderGrid() {
+  gridEl.innerHTML = '';
+  const corner = document.createElement('div');
+  corner.className = 'row-head corner';
+  gridEl.appendChild(corner);
+  KIREJI.forEach(o => {
+    const h = document.createElement('div');
+    h.className = 'col-head';
+    h.innerHTML = `<span class="op">${o.op.slice(0,2)}</span><span>${o.intensity}</span>`;
+    h.title = `${o.op} · ${o.intensity} (${o.word})`;
+    gridEl.appendChild(h);
+  });
+  KIGO.forEach(k => {
+    const rh = document.createElement('div');
+    rh.className = 'row-head';
+    rh.innerHTML = `<span><span class="phase">${k.phase}</span>${k.seasonName}, ${k.sub}</span>`;
+    gridEl.appendChild(rh);
+    KIREJI.forEach(o => {
+      const addr = k.i*8 + o.i;
+      const btn = document.createElement('button');
+      btn.className = 'cell' + (CANON[addr] ? ' canon' : '');
+      btn.dataset.season = k.season;
+      btn.style.background = `var(${k.bgVar})`;
+      btn.style.color = `var(${k.acVar})`;
+      btn.innerHTML = `<span class="addr">${pad2(addr)}</span>`;
+      btn.setAttribute('aria-label', `Адреса ${pad2(addr)}, ${k.phase} ${o.word}`);
+      btn.onclick = () => openDetail(addr);
+      gridEl.appendChild(btn);
+    });
+  });
+}
+renderGrid();
+
+/* ---------- DETAIL SHEET ---------- */
+
+function openDetail(addr) {
+  const pos = ATLAS[addr];
+  const { kigo: k, kireji: o } = pos;
+  const sheet = document.getElementById('detail-sheet');
+  sheet.innerHTML = `
+    <div class="sheet-head">
+      <div><span class="addr-badge">${pad2(addr)}</span><h2 style="display:inline; font-size:1.15rem;">«${pos.label}»</h2></div>
+      <button class="sheet-close" onclick="closeDetail()" aria-label="Закрити">×</button>
+    </div>
+    <p style="color:var(--ink-soft); font-size:0.85rem; margin:0 0 4px;">
+      Kigo_Index ${k.i} × 8 + Operator_Index ${o.i} = ${addr}
+    </p>
+    <div class="detail-grid">
+      <div class="detail-block">
+        <h4>Кіґо-вектор</h4>
+        <p><b>${k.seasonName}, ${k.sub} підфаза</b> — архетип ${k.archetype}</p>
+      </div>
+      <div class="detail-block">
+        <h4>Кіредзі-оператор</h4>
+        <p><b>${o.op}, ${o.intensity}</b> — топологічно ${o.topo}</p>
+      </div>
+      <div class="detail-block">
+        <h4>Стихія та афект</h4>
+        <p>${k.element} · ${k.affect}</p>
+      </div>
+      <div class="detail-block">
+        <h4>Функція розрізу</h4>
+        <p>${o.fn}</p>
+      </div>
+      <div class="detail-block">
+        <h4>Приклад сайдзікі</h4>
+        <p>${k.saijiki}</p>
+      </div>
+      <div class="detail-block">
+        <h4>Застосування в контенті</h4>
+        <p>${k.application}</p>
+      </div>
+    </div>
+    ${CANON[addr] ? `<div class="example-note"><b>Канонічний приклад.</b> ${CANON[addr]}</div>` : ''}
+  `;
+  document.getElementById('detail-overlay').classList.add('open');
+}
+function closeDetail() { document.getElementById('detail-overlay').classList.remove('open'); }
+
+/* ---------- SEASON FILTER ---------- */
+
+function setSeasonFilter(season) {
+  document.querySelectorAll('#chips .chip').forEach(c => c.setAttribute('aria-pressed', String(c.dataset.season === season)));
+  document.querySelectorAll('.cell').forEach(c => {
+    c.classList.toggle('dim', season !== 'all' && c.dataset.season !== season);
+  });
+  document.querySelectorAll('.wheel-slice').forEach(s => {
+    s.style.opacity = (season !== 'all' && s.dataset.season !== season) ? 0.28 : 1;
+  });
+}
+
+/* ---------- VIEW TOGGLE ---------- */
+
+function setView(v) {
+  document.getElementById('view-grid').classList.toggle('hidden', v !== 'grid');
+  document.getElementById('view-cycle').classList.toggle('hidden', v !== 'cycle');
+  document.getElementById('tab-grid').setAttribute('aria-pressed', String(v==='grid'));
+  document.getElementById('tab-cycle').setAttribute('aria-pressed', String(v==='cycle'));
+  if (v === 'cycle' && !window.__wheelBuilt) buildWheel();
+}
+
+/* ---------- CYCLE / WHEEL VIEW ---------- */
+
+function buildWheel() {
+  window.__wheelBuilt = true;
+  const svg = document.getElementById('wheel');
+  const cx = 210, cy = 210, rOuter = 190, rInner = 92;
+  const n = KIGO.length;
+  const ns = 'http://www.w3.org/2000/svg';
+
+  function arcPath(r0, r1, a0, a1) {
+    const p = (r,a) => [cx + r*Math.sin(a), cy - r*Math.cos(a)];
+    const [x0,y0] = p(r1,a0), [x1,y1] = p(r1,a1);
+    const [x2,y2] = p(r0,a1), [x3,y3] = p(r0,a0);
+    const large = (a1-a0) > Math.PI ? 1 : 0;
+    return `M ${x0} ${y0} A ${r1} ${r1} 0 ${large} 1 ${x1} ${y1} L ${x2} ${y2} A ${r0} ${r0} 0 ${large} 0 ${x3} ${y3} Z`;
+  }
+
+  KIGO.forEach((k, idx) => {
+    const a0 = (idx / n) * 2 * Math.PI;
+    const a1 = ((idx+1) / n) * 2 * Math.PI;
+    const mid = (a0+a1)/2;
+
+    const path = document.createElementNS(ns,'path');
+    path.setAttribute('d', arcPath(rInner, rOuter, a0, a1));
+    path.setAttribute('fill', `var(${k.bgVar})`);
+    path.setAttribute('stroke', 'var(--paper)');
+    path.setAttribute('stroke-width', '3');
+    path.classList.add('wheel-slice');
+    path.dataset.season = k.season;
+    path.setAttribute('tabindex', '0');
+    path.setAttribute('role', 'button');
+    path.setAttribute('aria-label', `${k.phase}, ${k.seasonName} ${k.sub}, адреси ${pad2(k.i*8)}–${pad2(k.i*8+7)}`);
+    path.onclick = () => openKigoGroup(k.i);
+    path.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openKigoGroup(k.i); } };
+    svg.appendChild(path);
+
+    const lr = (rInner+rOuter)/2 + 4;
+    const lx = cx + lr*Math.sin(mid), ly = cy - lr*Math.cos(mid);
+    const label = document.createElementNS(ns,'text');
+    label.setAttribute('x', lx); label.setAttribute('y', ly - 4);
+    label.setAttribute('text-anchor','middle');
+    label.setAttribute('class','wheel-label');
+    label.textContent = k.phase;
+    svg.appendChild(label);
+
+    const sub = document.createElementNS(ns,'text');
+    sub.setAttribute('x', lx); sub.setAttribute('y', ly + 10);
+    sub.setAttribute('text-anchor','middle');
+    sub.setAttribute('class','wheel-sub');
+    sub.textContent = `${pad2(k.i*8)}–${pad2(k.i*8+7)}`;
+    svg.appendChild(sub);
+  });
+
+  const center = document.createElementNS(ns,'text');
+  center.setAttribute('x', cx); center.setAttribute('y', cy - 4);
+  center.setAttribute('class', 'wheel-center');
+  center.textContent = 'рік поетичного';
+  svg.appendChild(center);
+  const center2 = document.createElementNS(ns,'text');
+  center2.setAttribute('x', cx); center2.setAttribute('y', cy + 14);
+  center2.setAttribute('class', 'wheel-center');
+  center2.textContent = 'циклу';
+  svg.appendChild(center2);
+}
+
+function openKigoGroup(kigoIndex) {
+  const k = KIGO[kigoIndex];
+  const sheet = document.getElementById('detail-sheet');
+  const rows = KIREJI.map(o => {
+    const addr = k.i*8 + o.i;
+    return `<button class="btn" style="width:100%; text-align:left; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;" onclick="openDetail(${addr})">
+      <span>${k.phase} ${o.word} <span style="color:var(--ink-soft); font-size:0.78rem;">(${o.op}, ${o.intensity})</span></span>
+      <span class="mono" style="color:var(--accent);">${pad2(addr)}</span>
+    </button>`;
+  }).join('');
+  sheet.innerHTML = `
+    <div class="sheet-head">
+      <h2 style="font-size:1.15rem;">${k.phase} — ${k.seasonName}, ${k.sub} підфаза</h2>
+      <button class="sheet-close" onclick="closeDetail()" aria-label="Закрити">×</button>
+    </div>
+    <p style="color:var(--ink-soft); font-size:0.88rem;">Архетип ${k.archetype} · ${k.element} · ${k.affect}</p>
+    <h4 style="margin:14px 0 6px; font-size:0.78rem; color:var(--ink-soft);">Вісім кіредзі-варіантів цього вектора</h4>
+    ${rows}
+  `;
+  document.getElementById('detail-overlay').classList.add('open');
+}
+
+/* ---------- GUIDE ---------- */
+
+function openGuide() { document.getElementById('guide-overlay').classList.add('open'); buildGuide(); }
+function closeGuide() { document.getElementById('guide-overlay').classList.remove('open'); }
+
+function buildGuide() {
+  const el = document.getElementById('guide-body');
+  if (el.dataset.built) return;
+  el.dataset.built = '1';
+  el.innerHTML = `
+    <h3 id="g-what">Що це за атлас</h3>
+    <p>Перед вами повний перелік із 64 станів простору <span class="term">S₀</span> моделі SUBIT-KKTO — формальної онтології поетичної топології, побудованої на матеріалі хайку та вака. Кожна позиція — це пара «сезонний архетип × тип розрізу», а не окремий конкретний вірш: атлас описує можливі топологічні позиції, у які може потрапити текст, а не каталог самих текстів.</p>
+
+    <h3 id="g-terms">Ключові терміни</h3>
+    <p><span class="term">Кіґо</span> (季語) — сезонне слово. В атласі кіґо мапиться не на календар, а на архетип фази циклу: ІНІЦІАЦІЯ (весна), ЕКСПАНСІЯ (літо), РЕФЛЕКСІЯ (осінь), ЛАТЕНТНІСТЬ (зима); кожен архетип має ранню й пізню підфазу — разом вісім кіґо-векторів.</p>
+    <p><span class="term">Кіредзі</span> (切れ字) — розрізове слово. У традиційній поетиці це «пауза», в моделі — оператор, що визначає тип відношення між двома образними планами: АПЕРТУРА (розширює), СЛІД (згортає), СЕВЕРЕНС (розриває), СУСПЕНЗІЯ (призупиняє); кожен оператор має м'яку й тверду інтенсивність — разом вісім кіредзі-варіантів.</p>
+    <p><span class="term">Сайдзікі</span> (歳時記) — традиційний сезонний словник, що класифікує кіґо за змістовими класами (небо, ландшафт, рослини, тварини, свята, побут, час). В атласі кожен кіґо-вектор супроводжується одним прикладом із сайдзікі як ілюстрацією, а не як вичерпним переліком.</p>
+    <p><span class="term">Топологічний ефект</span> — не стилістична характеристика, а структурна дія оператора на образний простір вірша: розширення відкриває нове поле, згортання повертає до попереднього стану, розрив ділить простір на дві незалежні площини, призупинення затримує розгортання без завершення.</p>
+
+    <h3 id="g-read">Як читати адресу позиції</h3>
+    <p>Адреса обчислюється прямим позиційним кодуванням:</p>
+    <div class="formula">SUBIT_ID = Kigo_Index × 8 + Operator_Index</div>
+    <p>де Kigo_Index ∈ {0,…,7} нумерує вісім кіґо-векторів за порядком «хару-рання → фую-пізня», а Operator_Index ∈ {0,…,7} нумерує вісім кіредзі-варіантів за порядком «АПЕРТУРА-м'яка → СУСПЕНЗІЯ-тверда». Поетична мітка складається за єдиним патерном: назва фази (наприклад, «Пік») плюс слово оператора (наприклад, «злам») — разом «Пік злам» для адреси 29.</p>
+
+    <h3 id="g-sym">Дві осі симетрії атласу</h3>
+    <p>Атлас організований не довільно, а за двома ортогональними осями. Перша — вісь <span class="term">інтенсивності</span>: у кожній парі колонок м'який варіант оператора завжди передує твердому, і ця вісь однакова для всіх чотирьох операторів. Друга — вісь <span class="term">фази циклу</span>: адреси 00–31 (хару й нацу) належать до висхідної половини року (ІНІЦІАЦІЯ → ЕКСПАНСІЯ), адреси 32–63 (акі й фую) — до низхідної половини (РЕФЛЕКСІЯ → ЛАТЕНТНІСТЬ). Ці дві осі відповідають рядкам і колонкам ґрід-вигляду атласу.</p>
+
+    <h3 id="g-examples">Два канонічні приклади</h3>
+    <p><b>01 — «Пробудження заклик».</b> ${CANON[1]}</p>
+    <p><b>42 — «Згасання відлуння».</b> ${CANON[42]}</p>
+    <p>Зіставлення цих двох позицій ілюструє головний методологічний хід моделі: різниця між віршами описується не темою і не формою, а різними топологічними траєкторіями в тому самому просторі — Басьо реалізує розширення на початку циклу, Комачі — згортання наприкінці.</p>
+
+    <h3 id="g-waka">Розширення для вака: чому їх немає в атласі</h3>
+    <p>Атлас із 64 позицій описує пару «кіґо × кіредзі», спільну для хайку і вака. Форма вака додатково послуговується двома власними, факультативними операторами, які не вписані в шестибітний простір і тому не мають власної адреси: <span class="term">какекотоба</span> (півотне слово, суперпозиція двох значень в одній лексемі — напр., «мацу» як «сосна» і як «чекати») та <span class="term">макуракотоба</span> (ритуальний епітет, посилання на традицію — хонкадорі). Аналізуючи вака, філолог спершу знаходить базову адресу за кіґо і кіредзі так само, як для хайку, а тоді додає ці два необов'язкові шари як окрему примітку.</p>
+
+    <h3 id="g-use">Як застосувати атлас у власному аналізі</h3>
+    <ul>
+      <li><b>Крок 0.</b> Перш ніж присвоювати вірш адресі, явно обґрунтуйте, як саме його сезонний образ і структура розрізу зводяться до восьми значень кожного слоту — це не завжди очевидно й вимагає окремого аргументу.</li>
+      <li><b>Крок 1.</b> Визначте кіґо-вектор: який сезонний архетип виражає образ, рання чи пізня підфаза.</li>
+      <li><b>Крок 2.</b> Визначте кіредзі-оператор: який тип розрізу організує вірш і з якою інтенсивністю.</li>
+      <li><b>Крок 3.</b> Обчисліть адресу і порівняйте отриману позицію з сусідніми — це часто виявляє, чи образ узгоджений зі своїм «очікуваним» архетипом, чи, як у Комачі, навпаки, конфліктує з ним.</li>
+      <li><b>Крок 4.</b> Для серії віршів (циклу, збірки) простежте послідовність адрес як траєкторію: чи вона стабілізується, звужується до ядра, повторюється циклічно, чи розходиться непередбачувано.</li>
+    </ul>
+
+    <h3 id="g-caveat">Епістемологічне застереження</h3>
+    <div class="caveat">
+      <p style="margin:0 0 8px;">Присвоєння вірша адресі 0–63 <b>не є емпіричним твердженням</b> про цей вірш — це акт кодування в наперед визначений скінченний алфавіт, який завжди можна оскаржити на етапі Кроку 0. При роботі з атласом варто явно розрізняти три рівні тверджень:</p>
+      <ul style="margin:0;">
+        <li>формально доведене в самій нотації (наприклад, кількість позицій дорівнює 64);</li>
+        <li>підтверджене конкретним джерелом (наприклад, позиція кіредзі в тексті оригіналу);</li>
+        <li>інтерпретаційна пропозиція дослідника (наприклад, віднесення образу до певного афекту).</li>
+      </ul>
+    </div>
+  `;
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') { closeDetail(); closeGuide(); }
+});
+</script>
+</body>
+</html>
