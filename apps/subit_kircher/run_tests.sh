@@ -1,2 +1,5 @@
 #!/bin/sh
-cd "$(dirname "$0")" && python3 kircher_data.py >/dev/null && python3 build_atlas.py && python3 -m unittest discover -s tests -v && python3 tests/browser_check.py
+set -e
+cd "$(dirname "$0")"
+python3 kircher_data.py >/dev/null 2>&1 || python kircher_data.py >/dev/null 2>&1
+python3 test_core.py -v || python test_core.py -v

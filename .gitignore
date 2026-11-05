@@ -23,3 +23,5 @@ build/
 *.tiff
 data/
 outputs/
+# SHA256SUMS of v6.13.37-39 covers this log
+!spec/subit_infinity_spec_v6/subit_v6.13.37-39/w7_release_axioms_v6.13.37.log

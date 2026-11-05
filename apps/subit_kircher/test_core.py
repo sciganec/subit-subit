@@ -1,7 +1,7 @@
-"""Тести ядра моделі K і цілісності даних. Запуск: python3 -m unittest discover -s tests -v   (з каталогу kircher/)."""
-import os, sys, json, unittest
+"""Тести ядра моделі K і цілісності даних. Запуск: python3 test_core.py   (з каталогу apps/subit_kircher/)."""
+import os, sys, json, unittest, tempfile
 from collections import Counter
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import io, contextlib
 with contextlib.redirect_stdout(io.StringIO()):
     import kircher_model as km
@@ -133,14 +133,16 @@ class TestData(unittest.TestCase):
             if e.get('end'): self.assertGreaterEqual(e['end'], e['year'])
 
     def test_export_roundtrip(self):
-        out = kd.export('/tmp/_atlas_test.json')
+        tmp_path = os.path.join(tempfile.gettempdir(), '_atlas_test.json')
+        out = kd.export(tmp_path)
         self.assertEqual(len(out['terms']), len(kd.TERMS)); self.assertEqual(len(out['claims']), len(kd.CLAIMS))
         for c in out['claims']: self.assertIn('weak', c)
 
     def test_spec_counts_match_data(self):
-        p = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'SUBIT-KIRCHER-v2.4.md')
+        p = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'SUBIT-KIRCHER-v2.4.md')
         if not os.path.exists(p): self.skipTest('специфікація v2.4 ще не згенерована')
-        s = open(p, encoding='utf-8').read()
+        with open(p, encoding='utf-8') as f:
+            s = f.read()
         self.assertIn('%d термінів' % len(kd.TERMS), s)
         self.assertNotIn('14 термінів Лексикону)', s.split('### 0.7')[1] if '### 0.7' in s else '')
 

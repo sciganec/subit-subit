@@ -1,11 +1,11 @@
 """Браузерні сценарії (Playwright/Chromium). Запуск: python3 tests/test_browser.py   (з каталогу kircher/, після build_atlas.py)."""
 import os, re, sys, json, io, contextlib
 from playwright.sync_api import sync_playwright
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, ROOT)
 with contextlib.redirect_stdout(io.StringIO()):
     import kircher_model as km
-URL = 'file://' + os.path.join(ROOT, 'atlas.html')
+URL = 'file://' + os.path.join(ROOT, 'subit_kircher.html')
 fails = []
 def check(name, cond, extra=''):
     print(('ok   ' if cond else 'FAIL ') + name + (' — ' + str(extra) if extra and not cond else ''))

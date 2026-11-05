@@ -556,4 +556,5 @@ def export(path):
 
 if __name__ == '__main__':
     summary()
-    export('/home/claude/kircher/atlas_data.json')
+    import os
+    export(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'atlas_data.json'))

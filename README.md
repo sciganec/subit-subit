@@ -6,7 +6,7 @@
 Статус: **архітектурний та математичний freeze; часткова Lean-верифікація**
 Дата: 3 листопада 2026 року
 
-Дослідницький модуль: **SUBIT-WARP v0.4** (DRAFT · CANONICAL CONSOLIDATION & AUDIT · NOT STABLE)
+Дослідницький модуль: **SUBIT-WARP v0.4** (W32 · DRAFT · NOT STABLE · RC NOT DECLARED)
 Альтернативні напрями: **SUBIT-ALT1 v0.1**, **SUBIT-ALT2 v0.2** (DRAFT · COMPUTED)
 
 ---
@@ -36,10 +36,13 @@ DEFINED                    ✅
 PROVED ON PAPER            ✅  (за статусами реєстру)
 AUDITED BY EXECUTION       ⛔
 LEAN-CHECKED               ✅  (частково: Дод. Е, W6–W8)
-BUILD-PASSED               ✅  (рівень Subit; з архіву, 2472 задачі, 0 попереджень)
+BUILD-PASSED-FROM-ARCHIVE  🟡  (частково: `lake build Subit`, 2472 задачі, 0 попереджень)
+CLEAN-REPRODUCIBLE-BUILD   ⛔  (конформної збірки всієї специфікації немає)
 IMPLEMENTED (conformant)   ⛔
 EMPIRICALLY SUPPORTED      ⛔
 ```
+
+Формулювання прапорця BUILD-PASSED узгоджено з §0.1 STABLE (розділення DOC-02, v6.13.33). Залишкові рядки «BUILD-PASSED: НІ» у тексті STABLE стосуються конформної збірки — див. [`ERRATA_v6.13.39.md`](spec/subit_infinity_spec_v6/subit_v6.13.37-39/ERRATA_v6.13.39.md).
 
 Це не тимчасовий стан. Це декларація того, чим репозиторій є: паперовою специфікацією з частковою машинною верифікацією.
 
@@ -96,31 +99,32 @@ EMPIRICALLY SUPPORTED      ⛔
 - **Q7** — універсальний об'єкт із доведеною властивістю.
 - **Q9** — несуперечність модальної системи разом із Ω.
 - **Q10′** — CHAOTIC × NONATTAINED (MIN_ZERO і MIN_POS).
-- **Q10″** — нульова ентропія для NONMIN_ZERO × ATTAINED.
-- **Q19** — ізоморфізм SUBIT_full з різними g.
-- **Q22** — вкладення автомата з |Q| > 64.
-- **Q25-new** — щільність ℛ_comp ∩ ℛ_caus у ℛ_caus.
-- **Q28b** — INVARIANT_DYNAMIC із глобальною g∞ на повному ℛ₀.
+- **Q22 (частково)** — вкладення автомата: закрито для 1 ≤ n ≤ 64^63 (2.4′); n > 64^63 відкрито (див. A4).
 - **A4** — для n > 64^63.
+
+**Закрито (за реєстром відкритих питань STABLE):** Q19 — твердження 7.8 (DP-f); Q10″ — LEAN-CHECKED для strictly зростаючих n_k (`W8GTree.lean`, `W8GEntropy.lean`); Q25-new — 10.10; Q28b — 11.11 / лема 11.9 (для S∞ × ℛ₀; для загального R — наслідок 11.11′ за гіпотези K ⊆ R).
 - **Lemma 11.9** — поза Tree∞ і S∞ × ℛ₀.
 
 ---
 
 ## SUBIT-WARP — підготовка до v6.14
 
-[`spec/subit_warp/`](spec/subit_warp/) — дослідницький модуль над SUBIT-∞. Поточна версія: **v0.4 (W21–W24)** (3 листопада 2026 р.).
+[`spec/subit_warp/`](spec/subit_warp/) — дослідницький модуль над SUBIT-∞. Поточна версія: **v0.4 (W21–W32)** (4 листопада 2026 р.). Заявлений канон: **W23′** (`subit_warp_v0.4_draft_13_canonical.md`); виправлення W29 (C-11…C-15) і висновки W25 ще не поглинуті. W32 (RC audit): Mathematical RC **не оголошено**.
 
 **Предмет:** взаємозв'язок між структурою дерева, граничною геометрією, інтегральними ядрами взаємодії та ієрархічною спектральною динамікою над Tree∞. Принцип: DO NOT COLLAPSE — CONTEXTUALIZE.
 
-**Архітектура W0–W24:**
+**Архітектура W0–W32:**
 - **W0–W6**: Базові конструкції (простір дерев, ультраметрика, геометрія межі $d_v$, заходи, ядра $K_q$ та $K_{Vl}$).
 - **W7–W10**: Спектральний оператор $T_q$, скінченна апроксимація, W9 Parameter Separation ($\beta = \alpha_w/\alpha_v$, $K_q = d_v^\beta$, інтегровність $\beta < D_v$), W10 верифікація (OPEN).
 - **W11–W20**: Неоднорідні моделі, операторні збурення, межі спектральної та структурної реконструкції.
 - **W21 (v0.4.0)**: Канонічна консолідація специфікації.
 - **W23**: Уніфікована виправлена математична специфікація (`subit_warp_v0.4_draft_11_canonical.md`).
-- **W24**: Первинний аудит математичних основ W0–W6 (`subit_warp_v0.4_draft_12_audit_2.md`).
+- **W24 / W24.16**: Первинний аудит основ W0–W6 (`draft_12_audit_2`, `draft_14_audit_3`).
+- **W23′**: Канон після W24.16 (`draft_13_canonical`).
+- **W25–W31**: Executable Verification, Integration Audit, Proof Closure, Regression Spec, Independent Audit (CORRECTIONS REQUIRED), Theorem Registry, Lean Blueprint (`draft_15`…`draft_21`).
+- **W32**: Canonical v0.4 Integration & Release Candidate Audit (`draft_22_w32_rc_audit`).
 
-**Статус:** DRAFT · CANONICAL CONSOLIDATION · NOT STABLE. Lean і чисельна перевірка WARP не завершені. Детальніше див. [`spec/subit_warp/README.md`](spec/subit_warp/README.md).
+**Статус:** DRAFT · NOT STABLE · RC NOT DECLARED. Lean і чисельна перевірка WARP не завершені. Детальніше див. [`spec/subit_warp/README.md`](spec/subit_warp/README.md).
 
 ---
 
@@ -183,7 +187,7 @@ spec/
   subit_infinity_spec_v5_1_EXT/      — v5.1 EXT: монографія, коментарі
   subit_infinity_spec_v6/
     …/subit_v6.13.37-39/             — ← ПОТОЧНИЙ СТАБІЛЬНИЙ РЕЛІЗ
-  subit_warp/                        — SUBIT-WARP v0.3 (підготовка до v6.14)
+  subit_warp/                        — SUBIT-WARP v0.4, W21–W32 (підготовка до v6.14)
   subit_alternative/                 — SUBIT-ALT1/ALT2 (альтернативні напрями)
 apps/
   gastronaut/   subit_dantis/   subit_kircher/   subit_kkto/
