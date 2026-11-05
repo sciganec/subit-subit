@@ -47,7 +47,6 @@ WARP не змінює означень базової системи і не є
 - **W29**: Independent Mathematical Audit — **CORRECTIONS REQUIRED** (C-11…C-15) (`subit_warp_v0.4_draft_19.md`).
 - **W30**: Theorem Registry & Proof Dependency — MATHEMATICALLY CONSOLIDATED DRAFT (`subit_warp_v0.4_draft_20.md`).
 - **W31**: Formalization Boundary & Lean Blueprint — архітектуру задано, реалізації немає (`subit_warp_v0.4_draft_21.md`).
-- **W32**: Canonical v0.4 Integration & Release Candidate Audit — Mathematical RC **не оголошено** (`subit_warp_v0.4_draft_22_w32_rc_audit.md`).
 
 **Поточний канон:** `draft_13_canonical` (W23′) залишається заявленим каноном, доки виправлення W29 (C-11…C-15) і застереження W25 (q→1, q⁰=1, ordered/unordered fingerprint) не поглинуті наступною канонічною редакцією (крок I-3 W32). Далі — W33 (RC checklist).
 
@@ -81,7 +80,6 @@ WARP не змінює означень базової системи і не є
 | [`subit_warp_v0.4_draft_19.md`](subit_warp_v0.4_draft_19.md) | **W29: Independent Mathematical Audit — CORRECTIONS REQUIRED** |
 | [`subit_warp_v0.4_draft_20.md`](subit_warp_v0.4_draft_20.md) | **W30: Theorem Registry & Proof Dependency** |
 | [`subit_warp_v0.4_draft_21.md`](subit_warp_v0.4_draft_21.md) | **W31: Formalization Boundary & Lean Blueprint** |
-| [`subit_warp_v0.4_draft_22_w32_rc_audit.md`](subit_warp_v0.4_draft_22_w32_rc_audit.md) | **W32: Canonical v0.4 Integration & RC Audit** |
 
 ---
 
