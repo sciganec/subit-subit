@@ -1,8 +1,8 @@
 # SUBIT-WARP
 
-**Статус:** DRAFT · CANONICAL CONSOLIDATION & AUDIT · NOT STABLE  
-**Версія:** v0.4 (W21–W24)  
-**Дата:** 3 листопада 2026 року  
+**Статус:** DRAFT · NOT STABLE  
+**Версія:** v0.4 (W21–W24.16 / W23′)  
+**Дата:** 4 листопада 2026 року  
 **Базова система:** SUBIT-∞ v6.13.39 Stable  
 **Принцип:** DO NOT COLLAPSE — CONTEXTUALIZE  
 
@@ -24,7 +24,7 @@ WARP не змінює означень базової системи і не є
 
 ---
 
-## Архітектурний розподіл (W0–W24)
+## Архітектурний розподіл (W0–W24.16)
 
 Модуль розділяє дві фундаментальні системи:
 
@@ -37,7 +37,10 @@ WARP не змінює означень базової системи і не є
 - **W11–W20**: Неоднорідні моделі, межі спектральної та структурної реконструкції.
 - **W21 / v0.4.0**: Канонічна консолідація (`subit_warp_v0.4.0.md`).
 - **W23**: Канонічні виправлення та уніфікована математична специфікація (`subit_warp_v0.4_draft_11_canonical.md`).
-- **W24**: Первинний аудит математичних основ W0–W6 (`subit_warp_v0.4_draft_12_audit_2.md`).
+- **W24**: Первинний аудит математичних основ W0–W6 (`subit_warp_v0.4_draft_12_audit_2.md`, частковий).
+- **W24.16**: Завершений первинний аудит W0–W6 за оригінальним текстом v0.3 (`subit_warp_v0.4_draft_12_audit_3.md`).
+- **W23′**: Канонічна редакція W23, виправлена після W24.16: d_F / d_Σ / d_T / d_H, PartialTree як нове розширення, Tω⁺ і теорема W5.4′, K_Vl(ξ,ξ)=0 (`subit_warp_v0.4_draft_13_canonical.md`).
+- **W25 (наступний етап)**: Executable Verification — незалежна обчислювальна перевірка спектральних формул, норм, апроксимацій і регресійні тести для Tω⁺.
 
 ---
 
@@ -59,12 +62,14 @@ WARP не змінює означень базової системи і не є
 | [`subit_warp_v0.4.0.md`](subit_warp_v0.4.0.md) | **v0.4.0: W21 Canonical Specification** |
 | [`subit_warp_v0.4_draft_1.md`](subit_warp_v0.4_draft_1.md) – [`_10_audit.md`](subit_warp_v0.4_draft_10_audit.md) | Чернетки та аудити еволюції v0.4 |
 | [`subit_warp_v0.4_draft_11_canonical.md`](subit_warp_v0.4_draft_11_canonical.md) | **W23: Canonical Corrections & Unified Specification** |
-| [`subit_warp_v0.4_draft_12_audit_2.md`](subit_warp_v0.4_draft_12_audit_2.md) | **W24: Primary Source Audit (W0–W6 foundations)** |
+| [`subit_warp_v0.4_draft_12_audit_2.md`](subit_warp_v0.4_draft_12_audit_2.md) | **W24: Primary Source Audit (W0–W6 foundations)** — частковий, доповнено W24.16 |
+| [`subit_warp_v0.4_draft_12_audit_3.md`](subit_warp_v0.4_draft_12_audit_3.md) | **W24.16: Primary Source Audit W0–W6 — COMPLETED WITH CORRECTIONS** |
+| [`subit_warp_v0.4_draft_13_canonical.md`](subit_warp_v0.4_draft_13_canonical.md) | **W23′: Canonical Corrections after W24.16 (поточна канонічна редакція)** |
 
 ---
 
 ## Обмеження та статус
 
-- Специфікація має статус **DRAFT / CANONICAL CONSOLIDATION**.
+- Специфікація має статус **DRAFT · NOT STABLE**; наступний етап — W25 (Executable Verification).
 - Lean 4 формалізація та чисельна сертифікація матриць $3^n \times 3^n$ залишаються відкритими (W10).
 - Фізична інтерпретація гравітаційних аналогій — суто дослідницька гіпотеза зі статусом `PHYSICAL-CORRESPONDENCE-OPEN`.
