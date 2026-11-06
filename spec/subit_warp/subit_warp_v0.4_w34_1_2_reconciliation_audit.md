@@ -215,7 +215,7 @@ a(x,y) ∈ N₀ for all x,y∈L,
 
 and for x≠y:
 
-0 ≤ a(x,y) < min(h(x),h(y).
+0 ≤ a(x,y) < min(h(x),h(y)).
 
 The existing symmetry, diagonal, and hierarchy conditions then define integer LCA depths suitable for the level-set construction.
 
