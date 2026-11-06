@@ -1,8 +1,8 @@
 # SUBIT-WARP
 
 **Статус:** DRAFT · NOT STABLE  
-**Версія:** v0.4 (W21–W32; канон W23′, RC не оголошено)  
-**Дата:** 4 листопада 2026 року  
+**Версія:** v0.4 (W23′ + W34.1.3–W34.1.8 integration/release-preparation series; RC не оголошено)  
+**Дата:** 5 листопада 2026 року  
 **Базова система:** SUBIT-∞ v6.13.39 Stable  
 **Принцип:** DO NOT COLLAPSE — CONTEXTUALIZE  
 
@@ -48,7 +48,7 @@ WARP не змінює означень базової системи і не є
 - **W30**: Theorem Registry & Proof Dependency — MATHEMATICALLY CONSOLIDATED DRAFT (`subit_warp_v0.4_draft_20.md`).
 - **W31**: Formalization Boundary & Lean Blueprint — архітектуру задано, реалізації немає (`subit_warp_v0.4_draft_21.md`).
 
-**Поточний канон:** `draft_13_canonical` (W23′) залишається заявленим каноном, доки виправлення W29 (C-11…C-15) і застереження W25 (q→1, q⁰=1, ordered/unordered fingerprint) не поглинуті наступною канонічною редакцією (крок I-3 W32). Далі — W33 (RC checklist).
+**Поточний канон:** `draft_13_canonical` (W23′) залишається базовим канонічним текстом, але не містить нової інтеграції W34.1.5. Робоча гілка готує Enc/Dec correspondence, окремий partial-tree layer і W23′/W30 integration proposal. За W34.1.8 статус залишається **BLOCKED · NOT STABLE · NOT RELEASE CANDIDATE**. W20 full regression і Lean kernel verification не виконані.
 
 ---
 
@@ -88,3 +88,17 @@ WARP не змінює означень базової системи і не є
 - Специфікація має статус **DRAFT · NOT STABLE**; поточний канон — W23′ (`draft_13`); RC не оголошено (W32); наступний крок — I-3, далі W33.
 - Lean 4 формалізація та чисельна сертифікація матриць $3^n \times 3^n$ залишаються відкритими (W10).
 - Фізична інтерпретація гравітаційних аналогій — суто дослідницька гіпотеза зі статусом `PHYSICAL-CORRESPONDENCE-OPEN`.
+
+
+## W34.1 — поточна інтеграція та підготовка релізу
+
+| Файл | Зміст | Статус |
+|---|---|---|
+| `subit_warp_v0.4_draft_32.md` | W34.1.3 Corrected Canonical Integration Patch | ANALYTICALLY CHECKED |
+| `subit_warp_v0.4_draft_33.md` | W34.1.4 Independent Mathematical Audit | CONDITIONAL PASS |
+| `subit_warp_v0.4_draft_34.md` | W34.1.5 Enc/Dec Correspondence Patch | TYPE-CORRECTED; NOT LEAN-VERIFIED |
+| `subit_warp_v0.4_draft_35.md` | W34.1.6 Independent Enc/Dec Review | CONDITIONAL PASS |
+| `subit_warp_v0.4_draft_36.md` | W34.1.7 W23′ / W30 Integration Proposal | PROPOSAL ONLY; NOT APPLIED |
+| `subit_warp_v0.4_draft_37.md` | W34.1.8 Stable Release Readiness Gate | BLOCKED; NOT STABLE |
+
+**Важливо:** W34.1.7 не змінює W23′ або W30. W20 full regression, Lean kernel verification та implementation audit не можна вважати пройденими без фактичного виконання й відтворюваних артефактів.
