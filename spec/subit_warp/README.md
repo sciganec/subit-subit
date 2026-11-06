@@ -1,7 +1,7 @@
 # SUBIT-WARP
 
 **Статус:** DRAFT · NOT STABLE  
-**Версія:** v0.4 (W23′ + W34.1.3–W34.1.8 integration/release-preparation series; RC не оголошено)  
+**Версія:** v0.4 (W23′ + W34.1.3–W34.1.9 integration/release-preparation series; RC не оголошено)  
 **Дата:** 5 листопада 2026 року  
 **Базова система:** SUBIT-∞ v6.13.39 Stable  
 **Принцип:** DO NOT COLLAPSE — CONTEXTUALIZE  
@@ -100,5 +100,6 @@ WARP не змінює означень базової системи і не є
 | `subit_warp_v0.4_draft_35.md` | W34.1.6 Independent Enc/Dec Review | CONDITIONAL PASS |
 | `subit_warp_v0.4_draft_36.md` | W34.1.7 W23′ / W30 Integration Proposal | PROPOSAL ONLY; NOT APPLIED |
 | `subit_warp_v0.4_draft_37.md` | W34.1.8 Stable Release Readiness Gate | BLOCKED; NOT STABLE |
+| `subit_warp_v0.4_draft_38.md` | W34.1.9 Independent Review of W23′ / W30 Integration Proposal | CONDITIONAL PASS; FULL DIFF REVIEW REQUIRED |
 
 **Важливо:** W34.1.7 не змінює W23′ або W30. W20 full regression, Lean kernel verification та implementation audit не можна вважати пройденими без фактичного виконання й відтворюваних артефактів.
