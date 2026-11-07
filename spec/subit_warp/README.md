@@ -48,7 +48,7 @@ WARP не змінює означень базової системи і не є
 - **W30**: Theorem Registry & Proof Dependency — MATHEMATICALLY CONSOLIDATED DRAFT (`subit_warp_v0.4_draft_20.md`).
 - **W31**: Formalization Boundary & Lean Blueprint — архітектуру задано, реалізації немає (`subit_warp_v0.4_draft_21.md`).
 
-**Поточний канон:** `draft_13_canonical` (W23′) залишається базовим канонічним текстом, але не містить нової інтеграції W34.1.5. Робоча гілка готує Enc/Dec correspondence, окремий partial-tree layer і W23′/W30 integration proposal. За W34.1.8 статус залишається **BLOCKED · NOT STABLE · NOT RELEASE CANDIDATE**. W20 full regression і Lean kernel verification не виконані.
+**Поточний канон:** Канонічна консолідована специфікація [`subit_warp_v0.4.md`](subit_warp_v0.4.md) інтегрує W23′, W30, W31, W34.1.3–W34.1.9 та W39–W47 (Enc/Dec correspondence, повне розмежування метрик d_F / d_Σ / d_T / d_H, домен Tω⁺, повні теореми T-001–T-021, чисельну перевірку W25 та Lean 4 Blueprint W45). За критеріями реліз-контролю статус залишається **DRAFT · NOT STABLE · NOT RELEASE CANDIDATE (RC NOT DECLARED)**, оскільки повний регресійний пакет W20, Lean kernel verification та implementation audit (Rust) очікують завершення (ворота G-12, G-13, G-14).
 
 ---
 
@@ -80,6 +80,18 @@ WARP не змінює означень базової системи і не є
 | [`subit_warp_v0.4_draft_19.md`](subit_warp_v0.4_draft_19.md) | **W29: Independent Mathematical Audit — CORRECTIONS REQUIRED** |
 | [`subit_warp_v0.4_draft_20.md`](subit_warp_v0.4_draft_20.md) | **W30: Theorem Registry & Proof Dependency** |
 | [`subit_warp_v0.4_draft_21.md`](subit_warp_v0.4_draft_21.md) | **W31: Formalization Boundary & Lean Blueprint** |
+| [`subit_warp_v0.4_draft_39_architecture.md`](subit_warp_v0.4_draft_39_architecture.md) | **W39: Consolidation Architecture** |
+| [`subit_warp_v0.4_draft_40.md`](subit_warp_v0.4_draft_40.md) | **W40: Mathematical Consistency Audit** |
+| [`subit_warp_v0.4_draft_41.md`](subit_warp_v0.4_draft_41.md) | **W39.1: Metric and Type Consistency Correction** |
+| [`subit_warp_v0.4_draft_42.md`](subit_warp_v0.4_draft_42.md) | **W41: T-007 Boundary Map Proof Closure** |
+| [`subit_warp_v0.4_draft_43.md`](subit_warp_v0.4_draft_43.md) | **W42: Spectral Theory Audit** |
+| [`subit_warp_v0.4_draft_44.md`](subit_warp_v0.4_draft_44.md) | **W43: Encoding/Decoding Correctness Audit** |
+| [`subit_warp_v0.4_draft_45.md`](subit_warp_v0.4_draft_45.md) | **W44: W20 Regression Audit** |
+| [`subit_warp_v0.4_draft_46.md`](subit_warp_v0.4_draft_46.md) | **W45: Lean 4 Formalization Blueprint** |
+| [`subit_warp_v0.4_draft_47.md`](subit_warp_v0.4_draft_47.md) | **W46: Independent Release Audit** |
+| [`subit_warp_v0.4_draft_48.md`](subit_warp_v0.4_draft_48.md) | **W47: Source Recovery & Dependency Closure** |
+| [`subit_warp_v0.4_draft_49_consolodated.md`](subit_warp_v0.4_draft_49_consolodated.md) | **Consolidated Draft — C1** |
+| [`subit_warp_v0.4.md`](subit_warp_v0.4.md) | **Канонічна специфікація SUBIT-WARP v0.4 (Consolidated Canonical C2)** |
 
 ---
 
