@@ -55,7 +55,7 @@ sha256sum -c SHA256SUMS
 
 | Модуль | Свідок | Зміст |
 | :-- | :-- | :-- |
-| `W6Word.lean`, `W6Tree.lean` | W6 | Interaction Kernels |
+| `W6Word.lean`, `W6Tree.lean` | W6 | NONMIN_ZERO × NONATTAINED (зсув на $d = \beta\alpha\beta\alpha^2\dots$) |
 | `W7Abstract.lean`, `W7Word.lean`, `W7Tree.lean` | W7 | Spectral Operator (NONMIN_POS × NONATTAINED) |
 | `W8GTree.lean` | W8 | NONMIN_ZERO × ATTAINED |
 | Додаток Е | — | Перелік усіх Lean-теорем |
@@ -88,4 +88,4 @@ Lean-код і Rust-код не змінювались між v6.13.37 і v6.13.
 - Повне відтворення з нуля разом із Mathlib не виконувалось.
 - Людського рецензента немає; перевірка — мультиагентна перехресна.
 - Відкриті: Q10′ (MIN × NONATTAINED), A4 для n > 64^63, Lemma 11.9 поза Tree∞ і S∞ × ℛ₀.
-- Статус d_ω у §10.10 («DP-f за уточненням 10.2») відкрито для рішення.
+- Означення 10.10 ($d_\omega$) перенумеровано на 10.12 (DP-f за H), твердження 10.10 (Q25-new щільність) — DP-f за уточненням 10.2.

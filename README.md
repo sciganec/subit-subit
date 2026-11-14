@@ -35,14 +35,14 @@ SUBIT-64 ≼ₐ SUBIT⁺ ≼ₐ SUBIT-CAT ≼ₐ SUBIT-∞
 DEFINED                    ✅
 PROVED ON PAPER            ✅  (за статусами реєстру)
 AUDITED BY EXECUTION       ⛔
-LEAN-CHECKED               ✅  (частково: Дод. Е, W6–W8)
+LEAN-CHECKED               🟡  (частково: Дод. Е, W6–W8)
 BUILD-PASSED-FROM-ARCHIVE  🟡  (частково: `lake build Subit`, 2472 задачі, 0 попереджень)
-CLEAN-REPRODUCIBLE-BUILD   ⛔  (конформної збірки всієї специфікації немає)
+CLEAN-REPRODUCIBLE-BUILD   🟡  (частково: з кешем Mathlib незалежно відтворено під час аудиту)
 IMPLEMENTED (conformant)   ⛔
 EMPIRICALLY SUPPORTED      ⛔
 ```
 
-Формулювання прапорця BUILD-PASSED узгоджено з §0.1 STABLE (розділення DOC-02, v6.13.33). Залишкові рядки «BUILD-PASSED: НІ» у тексті STABLE стосуються конформної збірки — див. [`ERRATA_v6.13.39.md`](spec/subit_infinity_spec_v6/subit_v6.13.37-39/ERRATA_v6.13.39.md).
+Формулювання прапорця `BUILD-PASSED-FROM-ARCHIVE` узгоджено між кореневим README, §0.1 специфікації та підсумком Додатка Д: статус **🟡 ЧАСТКОВО** (рівень Subit: 2472 задачі, 0 попереджень; збірка самого Mathlib з нуля в проєкті не виконувалася). Конформна реалізація всієї специфікації як єдиної програми відсутня (`IMPLEMENTED: ⛔`). Див. [`ERRATA_v6.13.39.md`](spec/subit_infinity_spec_v6/subit_v6.13.37-39/ERRATA_v6.13.39.md).
 
 Це не тимчасовий стан. Це декларація того, чим репозиторій є: паперовою специфікацією з частковою машинною верифікацією.
 
@@ -79,7 +79,15 @@ EMPIRICALLY SUPPORTED      ⛔
 - **K1–K5** — категорійні твердження, добуток ρ ⊠ σ, вкладення Dyn₊ → SUBIT.
 - **C1–C7** — OrbitType, InclusionType, залежності складових, скінченна періодичність, класифікація множин.
 - **M1, M2, M3, M6** — LTL-семантика, контрмодель гейтінгової двоїстості.
-- **W1–W8** — свідки реалізовності класів S(τ): FIXED, PERIODIC, MIN_ZERO, MIN_POS, NONMIN_POS, NONMIN_ZERO×ATTAINED, NONMIN_POS×NONATTAINED (W7 LEAN-CHECKED), NONMIN_ZERO (W8 LEAN-CHECKED).
+- **W1–W8** — свідки реалізовності класів $S(\tau)$:
+  - **W1**: FIXED × ATTAINED
+  - **W2**: FIXED × NONATTAINED
+  - **W3**: PERIODIC × ATTAINED та PERIODIC × NONATTAINED
+  - **W4**: MIN_ZERO × ATTAINED (одометр enc_αβ)
+  - **W5**: NONMIN_POS × ATTAINED ($h_{\mathrm{top}} = \log 2$)
+  - **W6**: NONMIN_ZERO × NONATTAINED (**LEAN-CHECKED**, v6.13.36: `W6Word.lean`, `W6Tree.lean`)
+  - **W7**: NONMIN_POS × NONATTAINED (**LEAN-CHECKED**, v6.13.37: `W7Abstract.lean`, `W7Word.lean`, `W7Tree.lean`)
+  - **W8**: NONMIN_ZERO × ATTAINED (**LEAN-CHECKED** для строго зростаючих $n_k$, v6.13.28: `W8GTree.lean`)
 - **D3, D4, D3′** — ентропія нерозтягувальних відображень, неможливість CHAOTIC при g∞ = π_R.
 - **D5, D6** — MIN_POS × ATTAINED (за EXT-1), шість класів S(τ) вичерпні.
 
@@ -96,14 +104,20 @@ EMPIRICALLY SUPPORTED      ⛔
 
 - **Q1** — декартова замкненість SUBIT і SUBIT_full.
 - **Q2′** — проміжна топосна категорія з нетривіальною g.
+- **Q6′** — алгоритмічна перевірка модальних формул (відкритість/замкненість класу).
 - **Q7** — універсальний об'єкт із доведеною властивістю.
 - **Q9** — несуперечність модальної системи разом із Ω.
-- **Q10′** — CHAOTIC × NONATTAINED (MIN_ZERO і MIN_POS).
-- **Q22 (частково)** — вкладення автомата: закрито для 1 ≤ n ≤ 64^63 (2.4′); n > 64^63 відкрито (див. A4).
-- **A4** — для n > 64^63.
+- **Q10′** — свідки для комірок MIN_ZERO × NONATTAINED та MIN_POS × NONATTAINED (зауваження: MIN_ZERO має $h_{\mathrm{top}} = 0$, тому не є CHAOTIC).
+- **Q22 (частково)** — вкладення автомата: закрито для $1 \le n \le 64^{63}$ (Тв. 2.4′, A4); для $n > 64^{63}$ залишається відкритим.
+- **A4** — вкладення автомата для $n > 64^{63}$.
+- **Лема 11.9** — продовження локально стискаючого відображення поза $\mathrm{Tree}_\infty$ і $S_\infty \times \mathcal{R}_0$.
 
-**Закрито (за реєстром відкритих питань STABLE):** Q19 — твердження 7.8 (DP-f); Q10″ — LEAN-CHECKED для strictly зростаючих n_k (`W8GTree.lean`, `W8GEntropy.lean`); Q25-new — 10.10; Q28b — 11.11 / лема 11.9 (для S∞ × ℛ₀; для загального R — наслідок 11.11′ за гіпотези K ⊆ R).
-- **Lemma 11.9** — поза Tree∞ і S∞ × ℛ₀.
+**Закрито (за Додатком В та реєстром STABLE):**
+- **Q6** — відкидання модальної контрмоделі M4 (ЗАКРИТО).
+- **Q10″** — W8 для довільних строго зростаючих $n_k$ (**LEAN-CHECKED**, `W8GTree.lean`, `W8GEntropy.lean`).
+- **Q19** — ізоморфізм об'єктів SUBIT_full з різними правилами $g$ (Твердження 7.8, **LEAN-CHECKED**, `IsoFull.lean`).
+- **Q25-new** — щільність $\mathcal{R}_{\mathrm{comp}} \cap \mathcal{R}_{\mathrm{caus}}$ у $\mathcal{R}_{\mathrm{caus}}$ за $d_{\mathcal{R}}$ (Твердження 10.10, DP-f за уточненням 10.2; $\mathrm{Tree}$-частина **LEAN-CHECKED**, `DensityTree.lean`, `RComp.lean`).
+- **Q28a / Q28b** — інваріантна динаміка із глобальною $g_\infty$ на повному $\mathcal{R}_0$ (Твердження 11.11, **LEAN-CHECKED**, `Q28b.lean`; для $R \subseteq \mathcal{R}_0$ — Наслідок 11.11′ за гіпотези $K \subseteq R$).
 
 ---
 

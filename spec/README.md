@@ -12,6 +12,8 @@
 | :-- | :-- |
 | [`subit_v6.13.39_stable.md`](subit_infinity_spec_v6/subit_v6.13.37-39/subit_v6.13.39_stable.md) | Специфікація (заморожений текст) |
 | [`subit_v6.13.37_lean_mathlib.tar.gz`](subit_infinity_spec_v6/subit_v6.13.37-39/subit_v6.13.37_lean_mathlib.tar.gz) | Lean 4.32.0 / Mathlib v4.32.0 (2472 задачі, 0 попереджень) |
+| [`subit_v6.13.31_rust.tar.gz`](subit_infinity_spec_v6/subit_v6.13.37-39/subit_v6.13.31_rust.tar.gz) | Rust-крейт референтної реалізації (57 тестів) |
+| [`w7_release_axioms_v6.13.37.lean`](subit_infinity_spec_v6/subit_v6.13.37-39/w7_release_axioms_v6.13.37.lean) | Скрипт перевірки аксіом W7 |
 | [`subit_v6.13.39_manifest.md`](subit_infinity_spec_v6/subit_v6.13.37-39/subit_v6.13.39_manifest.md) | Хеші SHA-256 і відтворюваність |
 | [`subit_v6.13.39_release_notes.md`](subit_infinity_spec_v6/subit_v6.13.37-39/subit_v6.13.39_release_notes.md) | Що змінено |
 | [`subit_v6.13.39_review.md`](subit_infinity_spec_v6/subit_v6.13.37-39/subit_v6.13.39_review.md) | Журнал рецензування |
@@ -84,5 +86,6 @@ SUBIT-WARP v0.4 — формальна модель деревоподібних
 | `subit_infinity_spec_v6/subit_v6.13.20-29/` | v6.13.20–29 | — |
 | `subit_infinity_spec_v6/subit_v6.13.30-36/` | v6.13.30–36 | — |
 | `subit_infinity_spec_v6/subit_v6.13.37-39/` | **v6.13.37–39 (STABLE)** | Nov 2026 |
+| `subit_infinity_spec_v6/subit_v6.14.0/` | v6.14.0 (Draft / RC Prep) | Nov 2026 |
 
 Принцип: **незворотність**. Жодна версія не вилучається.
