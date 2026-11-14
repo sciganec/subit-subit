@@ -6,8 +6,10 @@
 Статус: **архітектурний та математичний freeze; часткова Lean-верифікація**
 Дата: 3 листопада 2026 року
 
-Дослідницький модуль: **SUBIT-WARP v0.4** (W32 · DRAFT · NOT STABLE · RC NOT DECLARED)
-Альтернативні напрями: **SUBIT-ALT1 v0.1**, **SUBIT-ALT2 v0.2** (DRAFT · COMPUTED)
+Підготовка інтегрованого релізу: **SUBIT-∞ v6.14.0** ([`spec/subit_infinity_spec_v6/subit_v6.14.0/`](spec/subit_infinity_spec_v6/subit_v6.14.0/)) — інтеграція ALT v0.3 та WARP v0.4 (DRAFT · RC PREPARATION)
+Дослідницький модуль: **SUBIT-WARP v0.4** (W63 · DRAFT · NOT STABLE · RC NOT DECLARED)
+Альтернативні напрями: **SUBIT-ALT1 v0.1**, **SUBIT-ALT2 v0.2**, **SUBIT-ALT v0.3** (DRAFT · COMPUTED)
+Онтологічний каркас: **TETRAKSIS v0.2** ([`spec/subit_tetraksis/`](spec/subit_tetraksis/))
 
 ---
 

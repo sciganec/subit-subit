@@ -23,6 +23,20 @@
 
 ---
 
+## Підготовка релізу v6.14.0 (Інтеграція ALT + WARP)
+
+**[subit_infinity_spec_v6/subit_v6.14.0/](subit_infinity_spec_v6/subit_v6.14.0/)**
+
+Інтегрована консолідована специфікація, що об'єднує стабільне ядро v6.13.39, алгебраїчно-контекстну надбудову SUBIT-ALT v0.3 та гранично-спектральний модуль SUBIT-WARP v0.4.
+
+| Файл | Призначення |
+| :-- | :-- |
+| [`subit_v6.14.0.md`](subit_infinity_spec_v6/subit_v6.14.0/subit_v6.14.0.md) | Повна інтегрована специфікація v6.14.0 (16 розділів) |
+| [`subit_v6.14.0_release_notes.md`](subit_infinity_spec_v6/subit_v6.14.0/subit_v6.14.0_release_notes.md) | Release Notes (детальний опис нововведень та змін) |
+| [`subit_v6.14.0_readme.md`](subit_infinity_spec_v6/subit_v6.14.0/subit_v6.14.0_readme.md) | Навігація релізу та стан воріт |
+
+---
+
 ## Дослідницький модуль (підготовка до v6.14)
 
 **[subit_warp/](subit_warp/)**
@@ -61,6 +75,19 @@ SUBIT-WARP v0.4 — формальна модель деревоподібних
 | [`subit_alt2_v0.1/subit_alt2_spec_v0.2.md`](subit_alternative/subit_alt2_v0.1/subit_alt2_spec_v0.2.md) | **ALT2 v0.2**: гексаграма як відношення доступності |
 | [`subit_alt2_v0.1/verify_alt2.py`](subit_alternative/subit_alt2_v0.1/verify_alt2.py) | Перевірка ALT2 v0.1 |
 | [`subit_alt2_v0.1/verify_alt2b.py`](subit_alternative/subit_alt2_v0.1/verify_alt2b.py) | Перевірка ALT2 v0.2 |
+
+---
+
+## Онтологічний каркас
+
+**[subit_tetraksis/](subit_tetraksis/)**
+
+Канонічна 4-рівнева, 10-вузлова онтологічна структура системи SUBIT (Monad → Dyad → Triad → Tetrad).
+
+| Файл | Зміст |
+| :-- | :-- |
+| [`tetraksis_v0.2.md`](subit_tetraksis/tetraksis_v0.2.md) | Канонічна специфікація рівнів та вузлів TETRAKSIS |
+| [`tetraksis_schema_v0.2.txt`](subit_tetraksis/tetraksis_schema_v0.2.txt) | Текстова схема та прогресія |
 
 ---
 

@@ -92,6 +92,11 @@ WARP не змінює означень базової системи і не є
 | [`subit_warp_v0.4_draft_48.md`](subit_warp_v0.4_draft_48.md) | **W47: Source Recovery & Dependency Closure** |
 | [`subit_warp_v0.4_draft_49_consolodated.md`](subit_warp_v0.4_draft_49_consolodated.md) | **Consolidated Draft — C1** |
 | [`subit_warp_v0.4.md`](subit_warp_v0.4.md) | **Канонічна специфікація SUBIT-WARP v0.4 (Consolidated Canonical C2)** |
+| `drafts/subit_warp_v0.4_draft_50.md` – `_53.md` | **W48–W49.1**: C2 Integration Audit, Corrective Patch, Fingerprint Reconstruction |
+| `drafts/subit_warp_v0.4_draft_54.md` – `_57.md` | **W50–W53**: Reconstruction Axioms, Minimal Axioms, Tree-Class Selection, Boundary Quotients |
+| `drafts/subit_warp_v0.4_draft_58.md` – `_60.md` | **W54–W55**: Enriched Boundary, Information Geometry and Audit |
+| `drafts/subit_warp_v0.4_draft_61.md` – `_65.md` | **W56–W60**: Boundary Dynamics, Grafting Semigroup, Symbolic Geometry, Transfer Dynamics, Verification |
+| `drafts/subit_warp_v0.4_draft_66.md` – `_68.md` | **W61–W63**: Operator Limits, Spectral Measures, Observational Equivalence & Information Quotients |
 
 ---
 

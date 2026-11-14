@@ -1,0 +1,60 @@
+TETRAKSIS — SCHEMA (ASCII)
+
+Level Structure:
+1 → 2 → 3 → 4 nodes
+Monad → Dyad → Triad → Tetrad
+
+------------------------------------
+LEVEL 1 — MONAD
+------------------------------------
+            [ ∞ ]
+        (undivided whole)
+
+------------------------------------
+LEVEL 2 — DYAD
+------------------------------------
+        [ 0 ]     [ 1 ]
+       Anima     Animus
+   (receptive) (active pole)
+
+------------------------------------
+LEVEL 3 — TRIAD
+------------------------------------
+         WHO
+       /  |  \
+   WHERE  |  WHEN
+          |
+   (orientation axes)
+
+------------------------------------
+LEVEL 4 — TETRAD (BIGRAMS)
+------------------------------------
+        10 (ME / EAST  / SPRING)
+        11 (WE / SOUTH / SUMMER)
+        01 (YOU / WEST / AUTUMN)
+        00 (THEY / NORTH / WINTER)
+
+------------------------------------
+FULL SHAPE (1 → 2 → 3 → 4)
+------------------------------------
+
+                 ∞
+                /  \
+               0    1
+              / \  / \
+            WHO WHERE WHEN
+            /    \/    \
+           10   11 01   00
+
+(Conceptual expansion: each level unfolds the next)
+
+------------------------------------
+NOTES
+------------------------------------
+• Geometry is symmetric; semantics are asymmetric  
+• Each level increases differentiation  
+• Level 4 provides the SUBIT bigram alphabet  
+• This schema is the canonical minimal form of TETRAKSIS
+
+------------------------------------
+END OF FILE
