@@ -1,0 +1,83 @@
+
+========================================================================
+ALT-8 : structure of GL_3(Z4)
+========================================================================
+generators          : 15
+|GL_3(Z4)|          : 86016
+[PASS] |GL_3(Z4)| = 86016 = 2^12*3*7
+[PASS] every element has odd determinant
+|K|                 : 512
+[PASS] |K| = 512 = 2^9
+[PASS] K abelian
+[PASS] K exponent 2  => K = (Z/2)^9
+[PASS] K normal in GL_3(Z4)
+[PASS] |G/K| = 168 = |GL_3(F2)|
+order(s)            : 2
+order(t)            : 3
+(st)^7              : I
+[PASS] s^2 = 1, t^3 = 1, (st)^7 = 1  (presentation of GL_3(F2)=PSL(2,7))
+|<s,t>|             : 168
+[PASS] |<s,t>| = 168
+[PASS] complement C meets K trivially (C cap K = {I})
+[PASS] reduction of complement is all of GL_3(F2)  =>  1 -> K -> G -> GL_3(F2) -> 1 SPLITS
+|H|                 : 3072   index: 28
+[PASS] |H| = 3072 = 2^9*6, index 28
+[PASS] H = {M : M mod 2 is a permutation matrix} = Z4-monomial matrices
+[PASS] permutation matrices (order 6) form a complement: H = K : S_3
+distinct cycle types: 17
+[PASS] exactly 17 cycle types among the 86016 invertible matrices
+   order | order mod 2 | cycle type (len^mult)         | count
+       1 |          1 | 1^64                         | 1
+       2 |          1 | 1^32,2^16                    | 49
+       2 |          1 | 1^16,2^24                    | 294
+       2 |          1 | 1^8,2^28                     | 168
+       2 |          2 | 1^16,2^24                    | 336
+       2 |          2 | 1^8,2^28                     | 336
+       3 |          3 | 1^4,3^20                     | 3584
+       4 |          2 | 1^16,2^8,4^8                 | 336
+       4 |          2 | 1^8,2^12,4^8                 | 3024
+       4 |          2 | 1^8,2^4,4^12                 | 2688
+       4 |          2 | 1^4,2^6,4^12                 | 4032
+       4 |          4 | 1^4,2^2,4^14                 | 5376
+       6 |          3 | 1^2,2^1,3^10,6^5             | 3584
+       6 |          3 | 1^4,3^4,6^8                  | 10752
+       6 |          3 | 1^2,2^1,3^2,6^9              | 10752
+       7 |          7 | 1^1,7^9                      | 3072
+       8 |          4 | 1^4,2^6,4^4,8^4              | 5376
+       8 |          4 | 1^2,2^1,4^3,8^6              | 10752
+      14 |          7 | 1^1,7^1,14^4                 | 21504
+element-order counts: {1: 1, 2: 1183, 3: 3584, 4: 15456, 6: 25088, 7: 3072, 8: 16128, 14: 21504}
+[PASS] |{order 7}| = 3072
+[PASS] |{order 3}| = 3584
+conjugacy classes   : 60
+class-size histogram: {1: 2, 21: 2, 24: 2, 28: 2, 42: 2, 56: 2, 84: 2, 336: 4, 672: 6, 1344: 4, 1536: 16, 2688: 8, 3584: 8}
+[PASS] exactly 60 conjugacy classes
+[PASS] class-size histogram = {1:2,21:2,24:2,28:2,42:2,56:2,84:2,336:4,672:6,1344:4,1536:16,2688:8,3584:8}
+
+========================================================================
+ALT-9 : bisimulation of S5 + N (nuclear hexagram)
+========================================================================
+classes (S5 + N + atoms) : 36  (stabilized at depth 3)
+classes (N + atoms)      : 21
+[PASS] S5 + N + atoms has exactly 36 bisimulation classes
+[PASS] N + atoms has 21 classes (spec ?10 table)
+classes (S5 + atoms only): 8
+[PASS] S5 + atoms only has 8 classes (spec ?10 table)
+[PASS] bisimulation partition == product partition P
+[PASS] #P = 3 (w-blocks) * 4 (e) * 3 (n-blocks) = 36
+P class-size histogram   : {1: 16, 2: 16, 4: 4}
+[PASS] P size histogram = {1:16, 2:16, 4:4}
+[PASS] P is stable under R_w, R_e, R_n and N  (=> a bisimulation)
+nu-orbits                : 36
+[PASS] nu-orbits = 36 (the upper bound of ALT 16.1)
+[PASS] nu-orbit partition != bisimulation partition (36 = 36 is a coincidence)
+nu-partition violations for N: 54 of 64
+[PASS] nu is NOT an automorphism of N (violations > 0)
+|Aut(S; R_w,R_e,R_n; N; atoms)| : 1
+[PASS] Aut(structure) is trivial  => no automorphism-orbit explanation of 36
+
+========================================================================
+SUMMARY
+========================================================================
+checks passed: 30 / 30
+RESULT: ALL CHECKS PASSED
