@@ -29,3 +29,5 @@ outputs/
 !spec/subit_infinity_spec_v6/subit_v6.14.1/verify_alt7_affine.log
 # SHA256SUMS of v6.14.2 covers this log
 !spec/subit_infinity_spec_v6/subit_v6.14.2/verify_alt8_alt9.log
+# SHA256SUMS of v6.14.3 covers this log
+!spec/subit_infinity_spec_v6/subit_v6.14.3/verify_alt10_alt11.log

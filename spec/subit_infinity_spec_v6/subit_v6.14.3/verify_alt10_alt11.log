@@ -1,0 +1,57 @@
+
+========================================================================
+ALT-10 : hybrid logic on the frame F
+========================================================================
+each R_i : 16 classes of size 4 : True
+[PASS] each R_i is an equivalence with 16 classes of size 4
+classes  S5^3 (no atoms) : 1
+classes  S5^3 + {w=0}    : 2
+classes  S5^3 + 3 atoms  : 8
+classes  S5^3 + 12 atoms : 64
+[PASS] S5^3 with no atoms has 1 class (2 definable sets)
+[PASS] S5^3 + {w=0} has 2 classes (4 sets)
+[PASS] S5^3 + {w=0,e=0,n=0} has 8 classes (256 sets)
+[PASS] S5^3 + all 12 coordinate atoms has 64 classes (all 2^64 sets)
+[PASS] every nominal n_p denotes a singleton {p}
+[PASS] each coordinate atom {x_i=a} is the union of 16 nominals
+[PASS] each nominal n_p = {w=pw} cap {e=pe} cap {n=pn} (p=(1,2,3) checked)
+R-closure of one nominal : 8 sets, size profile {1: 1, 4: 3, 16: 3, 64: 1}
+[PASS] R-closure of a single nominal has 8 sets with sizes {1,4,4,4,16,16,16,64}
+Boolean atoms            : 8
+[PASS] the Boolean algebra of the R-closure has 8 atoms => 256 sets
+Boolean algebra size     : 256
+[PASS] the algebra has 2^8 = 256 elements
+[PASS] the algebra is closed under R_w, R_e, R_n
+[PASS] the algebra contains the singleton {p}, the lines and the planes
+[PASS] @_n maps every definable set to 0 or S (adds only global constants)
+[PASS] one nominal (256 sets) equals S5^3 + {w=0,e=0,n=0} (256 sets)
+[PASS] all 64 nominals define all 64 singletons => all 2^64 sets (same as 12 atoms)
+
+========================================================================
+ALT-11 : monster operators M_k^b versus the satisfaction operator @
+========================================================================
+[PASS] @ is idempotent (@@phi <-> @phi) on all circumstance atoms
+k=0 b=0 : commutation set = {c_k=b} x S, |.| = 1024
+k=0 b=1 : commutation set = {c_k=b} x S, |.| = 1024
+k=0 b=2 : commutation set = {c_k=b} x S, |.| = 1024
+k=0 b=3 : commutation set = {c_k=b} x S, |.| = 1024
+k=1 b=0 : commutation set = {c_k=b} x S, |.| = 1024
+k=1 b=1 : commutation set = {c_k=b} x S, |.| = 1024
+k=1 b=2 : commutation set = {c_k=b} x S, |.| = 1024
+k=1 b=3 : commutation set = {c_k=b} x S, |.| = 1024
+k=2 b=0 : commutation set = {c_k=b} x S, |.| = 1024
+k=2 b=1 : commutation set = {c_k=b} x S, |.| = 1024
+k=2 b=2 : commutation set = {c_k=b} x S, |.| = 1024
+k=2 b=3 : commutation set = {c_k=b} x S, |.| = 1024
+[PASS] M_k^b @phi <-> @M_k^b phi holds exactly on {c_k=b} x S (1024 of 4096 pairs), all 12 (k,b)
+[PASS] the commutation hyperplane has 1024 = 16 * 64 pairs
+[PASS] for c_k != b the witness phi = o_k=b separates (3072 failing pairs, all 12 (k,b))
+[PASS] no M_k^b commutes with @ on all of S x S
+[PASS] the diagonal Mtilde_k^b (context AND circumstance) commutes with @ on all 4096 pairs
+[PASS] the diagonal Mtilde_k^b commutes with @ on all context atoms too
+
+========================================================================
+SUMMARY
+========================================================================
+checks passed: 23 / 23
+RESULT: ALL CHECKS PASSED
