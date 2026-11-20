@@ -1,0 +1,67 @@
+
+========================================================================
+ALT-12 (a) : the axis-visibility relations R_S
+========================================================================
+[PASS] all 8 relations R_S are equivalences on S
+[PASS] class counts 64/16/16/16/4/4/4/1 for -,w,e,n,we,wn,en,wen   {'-': 64, 'w': 16, 'e': 16, 'n': 16, 'we': 4, 'wn': 4, 'en': 4, 'wen': 1}
+[PASS] R_S cap R_T = R_{S cap T} (all 64 pairs)
+[PASS] cl(R_S u R_T) = R_{S u T} (all 64 pairs)
+[PASS] R_S o R_T = R_{S u T} (all 64 pairs; hence commuting S5^4)
+
+========================================================================
+ALT-12 (b) : distributed vs common knowledge over all 4096 assignments
+========================================================================
+[PASS] number of four-agent axis-visibility assignments
+[PASS] D = R_{cap_a S_a} on all 4096 assignments
+[PASS] C = R_{cup_a S_a} on all 4096 assignments
+[PASS] D refines C on all 4096 assignments (K^D phi -> K^C phi valid)
+[PASS] D = C exactly when all four S_a coincide (8 of 4096)   count=8
+[PASS] #classes(D) distribution {1:1,4:45,16:675,64:3375}
+[PASS] #classes(C) distribution mirror {1:3375,4:675,16:45,64:1}
+[PASS] |classes(D)| = 4^(3 - |cap S_a|) on all assignments
+
+========================================================================
+ALT-12 (c) : canonical proposal  ME:-  WE:{w}  YOU:{e}  THEY:{n}
+========================================================================
+  agent ME   blind to   - : 64 classes of size 1
+  agent WE   blind to   w : 16 classes of size 4
+  agent YOU  blind to   e : 16 classes of size 4
+  agent THEY blind to   n : 16 classes of size 4
+[PASS] ME (identity) has 64 singleton classes
+[PASS] WE, YOU, THEY each have 16 classes of size 4
+[PASS] distributed knowledge of all four = R_- = identity (omniscient)
+[PASS] common knowledge of all four = R_wen = universal (no nontrivial C)
+[PASS] the three non-ME agents ALONE have D = identity (jointly omniscient)
+[PASS] coordinate visibility: ME sees all; each other agent blind to one distinct axis   {'ME': ['w', 'e', 'n'], 'WE': ['e', 'n'], 'YOU': ['w', 'n'], 'THEY': ['w', 'e']}
+[PASS] the three blind axes {w},{e},{n} are pairwise distinct and cover all axes
+[PASS] R_D subset R_a subset R_C for every agent (K^D -> K_a -> K^C)
+[PASS] D strictly refines C for the canonical proposal (D = identity != universal)
+
+========================================================================
+ALT-12 (d) : definable sets of the 4-agent frame
+========================================================================
+  bisimulation classes : no atoms 1 ; +{w=0} 2 ; +3 atoms 8 ; +12 atoms 64
+[PASS] no atoms -> 1 class (2 definable sets)
+[PASS] +{w=0} -> 2 classes (4 sets)
+[PASS] +{w=0,e=0,n=0} -> 8 classes (256 sets)
+[PASS] +all 12 coordinate atoms -> 64 classes (all 2^64 sets)
+
+========================================================================
+ALT-12 (e) : S5, implication chain, truth for ME
+========================================================================
+[PASS] each agent relation is an S5 equivalence (K,T,4,5 valid)
+[PASS] K^D phi -> K_a phi valid for every agent (R_D subset R_a)
+[PASS] K_a phi -> K^C phi valid for every agent (R_a subset R_C)
+[PASS] truth lemma for ME: K_ME phi <-> phi (R_ME = identity)
+
+========================================================================
+ALT-12 (f) : relabelling symmetry and group monotonicity
+========================================================================
+[PASS] every S4 relabelling of the WHO coordinate preserves all R_S (agent labels not canonical)
+[PASS] adding an agent refines D and coarsens C (group monotonicity)
+
+========================================================================
+SUMMARY
+========================================================================
+checks passed: 32 / 32
+RESULT: ALL CHECKS PASSED
