@@ -6,7 +6,7 @@
 Статус: **архітектурний та математичний freeze; часткова Lean-верифікація**
 Дата: 3 листопада 2026 року
 
-Підготовка інтегрованого релізу: **SUBIT-∞ v6.14.4 (RC CANDIDATE PREPARATION)** ([`spec/subit_infinity_spec_v6/subit_v6.14.4/`](spec/subit_infinity_spec_v6/subit_v6.14.4/)) — інтеграція ядра v6.13.39, ALT v0.3 (ALT-7–ALT-12) та WARP v0.4 (T-001–T-021)
+Підготовка інтегрованого релізу: **SUBIT-∞ v6.14.0-RC1 (Release Candidate)** — див. маніфест [`RELEASE_v6.14.0-RC1.md`](spec/subit_infinity_spec_v6/RELEASE_v6.14.0-RC1.md) (на базі [`subit_v6.14.4/`](spec/subit_infinity_spec_v6/subit_v6.14.4/): інтеграція ядра v6.13.39, ALT v0.3 з теоремами ALT-7–ALT-12 та WARP v0.4 T-001–T-021)
 Дослідницький модуль: **SUBIT-WARP v0.4** (W0–W63, канон C2 · DRAFT · NOT STABLE) ([`spec/subit_warp/`](spec/subit_warp/))
 Альтернативні напрями: **SUBIT-ALT** (ALT1 v0.1, ALT2 v0.2, ALT v0.3 · COMPUTED) ([`spec/subit_alt/`](spec/subit_alt/))
 Універсальна архітектура: **SUBIT-ECOSYSTEM v0.1.0** (каталог 64 модулів, SCR-контракти) ([`spec/SUBIT_ECOSYSTEM/`](spec/SUBIT_ECOSYSTEM/))
