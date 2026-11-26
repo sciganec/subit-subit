@@ -6,9 +6,11 @@
 Статус: **архітектурний та математичний freeze; часткова Lean-верифікація**
 Дата: 3 листопада 2026 року
 
-Підготовка інтегрованого релізу: **SUBIT-∞ v6.14.0** ([`spec/subit_infinity_spec_v6/subit_v6.14.0/`](spec/subit_infinity_spec_v6/subit_v6.14.0/)) — інтеграція ALT v0.3 та WARP v0.4 (DRAFT · RC PREPARATION)
-Дослідницький модуль: **SUBIT-WARP v0.4** (W63 · DRAFT · NOT STABLE · RC NOT DECLARED)
-Альтернативні напрями: **SUBIT-ALT1 v0.1**, **SUBIT-ALT2 v0.2**, **SUBIT-ALT v0.3** (DRAFT · COMPUTED)
+Підготовка інтегрованого релізу: **SUBIT-∞ v6.14.4 (RC CANDIDATE PREPARATION)** ([`spec/subit_infinity_spec_v6/subit_v6.14.4/`](spec/subit_infinity_spec_v6/subit_v6.14.4/)) — інтеграція ядра v6.13.39, ALT v0.3 (ALT-7–ALT-12) та WARP v0.4 (T-001–T-021)
+Дослідницький модуль: **SUBIT-WARP v0.4** (W0–W63, канон C2 · DRAFT · NOT STABLE) ([`spec/subit_warp/`](spec/subit_warp/))
+Альтернативні напрями: **SUBIT-ALT** (ALT1 v0.1, ALT2 v0.2, ALT v0.3 · COMPUTED) ([`spec/subit_alt/`](spec/subit_alt/))
+Універсальна архітектура: **SUBIT-ECOSYSTEM v0.1.0** (каталог 64 модулів, SCR-контракти) ([`spec/SUBIT_ECOSYSTEM/`](spec/SUBIT_ECOSYSTEM/))
+Генеративна морфологія: **SUBIT-SHELL v1.0** (10 специфікацій морфогенезу мушель) ([`spec/SUBIT_ECOSYSTEM/SUBIT_SHELL/`](spec/SUBIT_ECOSYSTEM/SUBIT_SHELL/))
 Онтологічний каркас: **TETRAKSIS v0.2** ([`spec/subit_tetraksis/`](spec/subit_tetraksis/))
 
 ---
@@ -123,74 +125,98 @@ EMPIRICALLY SUPPORTED      ⛔
 
 ---
 
-## SUBIT-WARP — підготовка до v6.14
+## Підготовка інтегрованого релізу v6.14
 
-[`spec/subit_warp/`](spec/subit_warp/) — дослідницький модуль над SUBIT-∞. Поточна версія: **v0.4 (W21–W32)** (4 листопада 2026 р.). Заявлений канон: **W23′** (`subit_warp_v0.4_draft_13_canonical.md`); виправлення W29 (C-11…C-15) і висновки W25 ще не поглинуті. W32 (RC audit): Mathematical RC **не оголошено**.
+[`spec/subit_infinity_spec_v6/`](spec/subit_infinity_spec_v6/) — серія інтегрованих реліз-кандидатських чернеток (v6.14.0 → v6.14.4), що здійснює консолідацію базового ядра v6.13.39 з алгеброю тора $\mathbb{Z}_4^3$ (SUBIT-ALT) та гранично-спектральною теорією (SUBIT-WARP).
 
-**Предмет:** взаємозв'язок між структурою дерева, граничною геометрією, інтегральними ядрами взаємодії та ієрархічною спектральною динамікою над Tree∞. Принцип: DO NOT COLLAPSE — CONTEXTUALIZE.
+Поточний кандидат у реліз: **SUBIT-∞ v6.14.4 (RC CANDIDATE PREPARATION)** ([`spec/subit_infinity_spec_v6/subit_v6.14.4/`](spec/subit_infinity_spec_v6/subit_v6.14.4/)).
 
-**Архітектура W0–W32:**
-- **W0–W6**: Базові конструкції (простір дерев, ультраметрика, геометрія межі $d_v$, заходи, ядра $K_q$ та $K_{Vl}$).
-- **W7–W10**: Спектральний оператор $T_q$, скінченна апроксимація, W9 Parameter Separation ($\beta = \alpha_w/\alpha_v$, $K_q = d_v^\beta$, інтегровність $\beta < D_v$), W10 верифікація (OPEN).
-- **W11–W20**: Неоднорідні моделі, операторні збурення, межі спектральної та структурної реконструкції.
-- **W21 (v0.4.0)**: Канонічна консолідація специфікації.
-- **W23**: Уніфікована виправлена математична специфікація (`subit_warp_v0.4_draft_11_canonical.md`).
-- **W24 / W24.16**: Первинний аудит основ W0–W6 (`draft_12_audit_2`, `draft_14_audit_3`).
-- **W23′**: Канон після W24.16 (`draft_13_canonical`).
-- **W25–W31**: Executable Verification, Integration Audit, Proof Closure, Regression Spec, Independent Audit (CORRECTIONS REQUIRED), Theorem Registry, Lean Blueprint (`draft_15`…`draft_21`).
-- **W32**: Canonical v0.4 Integration & Release Candidate Audit (`draft_22_w32_rc_audit`).
-
-**Статус:** DRAFT · NOT STABLE · RC NOT DECLARED. Lean і чисельна перевірка WARP не завершені. Детальніше див. [`spec/subit_warp/README.md`](spec/subit_warp/README.md).
+**Ключові результати серії v6.14:**
+- **v6.14.0**: первинна 5-рівнева інтеграція ядра з ALT v0.3 та WARP v0.4.
+- **v6.14.1**: теорема **ALT-7** (79 орбітних профілів усіх $4^{12}$ афінних відображень над $\mathbb{Z}_4^3$; закрито Q-ALT1); інтеграція онтології TETRAKSIS та екосистеми SUBIT-ECOSYSTEM.
+- **v6.14.2**: теорема **ALT-8** (структура $GL_3(\mathbb{Z}_4)$, порядок 86016, розщеплення напівпрямого добутку, 17 циклових типів; закрито Q-ALT2); теорема **ALT-9** (36 класів бісимуляції $S5+N$ як добуток $3\times 4\times 3$; закрито Q-ALT3).
+- **v6.14.3**: теорема **ALT-10** (гібридна логіка на рамці $\mathbb{F}$, взаємна визначність номіналів і координатних атомів; закрито Q-ALT4); теорема **ALT-11** (монстри $M_k^b$ комутують з $@$ точно на гіперплощині; закрито Q-ALT5).
+- **v6.14.4**: теорема **ALT-12** (епістемічна рамка 4 агентів, формули розподіленого $D$ та загального знання $C$; закрито Q-ALT7; модельні застереження за принципом DO NOT COLLAPSE).
 
 ---
 
-## SUBIT-ALT — альтернативні надбудови
+## SUBIT-WARP — гранична геометрія та спектральна теорія
 
-[`spec/subit_alternative/`](spec/subit_alternative/) — альтернативні теоретичні надбудови над `subit_spec_v0.1.md` (SUBIT = WHO × WHERE × WHEN, 6 бітів, 64 стани). Розвивають інші напрями, ніж SUBIT-∞, і не залежать від нього.
+[`spec/subit_warp/`](spec/subit_warp/) — дослідницький модуль над SUBIT-∞. Поточна версія: **v0.4 (Consolidated Canonical C2, W0–W63)**. Канонічна основа: **W23′** ([`subit_warp_v0.4_draft_13_canonical.md`](spec/subit_warp/subit_warp_v0.4/drafts/subit_warp_v0.4_draft_00-49/subit_warp_v0.4_draft_13_canonical.md)), канонічний текст: [`subit_warp_v0.4.md`](spec/subit_warp/subit_warp_v0.4/subit_warp_v0.4.md).
 
-Спільна відправна точка: коди v0.1 для кожної осі утворюють цикл Грея, тож SUBIT можна читати як тор ℤ₄³.
+**Предмет:** взаємозв'язок між структурою дерева, граничною геометрією, інтегральними ядрами взаємодії та ієрархічною спектральною динамікою над Tree∞. Принцип: DO NOT COLLAPSE — CONTEXTUALIZE.
+
+**Еволюція розділів (W0–W63):**
+- **W0–W6**: базові конструкції (простір дерев, ультраметрика, межа $d_v$, міра Бернуллі, ядра $K_q$ та $K_{Vl}$).
+- **W7–W10**: спектральний оператор $T_q$, W9 Parameter Separation ($\beta = \alpha_w/\alpha_v$, $K_q = d_v^\beta$), W10 верифікація.
+- **W11–W20**: неоднорідні моделі, операторні збурення, межі спектральної та структурної реконструкції.
+- **W21–W32**: канонічна консолідація (v0.4.0), виправлення W23, первинний аудит W24/W24.16, перевірка W25, інтеграційні аудити W26–W32.
+- **W34.1–W47**: патчі відповідності кодування/декодування, Lean Blueprint W45, аудит регресій W20.
+- **W48–W63**: поповнення просторів реконструкції, збагачена межа, напівгрупи прищеплювання, топологія межі, символьна динаміка, спостережувана еквівалентність та факторизації зі збереженням інформації.
+
+**Статус:** DRAFT · NOT STABLE · RC NOT DECLARED. Детальніше див. [`spec/subit_warp/README.md`](spec/subit_warp/README.md).
+
+---
+
+## SUBIT-ALT — скінченна алгебра та модальна логіка
+
+[`spec/subit_alt/`](spec/subit_alt/) — алгебраїчні та модально-контекстні надбудови над `subit_spec_v0.1.md` (SUBIT = WHO × WHERE × WHEN, 6 бітів, 64 стани).
+
+Спільна відправна точка: коди v0.1 для кожної осі утворюють цикл Грея, задаючи ізоморфізм $\phi: S_0 \to \mathbb{Z}_4^3$, де метрика Лі збігається з метрикою Геммінга.
 
 | Модуль | Зміст | Статус |
 | :-- | :-- | :-- |
-| **ALT1 v0.1** | ℤ₄³ як група; 3×3 матриці над ℤ₄; 86016 оборотних; 17 циклових типів; ядерна гексаграма N з 4 атракторами | COMPUTED (вичерпно) |
-| **ALT2 v0.1** | Контексти WHO–WHERE–WHEN; добуток трьох S5-логік; циклічний час; двовимірна семантика (Каплан) | COMPUTED (вичерпно) |
-| **ALT2 v0.2** | Ядерна гексаграма як відношення доступності; визначність (класи бісимуляції) | COMPUTED |
+| **ALT1 v0.1** | $\mathbb{Z}_4^3$ як група; 86016 оборотних матриць; 17 циклових типів; ядерна гексаграма $N$ | COMPUTED (вичерпно) |
+| **ALT2 v0.1** | Контексти WHO–WHERE–WHEN; добуток трьох $S5$-логік; циклічний час; семантика Каплана | COMPUTED (вичерпно) |
+| **ALT2 v0.2** | Ядерна гексаграма як відношення доступності; класи бісимуляції | COMPUTED |
+| **ALT v0.3** | Консолідована специфікація надбудови над 64 станами | DRAFT · COMPUTED |
 
-Відтворення: `python3 verify_alt1.py` / `verify_alt2.py` / `verify_alt2b.py` (потрібен Python 3; numpy лише для ALT1).
+Відтворення: скрипти у [`spec/subit_alt/`](spec/subit_alt/) та у версіях `subit_v6.14.1`–`subit_v6.14.4`.
 
-**Статус:** DRAFT · обчислювально перевірено, Lean-верифікації немає.
+---
+
+## Універсальна архітектура екосистеми (SUBIT-ECOSYSTEM)
+
+[`spec/SUBIT_ECOSYSTEM/`](spec/SUBIT_ECOSYSTEM/) — універсальна мета-архітектура:
+- **Масштаби:** MICRO / MACRO / META.
+- **Каталог 64 модулів:** 4 сектори (ME, WE, YOU, THEY) з 6-бітними кодами.
+- **Граф залежностей:** $G_{SUBIT} = (V, E, C, I, P, \Omega)$ з 9 типами залежностей.
+- **SCR (SUBIT Contract Registry):** централізований реєстр міжмодульних контрактів, правила сумісності, типізація Entity, Event, Context, Provenance.
+
+---
+
+## Генеративна морфологія (SUBIT-SHELL v1.0)
+
+[`spec/SUBIT_ECOSYSTEM/SUBIT_SHELL/`](spec/SUBIT_ECOSYSTEM/SUBIT_SHELL/) — генеративне моделювання морфологічних структур на основі дискретної 64-станової динаміки SUBIT та класичної параметричної моделі Раупа (1966). Складається з 10 документів, що охоплюють математичну формалізацію, архітектуру генеративного рушія, атлас 64 станів, механіку матеріалів та аналіз еволюційного простору адаптацій.
 
 ---
 
 ## Застосунки
 
-[`apps/`](apps/) — інтерактивні HTML-застосунки та супутні матеріали.
+[`apps/`](apps/) — інтерактивні HTML-застосунки та супутні інструменти.
 
 | Застосунок | Зміст |
 | :-- | :-- |
 | `gastronaut/` | Гастрономічний атлас (HTML) |
+| `subit-sketch/` | Графічний редактор та специфікації концептуального моделювання |
 | `subit_dantis/` | SUBIT-TOPOS: Космологія Данте; стаття та специфікація |
 | `subit_kircher/` | SUBIT-KIRCHER v2.4: специфікація, HTML-застосунок, Python-тести |
 | `subit_kkto/` | SUBIT-KKTO: академічна стаття, практичне застосування, HTML |
+| `subit_tech/` | Технологічні візуалізації та специфікації |
+| `subit_interactive_3D.html` | Інтерактивна 3D-візуалізація динаміки станів |
 
 ---
 
 ## Статті та монографії
 
-[`paper/`](paper/) — статті, монографії та діалоги.
+[`paper/`](paper/) — статті, монографії, теоретичні нариси та діалоги.
 
 | Папка / Файл | Зміст |
 | :-- | :-- |
-| `article_SUBIT_CPU.md` | Стаття: SUBIT як архітектура процесора |
-| `article_subit_ontology_and_coalgebra.md` | Стаття: онтологія та коалгебра |
-| `article_unique_and_typical.md` | Стаття: унікальне і типове |
-| `article_Bradbury_and_AI.md` | Стаття: Бредбері і ШІ |
-| `article_neural_interpretability.md` | Стаття: нейронна інтерпретовність |
-| `from_bit_to_functor/` | «Від біта до функтора» — стаття і хронологія |
-| `monograph_infinity/` | Монографія SUBIT-∞ (популярна) |
-| `monograph_MAOH/` | Монографія MAOH |
-| `monograph_semantic_physics/` | Монографія семантичної фізики |
-| `dialogues/` | Діалоги: симуляційна гіпотеза, ентропійна гравітація |
+| [`articles/`](paper/articles/) | Нові статті: технологічна істомапа (Histomap), спіральна математика, трансформація грошей, універсальний дохід |
+| [`articles_old/`](paper/articles_old/) | Класичні статті: архітектура процесора SUBIT CPU, онтологія і коалгебра, Бредбері і ШІ, нейронна інтерпретовність, діалоги |
+| [`monograph/`](paper/monograph/) | Монографії: SUBIT-∞ (популярна), MAOH, семантична фізика, «Від біта до функтора» |
+| [`theory/`](paper/theory/) | Теоретичні нариси: дзета-функція, універсальний адаптивний обчислювальний рушій (UACE v0.1) |
 
 ---
 
@@ -202,13 +228,17 @@ spec/
   subit_infinity_spec_v3–v5_2.md     — архів v3–v5.2
   subit_infinity_spec_v5_1_EXT/      — v5.1 EXT: монографія, коментарі
   subit_infinity_spec_v6/
-    …/subit_v6.13.37-39/             — ← ПОТОЧНИЙ СТАБІЛЬНИЙ РЕЛІЗ
-  subit_warp/                        — SUBIT-WARP v0.4, W21–W32 (підготовка до v6.14)
-  subit_alternative/                 — SUBIT-ALT1/ALT2 (альтернативні напрями)
+    subit_v6.13.37-39/               — ← ПОТОЧНИЙ СТАБІЛЬНИЙ РЕЛІЗ (Freeze, Lean 2472)
+    subit_v6.14.0–v6.14.4/           — Серія RC-підготовки v6.14 (ALT-7–ALT-12, W0–W63)
+  subit_warp/                        — SUBIT-WARP v0.4 (W0–W63, канон C2)
+  subit_alt/                         — SUBIT-ALT (ℤ₄³, S5³, матриці, бісимуляція)
+  SUBIT_ECOSYSTEM/                   — Мета-архітектура 64 модулів, SCR-контракти
+    SUBIT_SHELL/                     — Генеративна морфологія мушель v1.0 (10 специфікацій)
+  subit_tetraksis/                   — Онтологічний каркас TETRAKSIS (4 рівні, 10 вузлів)
 apps/
-  gastronaut/   subit_dantis/   subit_kircher/   subit_kkto/
+  gastronaut/   subit-sketch/   subit_dantis/   subit_kircher/   subit_kkto/   subit_tech/
 paper/
-  article_*.md   from_bit_to_functor/   monograph_*/   dialogues/
+  articles/   articles_old/   monograph/   theory/
 ```
 
 ---

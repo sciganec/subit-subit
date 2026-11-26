@@ -48,7 +48,7 @@ WARP не змінює означень базової системи і не є
 - **W30**: Theorem Registry & Proof Dependency — MATHEMATICALLY CONSOLIDATED DRAFT (`subit_warp_v0.4_draft_20.md`).
 - **W31**: Formalization Boundary & Lean Blueprint — архітектуру задано, реалізації немає (`subit_warp_v0.4_draft_21.md`).
 
-**Поточний канон:** Канонічна консолідована специфікація [`subit_warp_v0.4.md`](subit_warp_v0.4.md) інтегрує W23′, W30, W31, W34.1.3–W34.1.9 та W39–W47 (Enc/Dec correspondence, повне розмежування метрик d_F / d_Σ / d_T / d_H, домен Tω⁺, повні теореми T-001–T-021, чисельну перевірку W25 та Lean 4 Blueprint W45). За критеріями реліз-контролю статус залишається **DRAFT · NOT STABLE · NOT RELEASE CANDIDATE (RC NOT DECLARED)**, оскільки повний регресійний пакет W20, Lean kernel verification та implementation audit (Rust) очікують завершення (ворота G-12, G-13, G-14).
+**Поточний канон:** Канонічна консолідована специфікація [`subit_warp_v0.4.md`](subit_warp_v0.4/subit_warp_v0.4.md) інтегрує W23′, W30, W31, W34.1.3–W34.1.9 та W39–W47 (Enc/Dec correspondence, повне розмежування метрик d_F / d_Σ / d_T / d_H, домен Tω⁺, повні теореми T-001–T-021, чисельну перевірку W25 та Lean 4 Blueprint W45). За критеріями реліз-контролю статус залишається **DRAFT · NOT STABLE · NOT RELEASE CANDIDATE (RC NOT DECLARED)**, оскільки повний регресійний пакет W20, Lean kernel verification та implementation audit (Rust) очікують завершення (ворота G-12, G-13, G-14).
 
 ---
 
@@ -56,47 +56,28 @@ WARP не змінює означень базової системи і не є
 
 | Файл | Зміст |
 | :-- | :-- |
-| [`subit_warp_00_randall_sundrum.md`](subit_warp_00_randall_sundrum.md) | Вихідне есе: аналогія з моделлю Randall–Sundrum |
-| [`subit_warp_v0.1.md`](subit_warp_v0.1.md) | Специфікація v0.1 |
-| [`subit_warp_v0.2.0.md`](subit_warp_v0.2.0.md) | Специфікація v0.2.0 |
-| [`subit_warp_v0.2.1.md`](subit_warp_v0.2.1.md) | Редакція v0.2.1 |
-| [`subit_warp_v0.2_audit.md`](subit_warp_v0.2_audit.md) | Аудит v0.2 |
-| [`subit_warp_v0.3.md`](subit_warp_v0.3.md) | Специфікація v0.3 (Proof-Refined) |
-| [`subit_warp_v0.3_audit_1.md`](subit_warp_v0.3_audit_1.md) | Аудит v0.3: W6–W8 |
-| [`subit_warp_v0.3_audit_2.md`](subit_warp_v0.3_audit_2.md) | Аудит v0.3: W9 (перший прохід) |
-| [`subit_warp_v0.3_audit_3.md`](subit_warp_v0.3_audit_3.md) | Аудит v0.3: W9 Parameter Separation (фінальний) |
-| [`subit_warp_v0.3_audit_4.md`](subit_warp_v0.3_audit_4.md) | Аудит v0.3 (частина 4) |
-| [`subit_warp_v0.3_audit_5.md`](subit_warp_v0.3_audit_5.md) | Аудит v0.3 (частина 5) |
-| [`subit_warp_v0.4.0.md`](subit_warp_v0.4.0.md) | **v0.4.0: W21 Canonical Specification** |
-| [`subit_warp_v0.4_draft_1.md`](subit_warp_v0.4_draft_1.md) – [`_10_audit.md`](subit_warp_v0.4_draft_10_audit.md) | Чернетки та аудити еволюції v0.4 |
-| [`subit_warp_v0.4_draft_11_canonical.md`](subit_warp_v0.4_draft_11_canonical.md) | **W23: Canonical Corrections & Unified Specification** |
-| [`subit_warp_v0.4_draft_12_audit_2.md`](subit_warp_v0.4_draft_12_audit_2.md) | **W24: Primary Source Audit (W0–W6 foundations)** — частковий, доповнено W24.16 |
-| [`subit_warp_v0.4_draft_14_audit_3.md`](subit_warp_v0.4_draft_14_audit_3.md) | **W24.16: Primary Source Audit W0–W6 — COMPLETED WITH CORRECTIONS** (раніше згадувався як `draft_12_audit_3`) |
-| [`subit_warp_v0.4_draft_13_canonical.md`](subit_warp_v0.4_draft_13_canonical.md) | **W23′: Canonical Corrections after W24.16 (поточна канонічна редакція)** |
-| [`subit_warp_v0.4_draft_15_audit_4.md`](subit_warp_v0.4_draft_15_audit_4.md) | **W25: Executable Verification** |
-| [`subit_warp_v0.4_draft_16_audit_5.md`](subit_warp_v0.4_draft_16_audit_5.md) | **W26: Canonical Integration & Release Audit** |
-| [`subit_warp_v0.4_draft_17.md`](subit_warp_v0.4_draft_17.md) | **W27: Proof Closure** |
-| [`subit_warp_v0.4_draft_18.md`](subit_warp_v0.4_draft_18.md) | **W28: Global Consistency & Regression Spec** |
-| [`subit_warp_v0.4_draft_19.md`](subit_warp_v0.4_draft_19.md) | **W29: Independent Mathematical Audit — CORRECTIONS REQUIRED** |
-| [`subit_warp_v0.4_draft_20.md`](subit_warp_v0.4_draft_20.md) | **W30: Theorem Registry & Proof Dependency** |
-| [`subit_warp_v0.4_draft_21.md`](subit_warp_v0.4_draft_21.md) | **W31: Formalization Boundary & Lean Blueprint** |
-| [`subit_warp_v0.4_draft_39_architecture.md`](subit_warp_v0.4_draft_39_architecture.md) | **W39: Consolidation Architecture** |
-| [`subit_warp_v0.4_draft_40.md`](subit_warp_v0.4_draft_40.md) | **W40: Mathematical Consistency Audit** |
-| [`subit_warp_v0.4_draft_41.md`](subit_warp_v0.4_draft_41.md) | **W39.1: Metric and Type Consistency Correction** |
-| [`subit_warp_v0.4_draft_42.md`](subit_warp_v0.4_draft_42.md) | **W41: T-007 Boundary Map Proof Closure** |
-| [`subit_warp_v0.4_draft_43.md`](subit_warp_v0.4_draft_43.md) | **W42: Spectral Theory Audit** |
-| [`subit_warp_v0.4_draft_44.md`](subit_warp_v0.4_draft_44.md) | **W43: Encoding/Decoding Correctness Audit** |
-| [`subit_warp_v0.4_draft_45.md`](subit_warp_v0.4_draft_45.md) | **W44: W20 Regression Audit** |
-| [`subit_warp_v0.4_draft_46.md`](subit_warp_v0.4_draft_46.md) | **W45: Lean 4 Formalization Blueprint** |
-| [`subit_warp_v0.4_draft_47.md`](subit_warp_v0.4_draft_47.md) | **W46: Independent Release Audit** |
-| [`subit_warp_v0.4_draft_48.md`](subit_warp_v0.4_draft_48.md) | **W47: Source Recovery & Dependency Closure** |
-| [`subit_warp_v0.4_draft_49_consolodated.md`](subit_warp_v0.4_draft_49_consolodated.md) | **Consolidated Draft — C1** |
-| [`subit_warp_v0.4.md`](subit_warp_v0.4.md) | **Канонічна специфікація SUBIT-WARP v0.4 (Consolidated Canonical C2)** |
-| `drafts/subit_warp_v0.4_draft_50.md` – `_53.md` | **W48–W49.1**: C2 Integration Audit, Corrective Patch, Fingerprint Reconstruction |
-| `drafts/subit_warp_v0.4_draft_54.md` – `_57.md` | **W50–W53**: Reconstruction Axioms, Minimal Axioms, Tree-Class Selection, Boundary Quotients |
-| `drafts/subit_warp_v0.4_draft_58.md` – `_60.md` | **W54–W55**: Enriched Boundary, Information Geometry and Audit |
-| `drafts/subit_warp_v0.4_draft_61.md` – `_65.md` | **W56–W60**: Boundary Dynamics, Grafting Semigroup, Symbolic Geometry, Transfer Dynamics, Verification |
-| `drafts/subit_warp_v0.4_draft_66.md` – `_68.md` | **W61–W63**: Operator Limits, Spectral Measures, Observational Equivalence & Information Quotients |
+| [`subit_warp_v0.0_randall_sundrum.md`](subit_warp_v0.0/subit_warp_v0.0_randall_sundrum.md) | Вихідне есе: аналогія з моделлю Randall–Sundrum |
+| [`subit_warp_v0.1.md`](subit_warp_v0.1/subit_warp_v0.1.md) | Специфікація v0.1 |
+| [`subit_warp_v0.2.0.md`](subit_warp_v0.2/subit_warp_v0.2.0.md) | Специфікація v0.2.0 |
+| [`subit_warp_v0.2.1.md`](subit_warp_v0.2/subit_warp_v0.2.1.md) | Редакція v0.2.1 |
+| [`subit_warp_v0.2_audit.md`](subit_warp_v0.2/subit_warp_v0.2_audit.md) | Аудит v0.2 |
+| [`subit_warp_v0.3.md`](subit_warp_v0.3/subit_warp_v0.3.md) | Специфікація v0.3 (Proof-Refined) |
+| [`subit_warp_v0.3_audit_1.md`](subit_warp_v0.3/drafts/subit_warp_v0.3_audit_1.md) – [`_audit_5.md`](subit_warp_v0.3/drafts/subit_warp_v0.3_audit_5.md) | Аудити v0.3 (W6–W9, Parameter Separation) |
+| `subit_warp_v0.4.0` | **v0.4.0: W21 Canonical Specification** (консолідовано в [`subit_warp_v0.4.md`](subit_warp_v0.4/subit_warp_v0.4.md)) |
+| [`subit_warp_v0.4_draft_11_canonical.md`](subit_warp_v0.4/drafts/subit_warp_v0.4_draft_00-49/subit_warp_v0.4_draft_11_canonical.md) | **W23: Canonical Corrections & Unified Specification** |
+| [`subit_warp_v0.4_draft_12_audit_2.md`](subit_warp_v0.4/drafts/subit_warp_v0.4_draft_00-49/subit_warp_v0.4_draft_12_audit_2.md) | **W24: Primary Source Audit (W0–W6 foundations)** |
+| [`subit_warp_v0.4_draft_13_canonical.md`](subit_warp_v0.4/drafts/subit_warp_v0.4_draft_00-49/subit_warp_v0.4_draft_13_canonical.md) | **W23′: Canonical Corrections after W24.16 (канонічна редакція)** |
+| [`subit_warp_v0.4_draft_14_audit_3.md`](subit_warp_v0.4/drafts/subit_warp_v0.4_draft_00-49/subit_warp_v0.4_draft_14_audit_3.md) – [`_16_audit_5.md`](subit_warp_v0.4/drafts/subit_warp_v0.4_draft_00-49/subit_warp_v0.4_draft_16_audit_5.md) | W24.16–W26: Primary Source, Executable Verification (W25), Release Audit |
+| [`subit_warp_v0.4_draft_17.md`](subit_warp_v0.4/drafts/subit_warp_v0.4_draft_00-49/subit_warp_v0.4_draft_17.md) – [`_21.md`](subit_warp_v0.4/drafts/subit_warp_v0.4_draft_00-49/subit_warp_v0.4_draft_21.md) | W27–W31: Proof Closure, Regression Spec, Independent Audit, Lean Blueprint |
+| [`subit_warp_v0.4_draft_32.md`](subit_warp_v0.4/drafts/subit_warp_v0.4_draft_00-49/subit_warp_v0.4_draft_32.md) – [`_38.md`](subit_warp_v0.4/drafts/subit_warp_v0.4_draft_00-49/subit_warp_v0.4_draft_38.md) | W34.1.3–W34.1.9: Integration Patches, Enc/Dec Correspondence, Readiness Gates |
+| [`subit_warp_v0.4_draft_39_architecture.md`](subit_warp_v0.4/drafts/subit_warp_v0.4_draft_00-49/subit_warp_v0.4_draft_39_architecture.md) – [`_48.md`](subit_warp_v0.4/drafts/subit_warp_v0.4_draft_00-49/subit_warp_v0.4_draft_48.md) | W39–W47: Consolidation Architecture, Metric Consistency, Spectral Theory Audit |
+| [`subit_warp_v0.4_draft_49_consolidated.md`](subit_warp_v0.4/drafts/subit_warp_v0.4_draft_00-49/subit_warp_v0.4_draft_49_consolidated.md) | **Consolidated Draft — C1** |
+| [`subit_warp_v0.4.md`](subit_warp_v0.4/subit_warp_v0.4.md) | **Канонічна специфікація SUBIT-WARP v0.4 (Consolidated Canonical C2)** |
+| [`subit_warp_v0.4_draft_50.md`](subit_warp_v0.4/drafts/subit_warp_v0.4_draft_50-99/subit_warp_v0.4_draft_50.md) – [`_53.md`](subit_warp_v0.4/drafts/subit_warp_v0.4_draft_50-99/subit_warp_v0.4_draft_53.md) | **W48–W49.1**: C2 Integration Audit, Corrective Patch, Fingerprint Reconstruction |
+| [`subit_warp_v0.4_draft_54.md`](subit_warp_v0.4/drafts/subit_warp_v0.4_draft_50-99/subit_warp_v0.4_draft_54.md) – [`_57.md`](subit_warp_v0.4/drafts/subit_warp_v0.4_draft_50-99/subit_warp_v0.4_draft_57.md) | **W50–W53**: Reconstruction Axioms, Minimal Axioms, Tree-Class Selection, Boundary Quotients |
+| [`subit_warp_v0.4_draft_58.md`](subit_warp_v0.4/drafts/subit_warp_v0.4_draft_50-99/subit_warp_v0.4_draft_58.md) – [`_60.md`](subit_warp_v0.4/drafts/subit_warp_v0.4_draft_50-99/subit_warp_v0.4_draft_60.md) | **W54–W55**: Enriched Boundary, Information Geometry and Audit |
+| [`subit_warp_v0.4_draft_61.md`](subit_warp_v0.4/drafts/subit_warp_v0.4_draft_50-99/subit_warp_v0.4_draft_61.md) – [`_65.md`](subit_warp_v0.4/drafts/subit_warp_v0.4_draft_50-99/subit_warp_v0.4_draft_65.md) | **W56–W60**: Boundary Dynamics, Grafting Semigroup, Symbolic Geometry, Transfer Dynamics, Verification |
+| [`subit_warp_v0.4_draft_66.md`](subit_warp_v0.4/drafts/subit_warp_v0.4_draft_50-99/subit_warp_v0.4_draft_66.md) – [`_68.md`](subit_warp_v0.4/drafts/subit_warp_v0.4_draft_50-99/subit_warp_v0.4_draft_68.md) | **W61–W63**: Operator Limits, Spectral Measures, Observational Equivalence & Information Quotients |
 
 ---
 
